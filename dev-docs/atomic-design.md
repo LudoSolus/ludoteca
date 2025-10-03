@@ -35,6 +35,8 @@ Button.svelte           -> Atom
 ## 3. Fluxo de ponta a ponta (do clique até os dados)
 Podemos observar na imagem que os eventos sempre sobem até o componente Page, enquanto os dados têm sua origem na própria Page e descem para os demais componentes.  
 
+<img width="572" height="517" alt="M1RmVi6xP5XBhyFK-image" src="https://github.com/user-attachments/assets/218e298e-fcdc-4ae4-ba42-e5dcb4145952" />
+
 ### Regra de ouro:   
 Props descem (dados): Page → Template → Molécula → Átomos.  
 Eventos sobem (interações): Átomos → Molécula → Template → Page.  
