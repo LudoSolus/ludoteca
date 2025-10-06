@@ -1,3 +1,20 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+:root{
+    --primary-color: #FEEC7E;
+    --card-background-color: rgba(254, 236, 126, 0.4);
+    --link-color: #3C65FD;
+    --hover-color: #847818;
+    --active-color: #3A3405;
+}
+
+html{
+    font-family: "Inknut Antiqua", serif;
+    color: #000;
+    font-size: 16px;
+    font-weight: 300;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+}
