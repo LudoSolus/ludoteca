@@ -1,6 +1,7 @@
 <script>
 	import Button from '$lib/components/atoms/Button.svelte';
 	import Input from '$lib/components/atoms/Input.svelte';
+	import ProfilePicture from '$lib/components/atoms/ProfilePicture.svelte';
 	import { faArrowLeftLong, faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 </script>
 
@@ -39,6 +40,8 @@
 		}}
 		error={'Nome inválido'}
 	/>
+	<ProfilePicture userName={'João'} />
+	<ProfilePicture userName={'Felipe Scalco'} />
 </div>
 
 <style>
