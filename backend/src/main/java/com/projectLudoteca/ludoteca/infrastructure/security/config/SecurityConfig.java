@@ -17,7 +17,6 @@ public class SecurityConfig {
                 // 🔒 Desativa CSRF para APIs REST
                 .csrf(csrf -> csrf.disable())
 
-                // 🚪 Autorizações de rotas
                 .authorizeHttpRequests(auth -> auth
                         // ✅ Rotas públicas (liberadas)
                         .requestMatchers(
@@ -27,8 +26,6 @@ public class SecurityConfig {
                                 "/commands/users/register",
                                 "/queries/students/**"
                         ).permitAll()
-
-                        // 🔐 Todas as outras precisam de autenticação
                         .anyRequest().authenticated()
                 )
 
@@ -40,7 +37,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // 💬 Encoder de senhas
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
