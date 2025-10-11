@@ -1,5 +1,6 @@
 package com.projectLudoteca.ludoteca.common.entity;
 
+import com.projectLudoteca.ludoteca.common.util.PublicIdGenerator;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
@@ -12,7 +13,15 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"email"}),
+                @UniqueConstraint(columnNames = {"cpf"}),
+                @UniqueConstraint(columnNames = {"ra"}),
+                @UniqueConstraint(columnNames = {"public_id"})
+        }
+)
 @EntityListeners(AuditingEntityListener.class)
 public class User implements Serializable {
 
@@ -24,10 +33,22 @@ public class User implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
+    @Column(name = "public_id", nullable = false, unique = true, length = 4)
+    private String publicId;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(unique = true)
     private String ra;
 
     @CreatedDate
@@ -39,6 +60,11 @@ public class User implements Serializable {
     private LocalDateTime updatedAt;
 
     private Boolean removed;
+
+    @PrePersist
+    public void generatePublicId() {
+        this.publicId = PublicIdGenerator.generate();
+    }
 
     public User() {
         removed = false;
@@ -57,8 +83,8 @@ public class User implements Serializable {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public String getPublicId() {
+        return publicId;
     }
 
     public String getName() {
@@ -105,16 +131,8 @@ public class User implements Serializable {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public Boolean getRemoved() {

@@ -14,7 +14,7 @@ public class CreateUserHandler {
         this.repository = repository;
     }
 
-    public void handle(CreateUserCommand command) {
+    public User handle(CreateUserCommand command) {
         User user = new User();
         user.setName(command.name());
         user.setCpf(command.cpf());
@@ -23,5 +23,7 @@ public class CreateUserHandler {
         user.setRa(command.ra());
 
         repository.save(user);
+
+        return user;
     }
 }
