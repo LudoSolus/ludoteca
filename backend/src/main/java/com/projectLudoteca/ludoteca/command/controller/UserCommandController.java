@@ -2,6 +2,7 @@ package com.projectLudoteca.ludoteca.command.controller;
 
 import com.projectLudoteca.ludoteca.command.handler.CreateUserHandler;
 import com.projectLudoteca.ludoteca.command.model.CreateUserCommand;
+import com.projectLudoteca.ludoteca.command.service.UserCommandService;
 import com.projectLudoteca.ludoteca.common.entity.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/commands/users")
 public class UserCommandController {
 
-    private final CreateUserHandler handler;
+    private final UserCommandService service;
 
-    public UserCommandController(CreateUserHandler handler) {
-        this.handler = handler;
+    public UserCommandController(UserCommandService service) {
+        this.service = service;
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> createUser(@RequestBody CreateUserCommand command) {
-        handler.handle(command);
-        return ResponseEntity.ok("Usuário adicionado com sucesso!");
+        String response = service.createUser(command);
+        return ResponseEntity.ok(response);
     }
 }
