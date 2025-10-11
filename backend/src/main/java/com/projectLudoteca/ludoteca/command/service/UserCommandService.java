@@ -2,6 +2,7 @@ package com.projectLudoteca.ludoteca.command.service;
 
 import com.projectLudoteca.ludoteca.command.handler.CreateUserHandler;
 import com.projectLudoteca.ludoteca.command.model.CreateUserCommand;
+import com.projectLudoteca.ludoteca.command.model.LoginUserCommand;
 import com.projectLudoteca.ludoteca.common.entity.User;
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -75,11 +76,24 @@ public class UserCommandService {
                 command.ra()
         );
 
-        User user = createUserHandler.handle(command);
+        User user = createUserHandler.handle(encodedCommand);
 
         String token = jwtService.generateToken(user.getPublicId(), user.getEmail());
 
         return token;
+    }
+
+
+    public String login(LoginUserCommand command) {
+
+        User user = userRepository.findByEmail(command.email())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (!passwordEncoder.matches(command.password(), user.getPassword())) {
+            throw new RuntimeException("Senha inválida");
+        }
+
+        return jwtService.generateToken(user.getPublicId(), user.getEmail());
     }
 
 }
