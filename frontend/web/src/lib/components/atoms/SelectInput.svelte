@@ -42,7 +42,7 @@
 		}`}
 		on:click={toggleDropdown}
 	>
-		<span class={`${value ? '' : 'text-gray-400'}`}>
+		<span class="text-value {value ? '' : 'text-gray-400'}">
 			{value ? options.find((o) => o.value === value)?.label : placeholder}
 		</span>
 
@@ -51,12 +51,15 @@
 
 	{#if isOpen}
 		<div
-			class="options-box absolute top-full z-10 flex w-full flex-col items-start rounded-md border border-black bg-white shadow-md"
-			style="margin-top: {error ? '-15px' : '5px'}"
+			class="options-box absolute z-10 flex w-full flex-col items-start rounded-md border border-black bg-white shadow-md"
+			style="top: 74px"
 		>
 			{#each options as option}
 				<button
-					class="w-full text-start cursor-pointer px-3 py-2 text-black hover:bg-yellow-100"
+					class="w-full cursor-pointer px-3 py-2 text-start text-black hover:bg-yellow-100 {option.value ===
+					value
+						? 'selected'
+						: ''}"
 					on:click={() => selectOption(option)}
 				>
 					{option.label}
@@ -71,6 +74,18 @@
 </div>
 
 <style>
+	.text-value {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		height: 100%;
+	}
+
+	.selected {
+		background: var(--primary-color);
+		font-weight: 600;
+	}
+
 	.options-box {
 		max-height: 200px;
 		overflow-y: auto;

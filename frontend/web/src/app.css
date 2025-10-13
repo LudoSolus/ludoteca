@@ -11,10 +11,27 @@
 }
 
 html {
+    height: 100vh;
     font-family: "Inknut Antiqua", serif;
     color: #000;
     font-size: 16px;
     font-weight: 300;
     box-sizing: border-box;
     transition: all 0.2s ease-in-out;
+    overflow: hidden;
+}
+
+body {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+}
+
+body::-webkit-scrollbar {
+    width: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+    border-radius: 20px;
 }
