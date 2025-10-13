@@ -21,6 +21,8 @@ public class CreateUserHandler {
         user.setEmail(command.email());
         user.setPassword(command.password());
         user.setRa(command.ra());
+        user.setBirthDate(command.birthDate());
+        user.setUserType(command.userType());
 
         repository.save(user);
 

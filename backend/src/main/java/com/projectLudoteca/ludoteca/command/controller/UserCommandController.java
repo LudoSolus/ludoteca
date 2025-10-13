@@ -1,10 +1,8 @@
 package com.projectLudoteca.ludoteca.command.controller;
 
-import com.projectLudoteca.ludoteca.command.handler.CreateUserHandler;
 import com.projectLudoteca.ludoteca.command.model.CreateUserCommand;
 import com.projectLudoteca.ludoteca.command.model.LoginUserCommand;
 import com.projectLudoteca.ludoteca.command.service.UserCommandService;
-import com.projectLudoteca.ludoteca.common.entity.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

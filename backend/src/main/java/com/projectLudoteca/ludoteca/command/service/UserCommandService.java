@@ -4,6 +4,7 @@ import com.projectLudoteca.ludoteca.command.handler.CreateUserHandler;
 import com.projectLudoteca.ludoteca.command.model.CreateUserCommand;
 import com.projectLudoteca.ludoteca.command.model.LoginUserCommand;
 import com.projectLudoteca.ludoteca.common.entity.User;
+import com.projectLudoteca.ludoteca.common.enums.UserType;
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,9 @@ public class UserCommandService {
         if (command.password() == null || command.password().trim().isEmpty()) {
             throw new IllegalArgumentException("A senha é obrigatória.");
         }
+        if( command.birthDate() == null ) {
+            throw new IllegalArgumentException("A data de nascimento é obrigatória.");
+        }
 
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         if (!Pattern.matches(emailRegex, command.email())) {
@@ -66,6 +70,14 @@ public class UserCommandService {
             throw new IllegalArgumentException("CPF já cadastrado!");
         }
 
+        UserType type = UserType.COMMOM;
+        if(command.ra() != null && !command.ra().trim().isEmpty()) {
+            type = UserType.STUDENT;
+            if (userRepository.existsByRa(command.ra())) {
+                throw new IllegalArgumentException("RA já cadastrado!");
+            }
+        }
+
         String encodedPassword = passwordEncoder.encode(command.password());
 
         CreateUserCommand encodedCommand = new CreateUserCommand(
@@ -73,7 +85,9 @@ public class UserCommandService {
                 command.cpf(),
                 command.email(),
                 encodedPassword,
-                command.ra()
+                command.ra(),
+                command.birthDate(),
+                type
         );
 
         User user = createUserHandler.handle(encodedCommand);
