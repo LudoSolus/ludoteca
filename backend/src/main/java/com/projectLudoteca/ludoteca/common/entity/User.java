@@ -1,14 +1,15 @@
 package com.projectLudoteca.ludoteca.common.entity;
 
+import com.projectLudoteca.ludoteca.common.enums.UserType;
 import com.projectLudoteca.ludoteca.common.util.PublicIdGenerator;
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -29,8 +30,8 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue
+    @Column(columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID id;
 
     @Column(name = "public_id", nullable = false, unique = true, length = 4)
@@ -51,6 +52,13 @@ public class User implements Serializable {
     @Column(unique = true)
     private String ra;
 
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_type", nullable = false)
+    private UserType userType;
+
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -59,7 +67,11 @@ public class User implements Serializable {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    private Boolean removed;
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    @Column(nullable = false)
+    private Boolean removed = false;
 
     @PrePersist
     public void generatePublicId() {
@@ -67,16 +79,16 @@ public class User implements Serializable {
     }
 
     public User() {
-        removed = false;
     }
 
-    public User(String name, String cpf, String email, String password, String ra) {
+    public User(String name, String cpf, String email, String password, String ra, LocalDate birthDate, UserType userType) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
         this.password = password;
         this.ra = ra;
-        removed = false;
+        this.birthDate = birthDate;
+        this.userType = userType;
     }
 
     public UUID getId() {
@@ -127,12 +139,32 @@ public class User implements Serializable {
         this.ra = ra;
     }
 
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
     }
 
     public Boolean getRemoved() {

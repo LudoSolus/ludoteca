@@ -18,7 +18,7 @@ public class GetAllUsersHandler {
     public List<UserView> handleGetAllUsers() {
         return repository.findAll()
                          .stream()
-                         .map(u -> new UserView(u.getName(), u.getCpf(), u.getEmail(), u.getRa()))
+                         .map(u -> new UserView(u.getPublicId(), u.getName(), u.getCpf(), u.getEmail(), u.getRa(), u.getBirthDate().toString()))
                          .toList();
     }
 }
