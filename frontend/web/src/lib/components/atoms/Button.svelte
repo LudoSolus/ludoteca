@@ -6,6 +6,7 @@
 	export let onClick: () => void;
 	export let leftIcon: IconDefinition | null = null;
 	export let rightIcon: IconDefinition | null = null;
+	export let disabled: boolean = false
 </script>
 
 <button
