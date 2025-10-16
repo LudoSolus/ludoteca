@@ -2,7 +2,7 @@
 	import Button from '$lib/components/atoms/Button.svelte';
 	import RegisterForm from '../molecules/forms/RegisterForm.svelte';
 
-	let formIsValid: boolean = false
+	let formIsValid: boolean = false;
 	let formValues: Record<string, string> = {
 		name: '',
 		phone: '',
@@ -13,13 +13,20 @@
 		password: '',
 		ra: ''
 	};
-
 </script>
 
 <section class="flex h-full flex-col items-center justify-center gap-10 px-15 py-4">
 	<h1>Para começar sua jornada <br /> Crie uma conta</h1>
-	<RegisterForm bind:isValid={formIsValid} bind:formValues={formValues} />
-	<Button text="Criar Conta" onClick={() => {}} />
+	<RegisterForm bind:isValid={formIsValid} bind:formValues />
+	<Button
+		text="Criar Conta"
+		onClick={() => {
+			console.log('clicado');
+		}}
+		disabled={!formIsValid}
+		width="250px"
+		height="40px"
+	/>
 </section>
 
 <style>

@@ -99,8 +99,25 @@
 			formController.password.error = validators.password(formController.password.value);
 		}
 
-		return Object.values(formController).every(
-			(field) => (field.touched || !field.required) && !field.error
+		const utfprStudent = formController.institute.value === 'UTFPR';
+		let raIsValid: boolean = true;
+
+		if (utfprStudent) {
+			raIsValid = false;
+			if (formController.ra.touched) {
+				formController.ra.error = validators.ra(formController.ra.value);
+				raIsValid = formController.ra.error === null;
+			}
+		} else{
+			formController.ra.touched = false
+			formController.ra.error = null
+		}
+
+		return (
+			raIsValid &&
+			Object.values(formController).every(
+				(field) => (field.touched || !field.required) && !field.error
+			)
 		);
 	}
 

@@ -37,7 +37,7 @@ export class Validators {
             return "CPF é obrigatório.";
         }
 
-        const cpf = value.replace(/[^\d]/g, '');
+        const cpf = value.replaceAll(/[^\d]/g, '');
 
         if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
             return "CPF inválido.";
@@ -47,7 +47,7 @@ export class Validators {
         let remainder: number;
 
         for (let i = 1; i <= 9; i++) {
-            sum = sum + parseInt(cpf.substring(i - 1, i)) * (11 - i);
+            sum = sum + Number.parseInt(cpf.substring(i - 1, i)) * (11 - i);
         }
 
         remainder = (sum * 10) % 11;
@@ -56,13 +56,13 @@ export class Validators {
             remainder = 0;
         }
 
-        if (remainder !== parseInt(cpf.substring(9, 10))) {
+        if (remainder !== Number.parseInt(cpf.substring(9, 10))) {
             return "CPF inválido.";
         }
 
         sum = 0;
         for (let i = 1; i <= 10; i++) {
-            sum = sum + parseInt(cpf.substring(i - 1, i)) * (12 - i);
+            sum = sum + Number.parseInt(cpf.substring(i - 1, i)) * (12 - i);
         }
         remainder = (sum * 10) % 11;
 
@@ -70,7 +70,7 @@ export class Validators {
             remainder = 0;
         }
 
-        if (remainder !== parseInt(cpf.substring(10, 11))) {
+        if (remainder !== Number.parseInt(cpf.substring(10, 11))) {
             return "CPF inválido.";
         }
 
@@ -84,6 +84,18 @@ export class Validators {
         if (value.length < 6) {
             return "A senha deve conter pelo menos 6 caracteres."
         }
+        return null
+    }
+
+    public ra(value: string): string | null {
+        if (!value) {
+            return "RA é obrigatório.";
+        }
+
+        if (value.length !== 7){
+            return "RA inválido."
+        }
+        
         return null
     }
 }
