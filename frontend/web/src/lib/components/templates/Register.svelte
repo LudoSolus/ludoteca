@@ -15,7 +15,7 @@
 	};
 </script>
 
-<section class="flex h-full flex-col items-center justify-center gap-10 px-15 py-4">
+<section class="flex h-full flex-col items-center justify-center gap-10 px-5 py-4 xl:px-15">
 	<h1>Para começar sua jornada <br /> Crie uma conta</h1>
 	<RegisterForm bind:isValid={formIsValid} bind:formValues />
 	<Button
@@ -30,18 +30,28 @@
 </section>
 
 <style>
-	section {
-		min-width: fit-content;
-		width: 100vw;
-		background: var(--card-background-color);
-		border-top-left-radius: 20px;
-		border-bottom-left-radius: 20px;
-		box-shadow: -2px 0px 4px 0px rgba(0, 0, 0, 0.7);
-	}
-
 	h1 {
 		width: 100%;
-		font-size: 36px;
-		font-weight: 900;
+		font-size: 18px;
+		font-weight: 800;
+	}
+
+	@media (min-width: 410px) {
+		h1 {
+			font-size: 22px;
+		}
+	}
+
+	@media (min-width: 480px) {
+		h1 {
+			font-size: 26px;
+		}
+	}
+
+	@media (min-width: 725px) {
+		h1 {
+			font-size: 36px;
+			font-weight: 900;
+		}
 	}
 </style>

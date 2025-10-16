@@ -79,3 +79,15 @@
 		<span class="mt-1 text-xs text-red-500">{error}</span>
 	{/if}
 </div>
+
+<style>
+	label, input {
+		font-size: 14px;
+	}
+
+	@media (min-width: 320px) {
+		label, input {
+			font-size: 16px;
+		}
+	}
+</style>

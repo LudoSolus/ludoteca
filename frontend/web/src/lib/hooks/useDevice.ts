@@ -1,11 +1,13 @@
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
 
+type DeviceType = 'mobile' | 'desktop';
+
 function createDeviceStore() {
-  const { subscribe, set } = writable<'mobile' | 'desktop'>('desktop');
+  const { subscribe, set } = writable<DeviceType>('desktop');
 
   if (browser) {
-    function getDeviceType(): 'mobile' | 'desktop' {
+    function getDeviceType(): DeviceType {
       return window.innerWidth <= 768 ? 'mobile' : 'desktop';
     }
 

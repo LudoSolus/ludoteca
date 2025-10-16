@@ -108,9 +108,9 @@
 				formController.ra.error = validators.ra(formController.ra.value);
 				raIsValid = formController.ra.error === null;
 			}
-		} else{
-			formController.ra.touched = false
-			formController.ra.error = null
+		} else {
+			formController.ra.touched = false;
+			formController.ra.error = null;
 		}
 
 		return (
@@ -128,7 +128,7 @@
 	}
 </script>
 
-<div class="form-container flex w-full flex-wrap items-start justify-start gap-5">
+<div class="form-container sm: flex w-full flex-wrap items-start gap-0 sm:gap-3 xl:gap-5">
 	<Input
 		label={'Nome Completo'}
 		placeholder={'João dos Santos'}
@@ -212,7 +212,15 @@
 
 <style>
 	.form-container {
-		min-width: 620px;
-		max-width: 620px;
+		max-width: 320px;
+		justify-content: center;
+	}
+
+	@media (min-width: 725px) {
+		.form-container {
+			min-width: 620px;
+			max-width: 620px;
+			justify-content: flex-start;
+		}
 	}
 </style>
