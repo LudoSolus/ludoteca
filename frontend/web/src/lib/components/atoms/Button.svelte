@@ -6,11 +6,15 @@
 	export let onClick: () => void;
 	export let leftIcon: IconDefinition | null = null;
 	export let rightIcon: IconDefinition | null = null;
-	export let disabled: boolean = false
+	export let disabled: boolean = false;
+	export let width: string = 'fit-content';
+	export let height: string = 'fit-content';
 </script>
 
 <button
-	class="flex items-center gap-2 rounded-md border-2 border-black px-6 py-1"
+	style="width: {width}; height: {height};"
+	class="flex items-center justify-center gap-2 rounded-md border-2 border-black px-6 py-1"
+	{disabled}
 	on:click={onClick}
 >
 	{#if leftIcon}
@@ -28,13 +32,23 @@
 		font-weight: 600;
 		box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 4px;
 		cursor: pointer;
+		transition: all 0.2s ease-in-out;
 	}
 
 	button:hover {
 		background-color: var(--hover-color);
+		transition: all 0.2s ease-in-out;
 	}
 
 	button:active {
 		background-color: var(--active-color);
+		transition: all 0.2s ease-in-out;
+	}
+
+	button:disabled {
+		background-color: #beb05e;
+		box-shadow: none;
+		cursor: default;
+		transition: all 0.2s ease-in-out;
 	}
 </style>
