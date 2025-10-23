@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { generateId } from '$lib/helpers/generate-id';
 	import { maska } from 'maska/svelte';
 	import type { MaskInputOptions } from 'maska';
 	import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 	import IconButton from './IconButton.svelte';
+	import { generateId } from '$lib/shared/helpers/generate-id';
 
 	type MaskType = 'phone' | 'cpf' | 'ra';
 

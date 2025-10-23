@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { generateId } from '$lib/helpers/generate-id';
-	import type { SelectInputOption } from '$lib/interfaces/select-input-option';
+	import { generateId } from '$lib/shared/helpers/generate-id';
+	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
 	import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	// import { onClickOutside } from '$lib/helpers/on-click-outside'; // helper opcional se quiser fechar clicando fora

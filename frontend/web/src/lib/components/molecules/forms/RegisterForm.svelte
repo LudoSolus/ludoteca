@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Input from '$lib/components/atoms/Input.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
-	import { Validators } from '$lib/helpers/validators';
-	import type { InputController } from '$lib/interfaces/input-controller';
-	import type { SelectInputOption } from '$lib/interfaces/select-input-option';
+	import { Validators } from '$lib/shared/helpers/validators';
+	import type { InputController } from '$lib/shared/interfaces/input-controller';
+	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
 
 	type FormField =
 		| 'name'

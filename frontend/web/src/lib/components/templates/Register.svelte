@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/atoms/Button.svelte';
 	import RegisterForm from '../molecules/forms/RegisterForm.svelte';
+	import { toast } from 'svoast';
 
 	let formIsValid: boolean = false;
 	let formValues: Record<string, string> = {
@@ -13,6 +14,10 @@
 		password: '',
 		ra: ''
 	};
+
+	async function launchToast() {
+		toast.success('Conta criada com sucesso!', {closable: true});
+	}
 </script>
 
 <section class="flex h-full flex-col items-center justify-center gap-10 px-5 py-4 xl:px-15">
@@ -20,10 +25,8 @@
 	<RegisterForm bind:isValid={formIsValid} bind:formValues />
 	<Button
 		text="Criar Conta"
-		onClick={() => {
-			console.log('clicado');
-		}}
-		disabled={!formIsValid}
+		onClick={launchToast}
+		disabled={false}
 		width="250px"
 		height="40px"
 	/>
