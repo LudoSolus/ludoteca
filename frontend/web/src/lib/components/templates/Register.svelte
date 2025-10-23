@@ -27,6 +27,7 @@
 		text="Criar Conta"
 		onClick={launchToast}
 		disabled={false}
+		loading={true}
 		width="250px"
 		height="40px"
 	/>

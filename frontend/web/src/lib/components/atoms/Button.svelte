@@ -1,12 +1,14 @@
 <script lang="ts">
 	import type { IconDefinition } from '@fortawesome/free-brands-svg-icons';
 	import Fa from 'svelte-fa';
+	import Loading from './Loading.svelte';
 
 	export let text: string;
 	export let onClick: () => void;
 	export let leftIcon: IconDefinition | null = null;
 	export let rightIcon: IconDefinition | null = null;
 	export let disabled: boolean = false;
+	export let loading: boolean = false;
 	export let width: string = 'fit-content';
 	export let height: string = 'fit-content';
 </script>
@@ -14,15 +16,19 @@
 <button
 	style="width: {width}; height: {height};"
 	class="flex items-center justify-center gap-2 rounded-md border-2 border-black px-6 py-1"
-	{disabled}
+	disabled={disabled || loading}
 	on:click={onClick}
 >
-	{#if leftIcon}
-		<Fa icon={leftIcon} />
-	{/if}
-	{text}
-	{#if rightIcon}
-		<Fa icon={rightIcon} />
+	{#if loading}
+		<Loading size="20px" color="#FFF" weight="3px"/>
+	{:else}
+		{#if leftIcon}
+			<Fa icon={leftIcon} />
+		{/if}
+		{text}
+		{#if rightIcon}
+			<Fa icon={rightIcon} />
+		{/if}
 	{/if}
 </button>
 
