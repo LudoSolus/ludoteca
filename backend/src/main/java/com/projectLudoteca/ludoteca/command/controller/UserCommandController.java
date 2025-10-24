@@ -3,14 +3,15 @@ package com.projectLudoteca.ludoteca.command.controller;
 import com.projectLudoteca.ludoteca.command.model.CreateUserCommand;
 import com.projectLudoteca.ludoteca.command.model.LoginUserCommand;
 import com.projectLudoteca.ludoteca.command.service.UserCommandService;
+import com.projectLudoteca.ludoteca.common.response.ApiResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/commands/users")
+@Validated
 public class UserCommandController {
 
     private final UserCommandService service;
@@ -20,14 +21,17 @@ public class UserCommandController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> createUser(@RequestBody CreateUserCommand command) {
-        String response = service.createUser(command);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ApiResponse<String>> createUser(@RequestBody @Validated CreateUserCommand command) {
+        String result = service.createUser(command);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(ApiResponse.created("Usuário registrado com sucesso", result));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> createUser(@RequestBody LoginUserCommand command) {
-        String response = service.login(command);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ApiResponse<String>> login(@RequestBody @Validated LoginUserCommand command) {
+        String token = service.login(command);
+        return ResponseEntity
+                .ok(ApiResponse.success("Login realizado com sucesso", token));
     }
 }

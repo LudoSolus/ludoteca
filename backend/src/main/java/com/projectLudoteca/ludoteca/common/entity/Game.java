@@ -4,21 +4,17 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 
 @Entity
 public class Game implements Serializable {
 
     @Id
-    @GeneratedValue
-    @Column(columnDefinition = "uuid", updatable = false, nullable = false)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(updatable = false, nullable = false)
+    private String id;
 
     @Column(name = "barcode", unique = true)
     private Integer barcode;
@@ -67,7 +63,7 @@ public class Game implements Serializable {
         this.maxPlayers = maxPlayers;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 

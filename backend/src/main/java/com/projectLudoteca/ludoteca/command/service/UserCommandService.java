@@ -4,7 +4,7 @@ import com.projectLudoteca.ludoteca.command.handler.CreateUserHandler;
 import com.projectLudoteca.ludoteca.command.model.CreateUserCommand;
 import com.projectLudoteca.ludoteca.command.model.LoginUserCommand;
 import com.projectLudoteca.ludoteca.common.entity.User;
-import com.projectLudoteca.ludoteca.common.enums.UserType;
+import com.projectLudoteca.ludoteca.common.enums.UserRole;
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,9 +70,9 @@ public class UserCommandService {
             throw new IllegalArgumentException("CPF já cadastrado!");
         }
 
-        UserType type = UserType.COMMOM;
+        UserRole type = UserRole.USER;
         if(command.ra() != null && !command.ra().trim().isEmpty()) {
-            type = UserType.STUDENT;
+            type = UserRole.STUDENT;
             if (userRepository.existsByRa(command.ra())) {
                 throw new IllegalArgumentException("RA já cadastrado!");
             }
