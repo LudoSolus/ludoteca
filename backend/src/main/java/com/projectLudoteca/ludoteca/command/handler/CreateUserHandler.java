@@ -22,7 +22,7 @@ public class CreateUserHandler {
         user.setPassword(command.password());
         user.setRa(command.ra());
         user.setBirthDate(command.birthDate());
-        user.setUserType(command.userType());
+        user.setUserType(command.userRole());
 
         repository.save(user);
 

@@ -1,6 +1,6 @@
 package com.projectLudoteca.ludoteca.common.entity;
 
-import com.projectLudoteca.ludoteca.common.enums.UserType;
+import com.projectLudoteca.ludoteca.common.enums.UserRole;
 import com.projectLudoteca.ludoteca.common.util.PublicIdGenerator;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -57,7 +57,7 @@ public class User implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type", nullable = false)
-    private UserType userType;
+    private UserRole userRole;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -81,14 +81,14 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String name, String cpf, String email, String password, String ra, LocalDate birthDate, UserType userType) {
+    public User(String name, String cpf, String email, String password, String ra, LocalDate birthDate, UserRole userRole) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
         this.password = password;
         this.ra = ra;
         this.birthDate = birthDate;
-        this.userType = userType;
+        this.userRole = userRole;
     }
 
     public UUID getId() {
@@ -147,12 +147,12 @@ public class User implements Serializable {
         this.birthDate = birthDate;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public UserRole getUserType() {
+        return userRole;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setUserType(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -174,4 +174,5 @@ public class User implements Serializable {
     public void setRemoved(Boolean removed) {
         this.removed = removed;
     }
+
 }
