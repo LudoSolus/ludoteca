@@ -45,6 +45,9 @@ public class UserCommandService {
         if (command.password() == null || command.password().trim().isEmpty()) {
             throw new IllegalArgumentException("A senha é obrigatória.");
         }
+        if (command.phone() == null || command.phone().trim().isEmpty()) {
+            throw new IllegalArgumentException("O telefone é obrigatório.");
+        }
         if( command.birthDate() == null ) {
             throw new IllegalArgumentException("A data de nascimento é obrigatória.");
         }
@@ -57,6 +60,11 @@ public class UserCommandService {
         String cpfRegex = "\\d{11}";
         if (!Pattern.matches(cpfRegex, command.cpf())) {
             throw new IllegalArgumentException("CPF inválido. Deve conter 11 dígitos numéricos.");
+        }
+
+        String phoneRegex = "\\d{10,11}";
+        if (!Pattern.matches(phoneRegex, command.phone())) {
+            throw new IllegalArgumentException("Telefone inválido. Deve conter 10 ou 11 números.");
         }
 
         String senhaRegex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
@@ -79,7 +87,6 @@ public class UserCommandService {
             }
         }
 
-
         String encodedPassword = passwordEncoder.encode(command.password());
 
         CreateUserCommand encodedCommand = new CreateUserCommand(
@@ -87,6 +94,7 @@ public class UserCommandService {
                 command.cpf(),
                 command.email(),
                 encodedPassword,
+                command.phone(),
                 command.ra(),
                 command.birthDate(),
                 type,
