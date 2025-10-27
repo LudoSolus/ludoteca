@@ -4,7 +4,7 @@
 	import ProfilePicture from '$lib/components/atoms/ProfilePicture.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
 	import UserContainer from '$lib/components/atoms/UserContainer.svelte';
-	import type { SelectInputOption } from '$lib/interfaces/select-input-option';
+	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
 	import { faArrowLeftLong, faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 	let selectedPlan = '';
@@ -69,7 +69,6 @@
 	<ProfilePicture userName={'Felipe Scalco'} />
 	<UserContainer email={'guilherme.123@gmail.com'} ageGroup={'Adulto'} />
 	<UserContainer email={'josenildo.comisuamae.gamer@gmail.com'} ageGroup={'Criança'} isRpgMaster />
-<<<<<<< HEAD
 	<SelectInput
 		label="Plano"
 		bind:value={selectedPlan}
@@ -78,8 +77,6 @@
 		onChange={handleSelect}
 		width="300px"
 	/>
-=======
->>>>>>> main
 </div>
 
 <style>
