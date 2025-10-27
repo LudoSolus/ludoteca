@@ -69,6 +69,7 @@
 	<ProfilePicture userName={'Felipe Scalco'} />
 	<UserContainer email={'guilherme.123@gmail.com'} ageGroup={'Adulto'} />
 	<UserContainer email={'josenildo.comisuamae.gamer@gmail.com'} ageGroup={'Criança'} isRpgMaster />
+<<<<<<< HEAD
 	<SelectInput
 		label="Plano"
 		bind:value={selectedPlan}
@@ -77,6 +78,8 @@
 		onChange={handleSelect}
 		width="300px"
 	/>
+=======
+>>>>>>> main
 </div>
 
 <style>
