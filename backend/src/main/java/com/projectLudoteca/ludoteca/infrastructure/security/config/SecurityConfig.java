@@ -33,7 +33,9 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/commands/users/register",
                                 "/commands/users/login",
-                                "/queries/students/**"
+                                "/queries/users/**",
+                                "/commands/educational-institutions/register",
+                                "/queries/educational-institutions/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

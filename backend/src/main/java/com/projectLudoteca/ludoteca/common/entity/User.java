@@ -30,7 +30,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID id;
 
@@ -54,6 +54,10 @@ public class User implements Serializable {
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "educational_institution_id")
+    private EducationalInstitution educationalInstitution;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type", nullable = false)
@@ -81,13 +85,14 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String name, String cpf, String email, String password, String ra, LocalDate birthDate, UserRole userRole) {
+    public User(String name, String cpf, String email, String password, String ra, LocalDate birthDate, EducationalInstitution educationalInstitution, UserRole userRole) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
         this.password = password;
         this.ra = ra;
         this.birthDate = birthDate;
+        this.educationalInstitution = educationalInstitution;
         this.userRole = userRole;
     }
 
@@ -146,6 +151,10 @@ public class User implements Serializable {
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
+
+    public EducationalInstitution getEducationalInstitution() { return educationalInstitution; }
+
+    public void setEducationalInstitution(EducationalInstitution educationalInstitution) { this.educationalInstitution = educationalInstitution; }
 
     public UserRole getUserType() {
         return userRole;

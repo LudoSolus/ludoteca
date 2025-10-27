@@ -6,6 +6,7 @@ import com.projectLudoteca.ludoteca.command.model.LoginUserCommand;
 import com.projectLudoteca.ludoteca.common.entity.User;
 import com.projectLudoteca.ludoteca.common.enums.UserRole;
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
+import com.projectLudoteca.ludoteca.infrastructure.security.config.JwtService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -78,6 +79,7 @@ public class UserCommandService {
             }
         }
 
+
         String encodedPassword = passwordEncoder.encode(command.password());
 
         CreateUserCommand encodedCommand = new CreateUserCommand(
@@ -87,7 +89,8 @@ public class UserCommandService {
                 encodedPassword,
                 command.ra(),
                 command.birthDate(),
-                type
+                type,
+                command.institutionId()
         );
 
         User user = createUserHandler.handle(encodedCommand);

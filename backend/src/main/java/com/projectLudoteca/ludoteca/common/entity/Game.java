@@ -14,7 +14,7 @@ public class Game implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(updatable = false, nullable = false)
-    private String id;
+    private UUID id;
 
     @Column(name = "barcode", unique = true)
     private Integer barcode;
@@ -63,7 +63,7 @@ public class Game implements Serializable {
         this.maxPlayers = maxPlayers;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
