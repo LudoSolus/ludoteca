@@ -28,6 +28,7 @@ public class CreateUserHandler {
         user.setCpf(command.cpf());
         user.setEmail(command.email());
         user.setPassword(command.password());
+        user.setPhone(command.phone());
         user.setRa(command.ra());
         user.setBirthDate(command.birthDate());
         user.setUserType(command.userRole());

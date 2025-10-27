@@ -49,6 +49,9 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String phone;
+
     @Column(unique = true)
     private String ra;
 
@@ -85,11 +88,12 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String name, String cpf, String email, String password, String ra, LocalDate birthDate, EducationalInstitution educationalInstitution, UserRole userRole) {
+    public User(String name, String cpf, String email, String password, String phone, String ra, LocalDate birthDate, EducationalInstitution educationalInstitution, UserRole userRole) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
         this.password = password;
+        this.phone = phone;
         this.ra = ra;
         this.birthDate = birthDate;
         this.educationalInstitution = educationalInstitution;
@@ -135,6 +139,10 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getPhone() { return phone; }
+
+    public void setPhone(String phone) { this.phone = phone; }
 
     public String getRa() {
         return ra;
