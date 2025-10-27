@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.command.service;
+package com.projectLudoteca.ludoteca.infrastructure.security.config;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
