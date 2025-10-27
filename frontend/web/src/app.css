@@ -2,7 +2,7 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
-:root{
+:root {
     --primary-color: #FEEC7E;
     --card-background-color: rgba(254, 236, 126, 0.4);
     --link-color: #3C65FD;
@@ -10,7 +10,7 @@
     --active-color: #3A3405;
 }
 
-html{
+html {
     font-family: "Inknut Antiqua", serif;
     color: #000;
     font-size: 16px;

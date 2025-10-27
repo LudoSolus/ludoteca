@@ -1,18 +1,28 @@
 package com.projectLudoteca.ludoteca.common.entity;
 
+import com.projectLudoteca.ludoteca.common.enums.UserRole;
+import com.projectLudoteca.ludoteca.common.util.PublicIdGenerator;
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"email"}),
+                @UniqueConstraint(columnNames = {"cpf"}),
+                @UniqueConstraint(columnNames = {"ra"}),
+                @UniqueConstraint(columnNames = {"public_id"})
+        }
+)
 @EntityListeners(AuditingEntityListener.class)
 public class User implements Serializable {
 
@@ -20,15 +30,41 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID id;
 
+    @Column(name = "public_id", nullable = false, unique = true, length = 4)
+    private String publicId;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String phone;
+
+    @Column(unique = true)
     private String ra;
+
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "educational_institution_id")
+    private EducationalInstitution educationalInstitution;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_type", nullable = false)
+    private UserRole userRole;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -38,27 +74,38 @@ public class User implements Serializable {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    private Boolean removed;
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
-    public User() {
-        removed = false;
+    @Column(nullable = false)
+    private Boolean removed = false;
+
+    @PrePersist
+    public void generatePublicId() {
+        this.publicId = PublicIdGenerator.generate();
     }
 
-    public User(String name, String cpf, String email, String password, String ra) {
+    public User() {
+    }
+
+    public User(String name, String cpf, String email, String password, String phone, String ra, LocalDate birthDate, EducationalInstitution educationalInstitution, UserRole userRole) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
         this.password = password;
+        this.phone = phone;
         this.ra = ra;
-        removed = false;
+        this.birthDate = birthDate;
+        this.educationalInstitution = educationalInstitution;
+        this.userRole = userRole;
     }
 
     public UUID getId() {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public String getPublicId() {
+        return publicId;
     }
 
     public String getName() {
@@ -93,6 +140,10 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public String getPhone() { return phone; }
+
+    public void setPhone(String phone) { this.phone = phone; }
+
     public String getRa() {
         return ra;
     }
@@ -101,20 +152,36 @@ public class User implements Serializable {
         this.ra = ra;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public EducationalInstitution getEducationalInstitution() { return educationalInstitution; }
+
+    public void setEducationalInstitution(EducationalInstitution educationalInstitution) { this.educationalInstitution = educationalInstitution; }
+
+    public UserRole getUserType() {
+        return userRole;
+    }
+
+    public void setUserType(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
     }
 
     public Boolean getRemoved() {
@@ -124,4 +191,5 @@ public class User implements Serializable {
     public void setRemoved(Boolean removed) {
         this.removed = removed;
     }
+
 }
