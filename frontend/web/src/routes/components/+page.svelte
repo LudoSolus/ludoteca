@@ -70,6 +70,7 @@
 	<UserContainer email={'guilherme.123@gmail.com'} ageGroup={'Adulto'} />
 	<UserContainer email={'josenildo.comisuamae.gamer@gmail.com'} ageGroup={'Criança'} isRpgMaster />
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<SelectInput
 		label="Plano"
 		bind:value={selectedPlan}
@@ -80,6 +81,8 @@
 	/>
 =======
 >>>>>>> main
+=======
+>>>>>>> 44-rota-para-editar-dados-do-perfil
 </div>
 
 <style>
