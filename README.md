@@ -45,3 +45,10 @@ Durante a instalação:
 ✅ **Verificar instalação**
 ```bash
 java -version
+```
+  Saída esperada:
+```
+java version "25.0.1" 2025-10-21 LTS
+Java(TM) SE Runtime Environment (build 25.0.1+8-LTS-27)
+Java HotSpot(TM) 64-Bit Server VM (build 25.0.1+8-LTS-27, mixed mode, sharing)
+```
