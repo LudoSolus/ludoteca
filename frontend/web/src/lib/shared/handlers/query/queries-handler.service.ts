@@ -1,3 +1,4 @@
+import type { Axios } from "axios";
 import type { IExternalQuery } from "./external-query.interface";
 import type { IQueryResult } from "./query-result.interface";
 import type { IQuery } from "./query.interface";
@@ -6,7 +7,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 export class QueriesHandlerService {
 
   constructor(
-    // public http: HttpClient,
+    public axios: Axios,
   ) { }
 
   public handle<T>(query: IQuery<T>): Observable<IQueryResult<T>> {
