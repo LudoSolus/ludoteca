@@ -4,6 +4,7 @@ import com.projectLudoteca.ludoteca.command.model.CreateUserCommand;
 import com.projectLudoteca.ludoteca.command.model.LoginUserCommand;
 import com.projectLudoteca.ludoteca.command.service.UserCommandService;
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +22,7 @@ public class UserCommandController {
     }
 
     @PostMapping("/register")
+    @Operation(summary = "Registrar novo usuário", description = "Cria um usuário com dados válidos")
     public ResponseEntity<ApiResponse<String>> createUser(@RequestBody @Validated CreateUserCommand command) {
         String result = service.createUser(command);
         return ResponseEntity
@@ -29,6 +31,7 @@ public class UserCommandController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Login do usuário", description = "Realiza login retornando um token JWT")
     public ResponseEntity<ApiResponse<String>> login(@RequestBody @Validated LoginUserCommand command) {
         String token = service.login(command);
         return ResponseEntity
