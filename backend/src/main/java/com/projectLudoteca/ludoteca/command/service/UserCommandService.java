@@ -4,7 +4,9 @@ import com.projectLudoteca.ludoteca.command.handler.CreateUserHandler;
 import com.projectLudoteca.ludoteca.command.model.CreateUserCommand;
 import com.projectLudoteca.ludoteca.command.model.LoginUserCommand;
 import com.projectLudoteca.ludoteca.common.entity.User;
+import com.projectLudoteca.ludoteca.common.enums.UserRole;
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
+import com.projectLudoteca.ludoteca.infrastructure.security.config.JwtService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,6 +45,12 @@ public class UserCommandService {
         if (command.password() == null || command.password().trim().isEmpty()) {
             throw new IllegalArgumentException("A senha é obrigatória.");
         }
+        if (command.phone() == null || command.phone().trim().isEmpty()) {
+            throw new IllegalArgumentException("O telefone é obrigatório.");
+        }
+        if( command.birthDate() == null ) {
+            throw new IllegalArgumentException("A data de nascimento é obrigatória.");
+        }
 
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         if (!Pattern.matches(emailRegex, command.email())) {
@@ -52,6 +60,11 @@ public class UserCommandService {
         String cpfRegex = "\\d{11}";
         if (!Pattern.matches(cpfRegex, command.cpf())) {
             throw new IllegalArgumentException("CPF inválido. Deve conter 11 dígitos numéricos.");
+        }
+
+        String phoneRegex = "\\d{10,11}";
+        if (!Pattern.matches(phoneRegex, command.phone())) {
+            throw new IllegalArgumentException("Telefone inválido. Deve conter 10 ou 11 números.");
         }
 
         String senhaRegex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
@@ -66,6 +79,14 @@ public class UserCommandService {
             throw new IllegalArgumentException("CPF já cadastrado!");
         }
 
+        UserRole type = UserRole.USER;
+        if(command.ra() != null && !command.ra().trim().isEmpty()) {
+            type = UserRole.STUDENT;
+            if (userRepository.existsByRa(command.ra())) {
+                throw new IllegalArgumentException("RA já cadastrado!");
+            }
+        }
+
         String encodedPassword = passwordEncoder.encode(command.password());
 
         CreateUserCommand encodedCommand = new CreateUserCommand(
@@ -73,7 +94,11 @@ public class UserCommandService {
                 command.cpf(),
                 command.email(),
                 encodedPassword,
-                command.ra()
+                command.phone(),
+                command.ra(),
+                command.birthDate(),
+                type,
+                command.institutionId()
         );
 
         User user = createUserHandler.handle(encodedCommand);
