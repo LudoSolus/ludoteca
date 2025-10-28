@@ -2,9 +2,7 @@
 	import Button from '$lib/components/atoms/Button.svelte';
 	import Input from '$lib/components/atoms/Input.svelte';
 	import ProfilePicture from '$lib/components/atoms/ProfilePicture.svelte';
-	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
 	import UserContainer from '$lib/components/atoms/UserContainer.svelte';
-	import type { SelectInputOption } from '$lib/interfaces/select-input-option';
 	import { faArrowLeftLong, faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 	let selectedPlan = '';
@@ -70,6 +68,7 @@
 	<UserContainer email={'guilherme.123@gmail.com'} ageGroup={'Adulto'} />
 	<UserContainer email={'josenildo.comisuamae.gamer@gmail.com'} ageGroup={'Criança'} isRpgMaster />
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<SelectInput
 		label="Plano"
 		bind:value={selectedPlan}
@@ -80,6 +79,8 @@
 	/>
 =======
 >>>>>>> main
+=======
+>>>>>>> 44-rota-para-editar-dados-do-perfil
 </div>
 
 <style>
