@@ -4,5 +4,5 @@
 	let { children } = $props();
 </script>
 
-<Header/>
+<Header type="user"/>
 {@render children?.()}
