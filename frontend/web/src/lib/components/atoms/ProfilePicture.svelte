@@ -1,5 +1,8 @@
 <script lang="ts">
 	export let userName: string;
+	export let width: string = '50px';
+	export let height: string = '50px';
+	export let fontSize: string = '20px';
 
 	function getUserAbbreviation() {
 		let users: string[] = userName.split('');
@@ -7,8 +10,8 @@
 	}
 </script>
 
-<div class="profile-box flex items-center justify-center">
-	<p>{getUserAbbreviation()}</p>
+<div class="profile-box flex items-center justify-center" style="width: {width}; height: {height}">
+	<p style="font-size: {fontSize};">{getUserAbbreviation()}</p>
 </div>
 
 <style>
@@ -16,15 +19,12 @@
 		border-radius: 100px;
 		border: 2px solid #000e3d;
 		background-color: #7e90fe;
-		width: 50px;
-		height: 50px;
 	}
 
 	.profile-box p {
-        font-family: "Inter", sans-serif;
+		font-family: 'Inter', sans-serif;
 		text-transform: uppercase;
 		color: white;
-        font-size: 20px;
-        font-weight: 600;
+		font-weight: 600;
 	}
 </style>
