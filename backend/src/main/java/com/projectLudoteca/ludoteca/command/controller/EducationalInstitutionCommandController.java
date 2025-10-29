@@ -1,0 +1,33 @@
+package com.projectLudoteca.ludoteca.command.controller;
+
+import com.projectLudoteca.ludoteca.command.model.CreateEducationalInstitutionCommand;
+import com.projectLudoteca.ludoteca.command.service.EducationalInstitutionService;
+import com.projectLudoteca.ludoteca.common.response.ApiResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/commands/educational-institutions")
+@Validated
+public class EducationalInstitutionCommandController {
+
+    private EducationalInstitutionService service;
+
+    public EducationalInstitutionCommandController(EducationalInstitutionService service) {
+        this.service = service;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<ApiResponse<String>> createUser(@RequestBody @Validated CreateEducationalInstitutionCommand command) {
+        service.createEducationalInstitution(command);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(ApiResponse.created("Instituição registrada com sucesso", "Sucesso"));
+    }
+
+}
