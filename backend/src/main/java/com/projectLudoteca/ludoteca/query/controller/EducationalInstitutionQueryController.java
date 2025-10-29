@@ -1,7 +1,9 @@
 package com.projectLudoteca.ludoteca.query.controller;
 
+import com.projectLudoteca.ludoteca.common.response.ApiResponse;
 import com.projectLudoteca.ludoteca.query.handler.GetAllEducationalInstitutionsHandler;
 import com.projectLudoteca.ludoteca.query.model.EducationalInstitutionView;
+import com.projectLudoteca.ludoteca.query.model.UserView;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +22,12 @@ public class EducationalInstitutionQueryController {
     }
 
     @GetMapping("/list-all-educational-institutions")
-    public ResponseEntity<List<EducationalInstitutionView>> getAllEducationalInstitutions() {
-        return ResponseEntity.ok(getAllEducationalInstitutionsHandler.getAllEducationalInstitutions());
+    public ResponseEntity<ApiResponse<EducationalInstitutionView>> getAllEducationalInstitutions() {
+
+        List<EducationalInstitutionView> institutions = getAllEducationalInstitutionsHandler.getAllEducationalInstitutions();
+        ApiResponse<EducationalInstitutionView> response = new ApiResponse<>();
+        response.setResultList(institutions);
+
+        return ResponseEntity.ok(response);
     }
 }

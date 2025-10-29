@@ -1,10 +1,9 @@
-package com.projectLudoteca.ludoteca.command.service;
+package com.projectLudoteca.ludoteca.command.registerUser;
 
-import com.projectLudoteca.ludoteca.command.handler.CreateUserHandler;
-import com.projectLudoteca.ludoteca.command.model.CreateUserCommand;
-import com.projectLudoteca.ludoteca.command.model.LoginUserCommand;
+import com.projectLudoteca.ludoteca.common.entity.EducationalInstitution;
 import com.projectLudoteca.ludoteca.common.entity.User;
 import com.projectLudoteca.ludoteca.common.enums.UserRole;
+import com.projectLudoteca.ludoteca.common.repository.EducationalInstitutionRepository;
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
 import com.projectLudoteca.ludoteca.infrastructure.security.config.JwtService;
 import jakarta.transaction.Transactional;
@@ -12,27 +11,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 @Service
-public class UserCommandService {
+public class CreateUserHandler {
 
-    private final CreateUserHandler createUserHandler;
-    private final UserRepository userRepository;
+    private final UserRepository repository;
+    private final EducationalInstitutionRepository educationalInstitutionRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
     @Autowired
-    public UserCommandService(CreateUserHandler createUserHandler, UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
-        this.createUserHandler = createUserHandler;
-        this.userRepository = userRepository;
+    public CreateUserHandler(UserRepository repository, EducationalInstitutionRepository educationalInstitutionRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
+        this.repository = repository;
+        this.educationalInstitutionRepository = educationalInstitutionRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
     }
 
     @Transactional
-    public String createUser(CreateUserCommand command) {
-
+    public String handle(CreateUserCommand command) {
         if (command.name() == null || command.name().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome é obrigatório.");
         }
@@ -72,53 +71,44 @@ public class UserCommandService {
             throw new IllegalArgumentException("A senha deve conter no mínimo 8 caracteres, incluindo letras e números.");
         }
 
-        if (userRepository.existsByEmail(command.email())) {
+        if (repository.existsByEmail(command.email())) {
             throw new IllegalArgumentException("E-mail já cadastrado!");
         }
-        if (userRepository.existsByCpf(command.cpf())) {
+        if (repository.existsByCpf(command.cpf())) {
             throw new IllegalArgumentException("CPF já cadastrado!");
         }
 
         UserRole type = UserRole.USER;
         if(command.ra() != null && !command.ra().trim().isEmpty()) {
             type = UserRole.STUDENT;
-            if (userRepository.existsByRa(command.ra())) {
+            if (repository.existsByRa(command.ra())) {
                 throw new IllegalArgumentException("RA já cadastrado!");
             }
         }
 
         String encodedPassword = passwordEncoder.encode(command.password());
 
-        CreateUserCommand encodedCommand = new CreateUserCommand(
-                command.name(),
-                command.cpf(),
-                command.email(),
-                encodedPassword,
-                command.phone(),
-                command.ra(),
-                command.birthDate(),
-                type,
-                command.institutionId()
-        );
+        User user = new User();
+        user.setName(command.name());
+        user.setCpf(command.cpf());
+        user.setEmail(command.email());
+        user.setPassword(encodedPassword);
+        user.setPhone(command.phone());
+        user.setRa(command.ra());
+        user.setBirthDate(command.birthDate());
+        user.setUserType(type);
 
-        User user = createUserHandler.handle(encodedCommand);
+        EducationalInstitution  educationalInstitution = new EducationalInstitution();
+
+        if (command.institutionId() != null && !command.institutionId().isBlank()) {
+            educationalInstitutionRepository.findById(UUID.fromString(command.institutionId()))
+                    .ifPresent(user::setEducationalInstitution);
+        }
+
+        repository.save(user);
 
         String token = jwtService.generateToken(user.getPublicId(), user.getEmail());
 
         return token;
     }
-
-
-    public String login(LoginUserCommand command) {
-
-        User user = userRepository.findByEmail(command.email())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
-        if (!passwordEncoder.matches(command.password(), user.getPassword())) {
-            throw new RuntimeException("Senha inválida");
-        }
-
-        return jwtService.generateToken(user.getPublicId(), user.getEmail());
-    }
-
 }
