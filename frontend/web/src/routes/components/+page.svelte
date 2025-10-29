@@ -3,7 +3,14 @@
 	import Input from '$lib/components/atoms/Input.svelte';
 	import ProfilePicture from '$lib/components/atoms/ProfilePicture.svelte';
 	import UserContainer from '$lib/components/atoms/UserContainer.svelte';
+	import SelectInput from '$lib/components/atoms/SelectInput.svelte'; 
 	import { faArrowLeftLong, faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
+	import ScapeRoomContainer from '$lib/components/atoms/ScapeRoomContainer.svelte';
+	
+	type SelectInputOption = {
+    label: string;
+    value: string;
+  	};
 
 	let selectedPlan = '';
 	const planOptions: SelectInputOption[] = [
@@ -20,6 +27,10 @@
 </script>
 
 <div class="mt-6 flex flex-col items-center gap-4">
+
+	<ScapeRoomContainer title="Código Sombrio">
+		<Button text={'Detalhes'} onClick={() => {}} rightIcon={faArrowRight} />
+	</ScapeRoomContainer>
 	<Button text={'Entrar'} onClick={() => {}} />
 	<Button text={'Entrar'} onClick={() => {}} leftIcon={faTrash} />
 	<Button text={'Entrar'} onClick={() => {}} rightIcon={faArrowRight} />
@@ -67,8 +78,8 @@
 	<ProfilePicture userName={'Felipe Scalco'} />
 	<UserContainer email={'guilherme.123@gmail.com'} ageGroup={'Adulto'} />
 	<UserContainer email={'josenildo.comisuamae.gamer@gmail.com'} ageGroup={'Criança'} isRpgMaster />
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+
 	<SelectInput
 		label="Plano"
 		bind:value={selectedPlan}
@@ -77,10 +88,7 @@
 		onChange={handleSelect}
 		width="300px"
 	/>
-=======
->>>>>>> main
-=======
->>>>>>> 44-rota-para-editar-dados-do-perfil
+
 </div>
 
 <style>
