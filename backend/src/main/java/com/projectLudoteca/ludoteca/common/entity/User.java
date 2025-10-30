@@ -11,6 +11,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -61,6 +63,9 @@ public class User implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "educational_institution_id")
     private EducationalInstitution educationalInstitution;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<PasswordReset> passwordResets = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type", nullable = false)
@@ -163,6 +168,8 @@ public class User implements Serializable {
     public EducationalInstitution getEducationalInstitution() { return educationalInstitution; }
 
     public void setEducationalInstitution(EducationalInstitution educationalInstitution) { this.educationalInstitution = educationalInstitution; }
+
+    public List<PasswordReset> getPasswordResets() { return passwordResets; };
 
     public UserRole getUserType() {
         return userRole;
