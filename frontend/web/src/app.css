@@ -41,3 +41,7 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
     border-radius: 20px;
 }
+
+a{
+    color: var(--link-color);
+}

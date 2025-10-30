@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { IEducationalInstitution } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.interface';
 	import Input from '$lib/components/atoms/Input.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
 	import { Validators } from '$lib/shared/helpers/validators';
@@ -11,27 +12,23 @@
 		| 'email'
 		| 'cpf'
 		| 'birthDate'
-		| 'institute'
+		| 'instituitionId'
 		| 'password'
 		| 'ra';
 
-	export let isValid: boolean = false;
-	export let formValues: Record<string, string>;
+	let {
+		isValid = $bindable(),
+		formValues = $bindable(),
+		educationalInstitutions
+	} = $props<{
+		isValid: boolean;
+		formValues: Record<string, string>;
+		educationalInstitutions: IEducationalInstitution[];
+	}>();
 
 	const validators = new Validators();
 
-	const instituteOptions: SelectInputOption[] = [
-		{
-			label: 'Universidade Tecnológica Federal do Paraná (UTFPR)',
-			value: 'UTFPR'
-		},
-		{
-			label: 'Universidade Estadual de Londrina (UEL)',
-			value: 'UEL'
-		}
-	];
-
-	const formController: Record<FormField, InputController> = {
+	const formController: Record<FormField, InputController> = $state({
 		name: {
 			value: formValues.name,
 			touched: false,
@@ -62,8 +59,8 @@
 			error: null,
 			required: true
 		},
-		institute: {
-			value: formValues.institute,
+		instituitionId: {
+			value: formValues.instituitionId,
 			touched: false,
 			error: null,
 			required: true
@@ -80,7 +77,16 @@
 			error: null,
 			required: false
 		}
-	};
+	});
+
+	const insituitionSelectInputOptions: SelectInputOption[] = $derived(
+		educationalInstitutions.map((institution: IEducationalInstitution) => {
+			return {
+				label: institution.institutionName,
+				value: institution.institutionId
+			};
+		})
+	);
 
 	function validateForm(): boolean {
 		if (formController.name.touched) {
@@ -99,10 +105,9 @@
 			formController.password.error = validators.password(formController.password.value);
 		}
 
-		const utfprStudent = formController.institute.value === 'UTFPR';
 		let raIsValid: boolean = true;
 
-		if (utfprStudent) {
+		if (utfprInstituitionIsSelected()) {
 			raIsValid = false;
 			if (formController.ra.touched) {
 				formController.ra.error = validators.ra(formController.ra.value);
@@ -125,6 +130,10 @@
 		formController[formName].touched = true;
 		formValues[formName] = formController[formName].value;
 		isValid = validateForm();
+	}
+
+	function utfprInstituitionIsSelected(): boolean {
+		return formController.instituitionId.value === '16610773-99dd-4df0-901f-041a3936d5d6';
 	}
 </script>
 
@@ -182,10 +191,10 @@
 		placeholder={'Selecione sua instituição'}
 		width="300px"
 		height="90px"
-		options={instituteOptions}
-		onChange={(value) => onInput('institute', value)}
-		bind:value={formController.institute.value}
-		error={formController.institute.error}
+		options={insituitionSelectInputOptions}
+		onChange={(value) => onInput('instituitionId', value)}
+		bind:value={formController.instituitionId.value}
+		error={formController.instituitionId.error}
 	/>
 	<Input
 		label={'Senha'}
@@ -196,7 +205,7 @@
 		error={formController.password.error}
 		onInput={(value) => onInput('password', value)}
 	/>
-	{#if formController.institute.value == 'UTFPR'}
+	{#if utfprInstituitionIsSelected()}
 		<Input
 			label={'RA'}
 			placeholder={'0000000'}

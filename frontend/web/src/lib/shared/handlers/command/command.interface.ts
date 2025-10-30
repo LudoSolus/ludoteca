@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
-import { ICommandResult } from './command-result.interface';
 import { CommandsHandlerService } from './commands-handler.service';
+import type { ICommandResult } from './command-result.interface';
+import type { AxiosResponse } from 'axios';
 
 export interface ICommand {
-  execute(handler: CommandsHandlerService): Observable<ICommandResult>;
+  execute(handler: CommandsHandlerService): Observable<AxiosResponse<ICommandResult>>;
 }

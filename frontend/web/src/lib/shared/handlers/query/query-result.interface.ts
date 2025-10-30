@@ -1,7 +1,7 @@
 import type { EErrorCode } from "$lib/shared/enums/error-code.enum";
 
 export interface IQueryResult<T> {
-  resultData: T[] | T;
+  resultData: T;
   errorCode?: EErrorCode;
   errorName?: string;
   errorMessage?: string;

@@ -2,15 +2,15 @@
 	import Button from '$lib/components/atoms/Button.svelte';
 	import Input from '$lib/components/atoms/Input.svelte';
 	import ProfilePicture from '$lib/components/atoms/ProfilePicture.svelte';
+	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
 	import UserContainer from '$lib/components/atoms/UserContainer.svelte';
-	import SelectInput from '$lib/components/atoms/SelectInput.svelte'; 
 	import { faArrowLeftLong, faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import EscapeRoomContainer from '$lib/components/atoms/EscapeRoomContainer.svelte';
-	
+
 	type SelectInputOption = {
-    label: string;
-    value: string;
-  	};
+		label: string;
+		value: string;
+	};
 
 	let selectedPlan = '';
 	const planOptions: SelectInputOption[] = [
@@ -27,7 +27,6 @@
 </script>
 
 <div class="mt-6 flex flex-col items-center gap-4">
-
 	<EscapeRoomContainer title="Código Sombrio" />
 	<Button text={'Entrar'} onClick={() => {}} />
 	<Button text={'Entrar'} onClick={() => {}} leftIcon={faTrash} />
@@ -63,7 +62,7 @@
 		}}
 		error={'Nome inválido'}
 	/>
-		<SelectInput
+	<SelectInput
 		label="Plano"
 		bind:value={selectedPlan}
 		placeholder="Selecione o plano"
@@ -77,7 +76,6 @@
 	<UserContainer email={'guilherme.123@gmail.com'} ageGroup={'Adulto'} />
 	<UserContainer email={'josenildo.comisuamae.gamer@gmail.com'} ageGroup={'Criança'} isRpgMaster />
 
-
 	<SelectInput
 		label="Plano"
 		bind:value={selectedPlan}
@@ -86,7 +84,6 @@
 		onChange={handleSelect}
 		width="300px"
 	/>
-
 </div>
 
 <style>
