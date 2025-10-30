@@ -31,6 +31,14 @@ public class RequestPasswordResetHandler {
         Optional<User> userOpt = userRepository.findByEmail(command.email());
 
         userOpt.ifPresent(user -> {
+            boolean hasActiveCode = passwordResetRepository
+                    .findTopByUserAndUsedFalseOrderByCreatedAtDesc(user)
+                    .filter(pr -> pr.getExpiresAt().isAfter(LocalDateTime.now()))
+                    .isPresent();
+
+            if (hasActiveCode) {
+                return;
+            }
             String code = generateRecoveryCode();
             sendRecoveryEmail(user.getEmail(), code);
 
