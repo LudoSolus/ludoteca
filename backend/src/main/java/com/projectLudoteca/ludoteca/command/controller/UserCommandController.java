@@ -1,5 +1,7 @@
 package com.projectLudoteca.ludoteca.command.controller;
 
+import com.projectLudoteca.ludoteca.command.confirmationPasswordReset.ConfirmationPasswordResetCommand;
+import com.projectLudoteca.ludoteca.command.confirmationPasswordReset.ConfirmationPasswordResetHandler;
 import com.projectLudoteca.ludoteca.command.loginUser.LoginUserCommand;
 import com.projectLudoteca.ludoteca.command.loginUser.LoginUserHandler;
 import com.projectLudoteca.ludoteca.command.registerUser.CreateUserCommand;
@@ -25,12 +27,14 @@ public class UserCommandController {
     private final CreateUserHandler registerHandler;
     private final LoginUserHandler loginHandler;
     private final RequestPasswordResetHandler requestPasswordResetHandler;
+    private final ConfirmationPasswordResetHandler confirmationPasswordResetHandler;
     private final UpdateUserHandler updateHandler;
 
-    public UserCommandController(CreateUserHandler registerHandler, LoginUserHandler loginHandler, RequestPasswordResetHandler requestPasswordResetHandler, UpdateUserHandler updateHandler) {
+    public UserCommandController(CreateUserHandler registerHandler, LoginUserHandler loginHandler, RequestPasswordResetHandler requestPasswordResetHandler, ConfirmationPasswordResetHandler confirmationPasswordResetHandler, UpdateUserHandler updateHandler) {
         this.registerHandler = registerHandler;
         this.loginHandler = loginHandler;
         this.requestPasswordResetHandler = requestPasswordResetHandler;
+        this.confirmationPasswordResetHandler = confirmationPasswordResetHandler;
         this.updateHandler = updateHandler;
     }
 
@@ -62,6 +66,17 @@ public class UserCommandController {
         requestPasswordResetHandler.handle(command);
 
         ApiResponse<String> response = new ApiResponse<>("Se existir uma conta com este e-mail, um código foi enviado.");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/confirmation-password-reset")
+    @Operation(summary = "Redefinir senha", description = "Altera a senha do usuário usando o código enviado por email")
+    public ResponseEntity<ApiResponse<String>> resetPassword(
+            @RequestBody @Validated ConfirmationPasswordResetCommand command) {
+
+        String message = confirmationPasswordResetHandler.handle(command);
+        ApiResponse<String> response = new ApiResponse<>(message);
+
         return ResponseEntity.ok(response);
     }
 

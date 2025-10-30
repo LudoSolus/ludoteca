@@ -43,6 +43,7 @@ public class SecurityConfig {
                                 "/commands/users/register",
                                 "/commands/users/login",
                                 "/commands/users/request-password-reset",
+                                "/commands/users/confirmation-password-reset",
                                 "/queries/users/**",
                                 "/commands/educational-institutions/register",
                                 "/queries/educational-institutions/**"
