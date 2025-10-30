@@ -70,4 +70,19 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
+
+    /**
+     * Trata exceções de negócio personalizadas.
+     */
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiResponse<Void>> handleBusinessException(BusinessException ex) {
+        ApiResponse<Void> response = new ApiResponse<>();
+        response.setErrorCode(ex.getErrorCode());
+        response.setErrorName("BusinessException");
+        response.setErrorMessage(ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+
 }
