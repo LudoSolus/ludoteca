@@ -11,7 +11,7 @@
 		| 'email'
 		| 'cpf'
 		| 'birthDate'
-		| 'institute'
+		| 'instituteId'
 		| 'password'
 		| 'ra';
 
@@ -62,8 +62,8 @@
 			error: null,
 			required: true
 		},
-		institute: {
-			value: formValues.institute,
+		instituteId: {
+			value: formValues.instituteId,
 			touched: false,
 			error: null,
 			required: true
@@ -99,7 +99,7 @@
 			formController.password.error = validators.password(formController.password.value);
 		}
 
-		const utfprStudent = formController.institute.value === 'UTFPR';
+		const utfprStudent = formController.instituteId.value === 'UTFPR';
 		let raIsValid: boolean = true;
 
 		if (utfprStudent) {
@@ -183,9 +183,9 @@
 		width="300px"
 		height="90px"
 		options={instituteOptions}
-		onChange={(value) => onInput('institute', value)}
-		bind:value={formController.institute.value}
-		error={formController.institute.error}
+		onChange={(value) => onInput('instituteId', value)}
+		bind:value={formController.instituteId.value}
+		error={formController.instituteId.error}
 	/>
 	<Input
 		label={'Senha'}
@@ -196,7 +196,7 @@
 		error={formController.password.error}
 		onInput={(value) => onInput('password', value)}
 	/>
-	{#if formController.institute.value == 'UTFPR'}
+	{#if formController.instituteId.value == 'UTFPR'}
 		<Input
 			label={'RA'}
 			placeholder={'0000000'}

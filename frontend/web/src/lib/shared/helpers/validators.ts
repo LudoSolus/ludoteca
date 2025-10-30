@@ -81,9 +81,16 @@ export class Validators {
         if (!value) {
             return "Senha é obrigatória.";
         }
-        if (value.length < 6) {
-            return "A senha deve conter pelo menos 6 caracteres."
+        if (value.length < 8) {
+            return "A senha deve conter pelo menos 8 caracteres."
         }
+
+        const hasLetter = /[a-zA-Z]/.test(value);
+        const hasNumber = /[0-9]/.test(value);
+        if (!hasLetter || !hasNumber) {
+            return "A senha deve conter letras e números."
+        }
+
         return null
     }
 
@@ -92,10 +99,10 @@ export class Validators {
             return "RA é obrigatório.";
         }
 
-        if (value.length !== 7){
+        if (value.length !== 7) {
             return "RA inválido."
         }
-        
+
         return null
     }
 }

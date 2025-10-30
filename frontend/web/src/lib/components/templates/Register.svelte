@@ -3,6 +3,9 @@
 	import RegisterForm from '../molecules/forms/RegisterForm.svelte';
 	import { toast } from 'svoast';
 
+	export let registerUserLoading: boolean;
+	export let registerUser: (data: Record<string, string>) => void;
+
 	let formIsValid: boolean = false;
 	let formValues: Record<string, string> = {
 		name: '',
@@ -10,13 +13,18 @@
 		email: '',
 		cpf: '',
 		birthDate: '',
-		institute: '',
+		instituteId: '',
 		password: '',
 		ra: ''
 	};
 
-	async function launchToast() {
-		toast.success('Conta criada com sucesso!', {closable: true});
+	function handleOnRegisterUser() {
+		if (!formIsValid) {
+			toast.error('Preencha todos os campos.', { closable: true });
+			return;
+		}
+
+		registerUser(formValues);
 	}
 </script>
 
@@ -25,9 +33,9 @@
 	<RegisterForm bind:isValid={formIsValid} bind:formValues />
 	<Button
 		text="Criar Conta"
-		onClick={launchToast}
-		disabled={false}
-		loading={true}
+		onClick={handleOnRegisterUser}
+		disabled={!formIsValid}
+		loading={registerUserLoading}
 		width="250px"
 		height="40px"
 	/>
