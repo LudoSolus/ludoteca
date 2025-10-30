@@ -48,6 +48,7 @@ public class SecurityConfig {
                                 "/commands/educational-institutions/register",
                                 "/queries/educational-institutions/**"
                         ).permitAll()
+                        .requestMatchers("/commands/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
 
