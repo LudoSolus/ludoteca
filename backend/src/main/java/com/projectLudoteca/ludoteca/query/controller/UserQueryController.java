@@ -23,11 +23,10 @@ public class UserQueryController {
 
     @GetMapping("/list-all-users")
     @Operation(summary = "Lista de todos os usuários do sistema", description = "Realiza uma busca de todos os usuários do sistema")
-    public ResponseEntity<ApiResponse<UserView>> getAllUsers() {
+    public ResponseEntity<ApiResponse<List<UserView>>> getAllUsers() {
         List<UserView> users = handler.handleGetAllUsers();
 
-        ApiResponse<UserView> response = new ApiResponse<>();
-        response.setResultList(users);
+        ApiResponse<List<UserView>> response = new ApiResponse<>(users);
 
         return ResponseEntity.ok(response);
     }

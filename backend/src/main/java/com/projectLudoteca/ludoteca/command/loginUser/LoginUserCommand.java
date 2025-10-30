@@ -1,3 +1,5 @@
 package com.projectLudoteca.ludoteca.command.loginUser;
 
-public record LoginUserCommand (String email, String password) {}
+import jakarta.validation.constraints.Email;
+
+public record LoginUserCommand (@Email(message = "Email inválido") String email, String password) {}

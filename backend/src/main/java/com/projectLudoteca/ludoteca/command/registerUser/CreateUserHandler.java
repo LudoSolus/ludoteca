@@ -3,6 +3,7 @@ package com.projectLudoteca.ludoteca.command.registerUser;
 import com.projectLudoteca.ludoteca.common.entity.EducationalInstitution;
 import com.projectLudoteca.ludoteca.common.entity.User;
 import com.projectLudoteca.ludoteca.common.enums.UserRole;
+import com.projectLudoteca.ludoteca.common.exception.BusinessException;
 import com.projectLudoteca.ludoteca.common.repository.EducationalInstitutionRepository;
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
 import com.projectLudoteca.ludoteca.infrastructure.security.config.JwtService;
@@ -56,10 +57,7 @@ public class CreateUserHandler {
             throw new IllegalArgumentException("Formato de e-mail inválido.");
         }
 
-        String cpfRegex = "\\d{11}";
-        if (!Pattern.matches(cpfRegex, command.cpf())) {
-            throw new IllegalArgumentException("CPF inválido. Deve conter 11 dígitos numéricos.");
-        }
+
 
         String phoneRegex = "\\d{10,11}";
         if (!Pattern.matches(phoneRegex, command.phone())) {
@@ -69,6 +67,10 @@ public class CreateUserHandler {
         String senhaRegex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
         if (!Pattern.matches(senhaRegex, command.password())) {
             throw new IllegalArgumentException("A senha deve conter no mínimo 8 caracteres, incluindo letras e números.");
+        }
+
+        if (command.ra() != null && !command.ra().matches("\\d+")) {
+            throw new BusinessException("400", "O RA deve conter apenas números.");
         }
 
         if (repository.existsByEmail(command.email())) {

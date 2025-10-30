@@ -1,6 +1,5 @@
-package com.projectLudoteca.ludoteca.command.handler;
+package com.projectLudoteca.ludoteca.command.registerEducationalInstitution;
 
-import com.projectLudoteca.ludoteca.command.model.CreateEducationalInstitutionCommand;
 import com.projectLudoteca.ludoteca.common.entity.EducationalInstitution;
 import com.projectLudoteca.ludoteca.common.repository.EducationalInstitutionRepository;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,10 @@ public class CreateEducationalInstitutionHandler {
     }
 
     public void handle(CreateEducationalInstitutionCommand command) {
+        if (command.institutionName() == null || command.institutionName().trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome da instituição de ensino é obrigatório.");
+        }
+
         EducationalInstitution educationalInstitution = new EducationalInstitution(command.institutionName());
         repository.save(educationalInstitution);
     }

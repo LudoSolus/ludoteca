@@ -22,11 +22,10 @@ public class EducationalInstitutionQueryController {
     }
 
     @GetMapping("/list-all-educational-institutions")
-    public ResponseEntity<ApiResponse<EducationalInstitutionView>> getAllEducationalInstitutions() {
+    public ResponseEntity<ApiResponse<List<EducationalInstitutionView>>> getAllEducationalInstitutions() {
 
         List<EducationalInstitutionView> institutions = getAllEducationalInstitutionsHandler.getAllEducationalInstitutions();
-        ApiResponse<EducationalInstitutionView> response = new ApiResponse<>();
-        response.setResultList(institutions);
+        ApiResponse<List<EducationalInstitutionView>> response = new ApiResponse<>(institutions);
 
         return ResponseEntity.ok(response);
     }
