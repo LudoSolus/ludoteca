@@ -42,6 +42,7 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/commands/users/register",
                                 "/commands/users/login",
+                                "/commands/users/request-password-reset",
                                 "/queries/users/**",
                                 "/commands/educational-institutions/register",
                                 "/queries/educational-institutions/**"
