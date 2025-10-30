@@ -1,96 +1,67 @@
 <script lang="ts">
-	import Button from '$lib/components/atoms/Button.svelte';
-	import Input from '$lib/components/atoms/Input.svelte';
-	import ProfilePicture from '$lib/components/atoms/ProfilePicture.svelte';
-	import UserContainer from '$lib/components/atoms/UserContainer.svelte';
-	import SelectInput from '$lib/components/atoms/SelectInput.svelte'; 
-	import { faArrowLeftLong, faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
-	import EscapeRoomContainer from '$lib/components/atoms/EscapeRoomContainer.svelte';
-	
-	type SelectInputOption = {
-    label: string;
-    value: string;
-  	};
+  import EventCard from "$lib/components/molecules/EventCard.svelte";
+  import {
+    faGamepad,
+    faDice,
+    faKey,
+    faGhost,
+    faPuzzlePiece,
+    faHeart
+  } from "@fortawesome/free-solid-svg-icons";
 
-	let selectedPlan = '';
-	const planOptions: SelectInputOption[] = [
-		{ label: 'Mensal', value: 'MONTHLY' },
-		{ label: 'Três Meses', value: 'Three' },
-		{ label: 'Seis Meses', value: 'SIX' },
-		{ label: 'Anual', value: 'YEARLY' }
-	];
-
-	function handleSelect(value: string) {
-		selectedPlan = value;
-		console.log('Plano selecionado:', value);
-	}
+  const eventos = [
+    {
+      title: "Evento 55",
+      dateStart: "20/07",
+      timeStart: "08:00",
+      dateEnd: "20/07",
+      timeEnd: "18:00",
+      activities: [
+        { icon: faGamepad, text: "Jogos de Tabuleiro" },
+        { icon: faDice, text: "RPG’s" },
+        { icon: faKey, text: "Escape Room" },
+      ],
+      address: [
+        "Rua dos Expedicionários, nº 56",
+        "Bairro Alvorada",
+        "Cornélio Procópio, PR",
+      ],
+      image: "/images/event-boardgame.png",
+    },
+    {
+      title: "Noite do Horror",
+      dateStart: "21/07",
+      timeStart: "19:00",
+      dateEnd: "21/07",
+      timeEnd: "23:59",
+      activities: [
+        { icon: faGhost, text: "RPG de Terror" },
+        { icon: faHeart, text: "Card Games" },
+        { icon: faPuzzlePiece, text: "Puzzle Zone" },
+      ],
+      address: [
+        "Av. Central, nº 1020",
+        "Centro",
+        "Cornélio Procópio, PR",
+      ],
+      image: "/images/event-boardgame.png",
+    },
+  ];
 </script>
 
-<div class="mt-6 flex flex-col items-center gap-4">
-
-	<EscapeRoomContainer title="Código Sombrio" />
-	<Button text={'Entrar'} onClick={() => {}} />
-	<Button text={'Entrar'} onClick={() => {}} leftIcon={faTrash} />
-	<Button text={'Entrar'} onClick={() => {}} rightIcon={faArrowRight} />
-	<Input
-		label={'Nome'}
-		placeholder={'João'}
-		width="300px"
-		onInput={(value) => {
-			console.log(value);
-		}}
-	/>
-	<Input
-		label={'Nome'}
-		placeholder={'João'}
-		width="300px"
-		onInput={(value) => {
-			console.log(value);
-		}}
-		error={'Nome inválido'}
-	/>
-	<Input
-		placeholder="Pesquisar"
-		width="500px"
-		onInput={(value) => {
-			console.log(value);
-		}}
-	/>
-	<Input
-		width="300px"
-		onInput={(value) => {
-			console.log(value);
-		}}
-		error={'Nome inválido'}
-	/>
-		<SelectInput
-		label="Plano"
-		bind:value={selectedPlan}
-		placeholder="Selecione o plano"
-		options={planOptions}
-		onChange={handleSelect}
-		width="300px"
-		error="plano inválido"
-	/>
-	<ProfilePicture userName={'João'} />
-	<ProfilePicture userName={'Felipe Scalco'} />
-	<UserContainer email={'guilherme.123@gmail.com'} ageGroup={'Adulto'} />
-	<UserContainer email={'josenildo.comisuamae.gamer@gmail.com'} ageGroup={'Criança'} isRpgMaster />
-
-
-	<SelectInput
-		label="Plano"
-		bind:value={selectedPlan}
-		placeholder="Selecione o plano"
-		options={planOptions}
-		onChange={handleSelect}
-		width="300px"
-	/>
-
-</div>
-
-<style>
-	div {
-		margin-bottom: 100px;
-	}
-</style>
+<main class="min-h-screen bg-[#fffcee] p-10 space-y-12">
+  <section class="flex flex-col items-center gap-8">
+    {#each eventos as evento}
+      <EventCard
+        title={evento.title}
+        dateStart={evento.dateStart}
+        timeStart={evento.timeStart}
+        dateEnd={evento.dateEnd}
+        timeEnd={evento.timeEnd}
+        activities={evento.activities}
+        address={evento.address}
+        image={evento.image}
+      />
+    {/each}
+  </section>
+</main>
