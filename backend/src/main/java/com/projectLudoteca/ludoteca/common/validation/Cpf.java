@@ -7,7 +7,7 @@ import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = CPFValidator.class)
+@Constraint(validatedBy = CpfValidator.class)
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Cpf {
