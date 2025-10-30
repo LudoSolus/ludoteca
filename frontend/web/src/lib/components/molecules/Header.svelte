@@ -6,6 +6,7 @@
 	import Fa from 'svelte-fa';
 	import { faBars } from '@fortawesome/free-solid-svg-icons';
 	import IconButton from '../atoms/IconButton.svelte';
+	import ProfileMenu from '../atoms/ProfileMenu.svelte';
 
 	interface Route {
 		name: string;
@@ -16,6 +17,7 @@
 
 	const currentPath = $derived(page.url.pathname);
 	let menuIsVisible: boolean = $state(false);
+	let profileMenuIsVisible: boolean = $state(true);
 
 	const adminRoutes: Route[] = [
 		{ name: 'Dashboard', path: '/admin' },
@@ -32,6 +34,10 @@
 	];
 
 	function toogleMenuVisibility() {
+		if (!menuIsVisible && profileMenuIsVisible) {
+			hiddeProfileMenu();
+		}
+
 		menuIsVisible = !menuIsVisible;
 	}
 
@@ -39,9 +45,25 @@
 		menuIsVisible = false;
 	}
 
+	function toogleProfileMenuVisibility() {
+		if (!profileMenuIsVisible && menuIsVisible) {
+			hiddeMenu();
+		}
+
+		profileMenuIsVisible = !profileMenuIsVisible;
+	}
+
+	function hiddeProfileMenu() {
+		profileMenuIsVisible = false;
+	}
+
 	function handleOnOverlayClick() {
 		if (menuIsVisible) {
 			hiddeMenu();
+		}
+
+		if (profileMenuIsVisible) {
+			hiddeProfileMenu();
 		}
 	}
 
@@ -70,10 +92,13 @@
 			width={profilePictureSize}
 			height={profilePictureSize}
 			fontSize="18px"
+			onClick={toogleProfileMenuVisibility}
 		/>
 	</div>
 	{#if $device == 'mobile' && menuIsVisible}
-		<div class="header-menu absolute top-15 flex flex-col items-center justify-start gap-2 p-2">
+		<div
+			class="header-menu absolute top-16 flex flex-col items-center justify-start gap-2 rounded-lg p-2 shadow-lg"
+		>
 			{#each type == 'admin' ? adminRoutes : userRoutes as route (route.path)}
 				<HeaderRoute
 					name={route.name}
@@ -84,8 +109,14 @@
 			{/each}
 		</div>
 	{/if}
+
+	{#if profileMenuIsVisible}
+		<div class="absolute top-15 right-3 z-12">
+			<ProfileMenu userId="asadasd" userPublicId="123" />
+		</div>
+	{/if}
 </header>
-{#if $device == 'mobile' && menuIsVisible}
+{#if ($device == 'mobile' && menuIsVisible) || profileMenuIsVisible}
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div class="overlay" onclick={handleOnOverlayClick}></div>
@@ -100,7 +131,7 @@
 
 	.header-menu {
 		background: var(--primary-color);
-		border: 2px solid #000;
+		border: 1px solid #000;
 		z-index: 12;
 	}
 

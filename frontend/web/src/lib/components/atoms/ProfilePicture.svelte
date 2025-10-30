@@ -3,6 +3,7 @@
 	export let width: string = '50px';
 	export let height: string = '50px';
 	export let fontSize: string = '20px';
+	export let onClick: (() => void) | null = null;
 
 	function getUserAbbreviation() {
 		let users: string[] = userName.split('');
@@ -10,9 +11,13 @@
 	}
 </script>
 
-<div class="profile-box flex items-center justify-center" style="width: {width}; height: {height}">
+<button
+	class="profile-box flex items-center justify-center"
+	style="width: {width}; height: {height}; cursor: {onClick ? 'pointer' : 'default'}"
+	on:click={onClick}
+>
 	<p style="font-size: {fontSize};">{getUserAbbreviation()}</p>
-</div>
+</button>
 
 <style>
 	.profile-box {
