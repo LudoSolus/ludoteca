@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.command.model;
+package com.projectLudoteca.ludoteca.command.registerEducationalInstitution;
 
 public record CreateEducationalInstitutionCommand(String institutionName) {
 }

@@ -23,7 +23,7 @@ public class LoginUserHandler {
     }
 
     @Transactional
-    public String login(LoginUserCommand command) {
+    public String handle(LoginUserCommand command) {
 
         User user = userRepository.findByEmail(command.email())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));

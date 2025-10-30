@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.command.service;
+package com.projectLudoteca.ludoteca.infrastructure.security.config;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
