@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { RegisterUserCommand } from '$lib/api/commands/register-user/register-user.command';
+	import type { IEducationalInstitution } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.interface';
 	import { ListEducationalInstitutionsQuery } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.query';
 	import Register from '$lib/components/templates/Register.svelte';
 	import { UserRole } from '$lib/shared/enums/user-role.enum';
@@ -8,11 +10,13 @@
 	import { onlyNumbers } from '$lib/shared/helpers/only-numbers';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
+	import { toast } from 'svoast';
 
 	const queriesHandler = new QueriesHandlerService(axios);
 	const commandsHandler = new CommandsHandlerService(axios);
 
-	$: registerUserLoading = false;
+	let educationalInstitutions: IEducationalInstitution[] = $state([]);
+	let registerUserLoading: boolean = $state(false);
 
 	onMount(() => {
 		fetchEducationalInstituitions();
@@ -21,10 +25,10 @@
 	function fetchEducationalInstituitions() {
 		queriesHandler.handle(new ListEducationalInstitutionsQuery()).subscribe({
 			next: (data) => {
-				console.log(data);
+				educationalInstitutions = data.resultData;
 			},
 			error: (err) => {
-				console.log(err);
+				toast.error('Erro ao buscar instituições, recarregue a página.', { closable: true });
 			}
 		});
 	}
@@ -37,22 +41,23 @@
 			data.email,
 			data.password,
 			onlyNumbers(data.phone),
-			data.ra,
+			data.ra.length > 0 ? data.ra : null,
 			data.birthDate as unknown as Date,
 			UserRole.USER,
 			data.instituteId
 		);
 		commandsHandler.handle(command).subscribe({
 			next: (data) => {
-				console.log(data);
+				toast.success('Conta criada com sucesso!', { closable: true });
+				const token = data.data.resultData;
+				goto("/user/home")
 				registerUserLoading = false;
 			},
 			error: (err) => {
-				console.log(err);
 				registerUserLoading = false;
 			}
 		});
 	}
 </script>
 
-<Register {registerUser} {registerUserLoading} />
+<Register {registerUser} {registerUserLoading} {educationalInstitutions} />

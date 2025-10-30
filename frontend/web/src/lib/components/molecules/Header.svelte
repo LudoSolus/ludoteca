@@ -3,7 +3,6 @@
 	import ProfilePicture from '../atoms/ProfilePicture.svelte';
 	import { page } from '$app/state';
 	import { device } from '$lib/shared/hooks/useDevice';
-	import Fa from 'svelte-fa';
 	import { faBars } from '@fortawesome/free-solid-svg-icons';
 	import IconButton from '../atoms/IconButton.svelte';
 	import ProfileMenu from '../atoms/ProfileMenu.svelte';
@@ -17,7 +16,7 @@
 
 	const currentPath = $derived(page.url.pathname);
 	let menuIsVisible: boolean = $state(false);
-	let profileMenuIsVisible: boolean = $state(true);
+	let profileMenuIsVisible: boolean = $state(false);
 
 	const adminRoutes: Route[] = [
 		{ name: 'Dashboard', path: '/admin' },
