@@ -15,7 +15,7 @@
 	let { type }: { type: 'admin' | 'user' } = $props();
 
 	const currentPath = $derived(page.url.pathname);
-	let menuIsVisible: boolean = false;
+	let menuIsVisible: boolean = $state(false);
 
 	const adminRoutes: Route[] = [
 		{ name: 'Dashboard', path: '/admin' },
@@ -34,6 +34,18 @@
 	function toogleMenuVisibility() {
 		menuIsVisible = !menuIsVisible;
 	}
+
+	function hiddeMenu() {
+		menuIsVisible = false;
+	}
+
+	function handleOnOverlayClick() {
+		if (menuIsVisible) {
+			hiddeMenu();
+		}
+	}
+
+	const profilePictureSize = $derived($device == 'desktop' ? '45px' : '40px');
 </script>
 
 <header class="header-box flex h-15 w-full items-center justify-between px-7 py-2">
@@ -44,16 +56,62 @@
 			{/each}
 		</div>
 	{:else}
-		<IconButton icon={faBars} onClick={toogleMenuVisibility} width="35px" height="35px" variant="naked"/>
+		<IconButton
+			icon={faBars}
+			onClick={toogleMenuVisibility}
+			width="40px"
+			height="40px"
+			variant="naked"
+		/>
 	{/if}
 	<div>
-		<ProfilePicture userName="Felipe" width="45px" height="45px" fontSize="18px" />
+		<ProfilePicture
+			userName="Felipe"
+			width={profilePictureSize}
+			height={profilePictureSize}
+			fontSize="18px"
+		/>
 	</div>
+	{#if $device == 'mobile' && menuIsVisible}
+		<div class="header-menu absolute top-15 flex flex-col items-center justify-start gap-2 p-2">
+			{#each type == 'admin' ? adminRoutes : userRoutes as route (route.path)}
+				<HeaderRoute
+					name={route.name}
+					path={route.path}
+					selected={route.path == currentPath}
+					onClick={hiddeMenu}
+				/>
+			{/each}
+		</div>
+	{/if}
 </header>
+{#if $device == 'mobile' && menuIsVisible}
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
+	<!-- svelte-ignore a11y_no_static_element_interactions -->
+	<div class="overlay" onclick={handleOnOverlayClick}></div>
+{/if}
 
 <style>
 	.header-box {
+		position: relative;
 		background: var(--primary-color);
-		overflow: hidden;
+		z-index: 11;
+	}
+
+	.header-menu {
+		background: var(--primary-color);
+		border: 2px solid #000;
+		z-index: 12;
+	}
+
+	.overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.3);
+		backdrop-filter: blur(5px);
+		z-index: 10;
 	}
 </style>

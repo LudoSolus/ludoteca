@@ -4,9 +4,15 @@
 	export let name: string;
 	export let path: string;
 	export let selected: boolean;
+	export let onClick: () => void = () => {};
+
+	function handleClick() {
+		onClick();
+		goto(path);
+	}
 </script>
 
-<button on:click={() => goto(path)} class="{selected ? 'selected' : ''}">
+<button on:click={() => handleClick()} class="{selected ? 'selected' : ''}">
 	{name}
 </button>
 
