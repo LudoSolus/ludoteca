@@ -1,7 +1,8 @@
 <script lang="ts">
   import Fa from 'svelte-fa';
-  import { faKey } from '@fortawesome/free-solid-svg-icons';
-  export let title: string = 'Código Sombrio';
+  import { faArrowLeftLong, faArrowRight, faTrash, faKey } from '@fortawesome/free-solid-svg-icons';
+  import Button from '$lib/components/atoms/Button.svelte';
+  export let title: string = '';
 </script>
 
 <div
@@ -13,5 +14,5 @@
     <h2 class="text-2xl font-semibold text-black">{title}</h2>
   </div>
 
-  <slot />
+  <Button text={'Detalhes'} onClick={() => {}} rightIcon={faArrowRight} />
 </div>

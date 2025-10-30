@@ -5,7 +5,7 @@
 	import UserContainer from '$lib/components/atoms/UserContainer.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte'; 
 	import { faArrowLeftLong, faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
-	import ScapeRoomContainer from '$lib/components/atoms/ScapeRoomContainer.svelte';
+	import EscapeRoomContainer from '$lib/components/atoms/EscapeRoomContainer.svelte';
 	
 	type SelectInputOption = {
     label: string;
@@ -28,9 +28,7 @@
 
 <div class="mt-6 flex flex-col items-center gap-4">
 
-	<ScapeRoomContainer title="Código Sombrio">
-		<Button text={'Detalhes'} onClick={() => {}} rightIcon={faArrowRight} />
-	</ScapeRoomContainer>
+	<EscapeRoomContainer title="Código Sombrio" />
 	<Button text={'Entrar'} onClick={() => {}} />
 	<Button text={'Entrar'} onClick={() => {}} leftIcon={faTrash} />
 	<Button text={'Entrar'} onClick={() => {}} rightIcon={faArrowRight} />
