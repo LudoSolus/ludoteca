@@ -39,6 +39,12 @@ public class Game implements Serializable {
     @Column(name = "is_available")
     private Boolean isAvailable = true;
 
+    @Column(name = "link_instruction_manual")
+    private String linkInstructionManual;
+
+    @Column(name = "link_video_tutorial")
+    private String linkVideoTutorial;
+
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Loan> loans = new ArrayList<>();
 
@@ -59,13 +65,16 @@ public class Game implements Serializable {
     public Game() {
     }
 
-    public Game(Integer barcode, String title, String category, String description, Integer minPlayers, Integer maxPlayers) {
+    public Game(Integer barcode, String title, String category, String description, Integer minPlayers, Integer maxPlayers, Boolean isAvailable, String linkInstructionManual, String linkVideoTutorial) {
         this.barcode = barcode;
         this.title = title;
         this.category = category;
         this.description = description;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
+        this.isAvailable = isAvailable;
+        this.linkInstructionManual = linkInstructionManual;
+        this.linkVideoTutorial = linkVideoTutorial;
     }
 
     public UUID getId() {
@@ -127,6 +136,14 @@ public class Game implements Serializable {
     public void setIsAvailable(Boolean isAvailable) {
         this.isAvailable = isAvailable;
     }
+
+    public String getLinkInstructionManual() { return linkInstructionManual; }
+
+    public void setLinkInstructionManual(String linkInstructionManual) { this.linkInstructionManual = linkInstructionManual; }
+
+    public String getLinkVideoTutorial() { return linkVideoTutorial; }
+
+    public void setLinkVideoTutorial(String linkVideoTutorial) { this.linkVideoTutorial = linkVideoTutorial; }
 
     public List<Loan> getLoans() { return loans; }
 
