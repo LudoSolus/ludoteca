@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.command.model;
+package com.projectLudoteca.ludoteca.command.registerUser;
 
 import java.time.LocalDate;
 

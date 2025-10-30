@@ -25,9 +25,10 @@ public class EducationalInstitutionCommandController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<String>> createUser(@RequestBody @Validated CreateEducationalInstitutionCommand command) {
         service.createEducationalInstitution(command);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(ApiResponse.created("Instituição registrada com sucesso", "Sucesso"));
+
+        ApiResponse<String> response = new ApiResponse<>("Instituição registrada com sucesso");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 }
