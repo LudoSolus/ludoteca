@@ -109,7 +109,7 @@ public class CreateUserHandler {
 
         repository.save(user);
 
-        String token = jwtService.generateToken(user.getPublicId(), user.getEmail());
+        String token = jwtService.generateToken(user.getPublicId(), user.getEmail(), user.getUserType().name());
 
         return token;
     }

@@ -2,6 +2,8 @@ package com.projectLudoteca.ludoteca.common.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.*;
@@ -36,6 +38,9 @@ public class Game implements Serializable {
 
     @Column(name = "is_available")
     private Boolean isAvailable = true;
+
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Loan> loans = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -122,6 +127,8 @@ public class Game implements Serializable {
     public void setIsAvailable(Boolean isAvailable) {
         this.isAvailable = isAvailable;
     }
+
+    public List<Loan> getLoans() { return loans; }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;

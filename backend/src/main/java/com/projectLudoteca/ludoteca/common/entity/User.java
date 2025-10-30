@@ -67,6 +67,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PasswordReset> passwordResets = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Loan> loans = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type", nullable = false)
     private UserRole userRole;
@@ -170,6 +173,8 @@ public class User implements Serializable {
     public void setEducationalInstitution(EducationalInstitution educationalInstitution) { this.educationalInstitution = educationalInstitution; }
 
     public List<PasswordReset> getPasswordResets() { return passwordResets; };
+
+    public List<Loan> getLoans() { return loans; }
 
     public UserRole getUserType() {
         return userRole;

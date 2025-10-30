@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -20,7 +22,7 @@ import java.util.List;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Autowired
-        private JwtService jwtService;
+    private JwtService jwtService;
     @Autowired
     private UserRepository userRepository;
 
@@ -34,15 +36,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String token = header.substring(7);
             String email = jwtService.extractEmail(token);
 
-            User user = userRepository.findByEmail(email)
-                    .orElseThrow(() -> new BadCredentialsException("Credenciais inválidas."));
-            if (user != null) {
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null,
-                        List.of());
+            userRepository.findByEmail(email).ifPresent(user -> {
+                List<GrantedAuthority> authorities = List.of(
+                        new SimpleGrantedAuthority("ROLE_" + user.getUserType().name())
+                );
+
+                UsernamePasswordAuthenticationToken auth =
+                        new UsernamePasswordAuthenticationToken(user, null, authorities);
+
                 SecurityContextHolder.getContext().setAuthentication(auth);
-            }
+            });
         }
 
         filterChain.doFilter(request, response);
     }
+
 }

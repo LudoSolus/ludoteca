@@ -17,10 +17,11 @@ public class JwtService {
 
     private static final long EXPIRATION_TIME = 5000 * 60 * 60;
 
-    public String generateToken(String publicId, String email) {
+    public String generateToken(String publicId, String email, String role) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("publicId", publicId);
         claims.put("email", email);
+        claims.put("role", role);
 
         return Jwts.builder()
                 .setClaims(claims)
