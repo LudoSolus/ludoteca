@@ -1,8 +1,8 @@
 package com.projectLudoteca.ludoteca.query.controller;
 
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
-import com.projectLudoteca.ludoteca.query.handler.GetAllUsersHandler;
-import com.projectLudoteca.ludoteca.query.model.UserView;
+import com.projectLudoteca.ludoteca.query.listAllUsers.GetAllUsersHandler;
+import com.projectLudoteca.ludoteca.query.listAllUsers.GetAllUsersView;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +23,10 @@ public class UserQueryController {
 
     @GetMapping("/list-all-users")
     @Operation(summary = "Lista de todos os usuários do sistema", description = "Realiza uma busca de todos os usuários do sistema")
-    public ResponseEntity<ApiResponse<List<UserView>>> getAllUsers() {
-        List<UserView> users = handler.handleGetAllUsers();
+    public ResponseEntity<ApiResponse<List<GetAllUsersView>>> getAllUsers() {
+        List<GetAllUsersView> viewList = handler.handleGetAllUsers();
 
-        ApiResponse<List<UserView>> response = new ApiResponse<>(users);
+        ApiResponse<List<GetAllUsersView>> response = new ApiResponse<>(viewList);
 
         return ResponseEntity.ok(response);
     }

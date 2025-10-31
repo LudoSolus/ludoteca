@@ -45,6 +45,9 @@ public class Game implements Serializable {
     @Column(name = "link_video_tutorial")
     private String linkVideoTutorial;
 
+    @Column(nullable = false)
+    private Boolean isBoorowed = false;
+
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Loan> loans = new ArrayList<>();
 
@@ -144,6 +147,10 @@ public class Game implements Serializable {
     public String getLinkVideoTutorial() { return linkVideoTutorial; }
 
     public void setLinkVideoTutorial(String linkVideoTutorial) { this.linkVideoTutorial = linkVideoTutorial; }
+
+    public Boolean getIsBoorowed() { return isBoorowed; }
+
+    public void setIsBoorowed(Boolean isBoorowed) { this.isBoorowed = isBoorowed; }
 
     public List<Loan> getLoans() { return loans; }
 
