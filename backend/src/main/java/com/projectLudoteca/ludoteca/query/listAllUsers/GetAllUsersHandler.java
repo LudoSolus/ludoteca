@@ -1,7 +1,6 @@
-package com.projectLudoteca.ludoteca.query.handler;
+package com.projectLudoteca.ludoteca.query.listAllUsers;
 
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
-import com.projectLudoteca.ludoteca.query.model.UserView;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +14,10 @@ public class GetAllUsersHandler {
         this.repository = repository;
     }
 
-    public List<UserView> handleGetAllUsers() {
+    public List<GetAllUsersView> handleGetAllUsers() {
         return repository.findAll()
                          .stream()
-                         .map(u -> new UserView(u.getPublicId(), u.getName(), u.getCpf(), u.getEmail(), u.getRa(), u.getBirthDate().toString()))
+                         .map(u -> new GetAllUsersView(u.getPublicId(), u.getName(), u.getCpf(), u.getEmail(), u.getRa(), u.getBirthDate().toString()))
                          .toList();
     }
 }

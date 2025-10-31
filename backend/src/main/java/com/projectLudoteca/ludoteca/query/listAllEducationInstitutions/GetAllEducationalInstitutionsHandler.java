@@ -1,9 +1,6 @@
-package com.projectLudoteca.ludoteca.query.handler;
+package com.projectLudoteca.ludoteca.query.listAllEducationInstitutions;
 
-import com.projectLudoteca.ludoteca.common.entity.EducationalInstitution;
 import com.projectLudoteca.ludoteca.common.repository.EducationalInstitutionRepository;
-import com.projectLudoteca.ludoteca.query.model.EducationalInstitutionView;
-import com.projectLudoteca.ludoteca.query.model.UserView;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +14,10 @@ public class GetAllEducationalInstitutionsHandler {
         this.repository = repository;
     }
 
-    public List<EducationalInstitutionView> getAllEducationalInstitutions() {
+    public List<GetAllEducationalInstitutionsView> getAllEducationalInstitutions() {
         return repository.findAll()
                 .stream()
-                .map(ei -> new EducationalInstitutionView(ei.getId().toString(), ei.getInstitutionName()))
+                .map(ei -> new GetAllEducationalInstitutionsView(ei.getId().toString(), ei.getInstitutionName()))
                 .toList();
     }
 
