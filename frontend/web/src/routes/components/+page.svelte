@@ -6,6 +6,7 @@
 	import UserContainer from '$lib/components/atoms/UserContainer.svelte';
 	import { faArrowLeftLong, faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import EscapeRoomContainer from '$lib/components/atoms/EscapeRoomContainer.svelte';
+	import RpgContainer from '$lib/components/atoms/RpgContainer.svelte';
 
 	type SelectInputOption = {
 		label: string;
@@ -25,6 +26,8 @@
 		console.log('Plano selecionado:', value);
 	}
 </script>
+
+ <RpgContainer title="Era Glacial de Ragnar" system="D&D" startDate="05/09/2025"/>
 
 <div class="mt-6 flex flex-col items-center gap-4">
 	<EscapeRoomContainer title="Código Sombrio" />
