@@ -1,6 +1,6 @@
 package com.projectLudoteca.ludoteca.common.entity;
 
-import com.projectLudoteca.ludoteca.common.entity.id.GameEventId;
+import com.projectLudoteca.ludoteca.common.entity.id.ParticipationEventId;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class ParticipationEvent {
 
     @EmbeddedId
-    private GameEventId id;
+    private ParticipationEventId id;
 
     @ManyToOne
     @MapsId("userId")
