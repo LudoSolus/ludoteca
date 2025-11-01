@@ -1,0 +1,22 @@
+package com.projectLudoteca.ludoteca.query.gameDetailsAdmin;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
+public record GetGameDetailsAdminView(Integer barcode,
+                                      String title,
+                                      String description,
+                                      String category,
+                                      Integer minPlayers,
+                                      Integer maxPlayers,
+                                      String linkInstructionManual,
+                                      String linkVideoTutorial,
+                                      List<LoanHistoryView> loanHistory
+) {
+    public record LoanHistoryView(
+            UUID loanId,
+            String userEmail,
+            LocalDateTime loanDate
+    ) {}
+}
