@@ -36,6 +36,7 @@ public class ConfirmationPasswordResetHandler {
         }
 
         User user = passwordReset.getUser();
+        user.getPasswordResets().add(passwordReset);
 
         if (passwordEncoder.matches(command.newPassword(), user.getPassword())) {
             throw new BusinessException("A nova senha não pode ser igual à senha atual.");
