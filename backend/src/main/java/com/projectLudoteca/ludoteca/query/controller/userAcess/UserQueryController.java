@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.query.controller;
+package com.projectLudoteca.ludoteca.query.controller.userAcess;
 
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
 import com.projectLudoteca.ludoteca.query.listAllUsers.GetAllUsersHandler;
