@@ -10,21 +10,21 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "game_event")
-public class GameEvent {
+@Table(name = "participation_event")
+public class ParticipationEvent {
 
     @EmbeddedId
     private GameEventId id;
 
     @ManyToOne
-    @MapsId("gameId") // mapeia o campo studentId da chave composta
-    @JoinColumn(name = "game_id")
+    @MapsId("userId")
+    @JoinColumn(name = "user_id")
     private Game game;
 
     @ManyToOne
     @MapsId("eventId")
     @JoinColumn(name = "event_id")
-    private Event event;
+    private User user;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -40,19 +40,18 @@ public class GameEvent {
     @Column(nullable = false)
     private Boolean removed = false;
 
-    public GameEvent() {}
+    public ParticipationEvent() {}
 
-    public GameEvent(Game game, Event event) {
+    public ParticipationEvent(Game game, User user) {
         this.game = game;
-        this.event = event;
+        this.user = user;
     }
 
     public void setGame(Game game) {
         this.game = game;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setUser(User user) {
+        this.user = user;
     }
-
 }

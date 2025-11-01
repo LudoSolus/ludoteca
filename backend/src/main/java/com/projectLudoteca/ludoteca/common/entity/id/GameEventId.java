@@ -1,10 +1,14 @@
-package com.projectLudoteca.ludoteca.common.entity;
+package com.projectLudoteca.ludoteca.common.entity.id;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 public class GameEventId implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private UUID gameId;
     private UUID eventId;
