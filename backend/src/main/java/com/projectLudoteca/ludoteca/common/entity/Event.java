@@ -10,6 +10,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -41,6 +43,12 @@ public class Event implements Serializable {
     private EventStatus status;
 
     private String linkEvaluation;
+
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ParticipationEvent> participationEvents = new ArrayList<>();
+
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Loan> loans = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -90,6 +98,10 @@ public class Event implements Serializable {
     public void setLinkEvaluation(String linkEvaluation) {
         this.linkEvaluation = linkEvaluation;
     }
+
+    public List<ParticipationEvent> getParticipationEvents() { return participationEvents; }
+
+    public List<Loan> getLoans() { return loans; }
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
