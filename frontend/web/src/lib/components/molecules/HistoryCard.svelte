@@ -18,35 +18,54 @@
 
 <div class="flex flex-col sm:flex-row items-stretch w-full max-w-xl rounded-xl overflow-hidden shadow-md border border-black bg-white">
   <div class="flex flex-col justify-center gap-3 p-4 flex-1">
-    <h3 class="text-xl font-bold text-black">{title}</h3>
+    
+    <h3
+      class="font-inknut font-medium text-black"
+      style="font-size:18px; line-height:22px; letter-spacing:0;"
+    >
+      {title}
+    </h3>
 
     {#if timePlayed}
-      <div class="flex items-center gap-2 text-sm text-[#404040] font-medium">
+      <div
+        class="flex items-center gap-2 font-inknut font-medium text-[#404040]"
+        style="font-size:18px; line-height:22px; letter-spacing:0;"
+      >
         <FA icon={faClock} class="w-5 h-5 text-[#404040]" />
         <span>{timePlayed}</span>
       </div>
     {/if}
 
     {#if date}
-      <div class="flex items-center gap-2 text-sm text-[#404040] font-medium">
+      <div
+        class="flex items-center gap-2 font-inknut font-medium text-[#404040]"
+        style="font-size:18px; line-height:22px; letter-spacing:0;"
+      >
         <FA icon={faCalendarDays} class="w-5 h-5 text-[#404040]" />
         <span>{date}</span>
       </div>
     {/if}
 
     {#if system}
-      <div class="text-sm text-[#404040] font-medium">
+      <div
+        class="font-inknut font-medium text-[#404040]"
+        style="font-size:18px; line-height:22px; letter-spacing:0;"
+      >
         <span class="font-bold">Sistema:</span> {system}
       </div>
     {/if}
 
     {#if sessions > 0}
-      <div class="text-sm text-[#404040] font-medium">
+      <div
+        class="font-inknut font-medium text-[#404040]"
+        style="font-size:18px; line-height:22px; letter-spacing:0;"
+      >
         <span class="font-bold">Sessões:</span> {sessions}
       </div>
     {/if}
   </div>
 
+  
   <div
     class="flex items-center justify-center flex-shrink-0 min-w-[100px] aspect-square"
     style="background-color: {config.color};"
