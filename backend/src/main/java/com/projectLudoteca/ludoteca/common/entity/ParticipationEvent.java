@@ -17,13 +17,13 @@ public class ParticipationEvent {
     private ParticipationEventId id;
 
     @ManyToOne
-    @MapsId("userId")
-    @JoinColumn(name = "user_id")
-    private Game game;
-
-    @ManyToOne
     @MapsId("eventId")
     @JoinColumn(name = "event_id")
+    private Event event;
+
+    @ManyToOne
+    @MapsId("userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @CreatedDate
@@ -42,13 +42,13 @@ public class ParticipationEvent {
 
     public ParticipationEvent() {}
 
-    public ParticipationEvent(Game game, User user) {
-        this.game = game;
+    public ParticipationEvent(Event event, User user) {
+        this.event = event;
         this.user = user;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
     public void setUser(User user) {
