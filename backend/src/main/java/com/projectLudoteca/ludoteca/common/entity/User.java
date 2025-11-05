@@ -77,6 +77,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ParticipationEvent> participationsEvent = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ParticipationEscapeRoom> participationsEscapeRoom = new ArrayList<>();
+
     @OneToMany(mappedBy = "presenter", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<EscapeRoomSession> participationsPresenterEscapeRoom = new ArrayList<>();
 
