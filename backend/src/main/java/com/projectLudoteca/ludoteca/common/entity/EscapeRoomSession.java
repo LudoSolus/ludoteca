@@ -8,6 +8,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -50,6 +52,9 @@ public class EscapeRoomSession implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "event_id")
     private Event event;
+
+    @OneToMany(mappedBy = "escapeRoomSession", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ParticipationEscapeRoom> participationsEscapeRoom = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
