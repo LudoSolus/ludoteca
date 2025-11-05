@@ -9,6 +9,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -39,6 +41,9 @@ public class ParticipationRPG implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User master;
+
+    @OneToMany(mappedBy = "participationRPG", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<RPGSession> sessionsRPG = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
