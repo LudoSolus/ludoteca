@@ -32,10 +32,11 @@ public class Event implements Serializable {
     @Column(nullable = false)
     private String description;
 
+    @CreatedDate
     @Column(name = "start_date", updatable = false, nullable = false)
     private LocalDateTime startDate;
 
-    @Column(nullable = false)
+    @Column(name = "final_date", nullable = false)
     private LocalDateTime finalDate;
 
     @Enumerated(EnumType.STRING)
