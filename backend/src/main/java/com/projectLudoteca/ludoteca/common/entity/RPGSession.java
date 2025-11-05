@@ -9,15 +9,13 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "one_shot_rpg")
-public class OneShotRPG implements Serializable {
+@Table(name = "rpg_session")
+public class RPGSession implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -27,17 +25,27 @@ public class OneShotRPG implements Serializable {
     @Column(columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(nullable = false)
-    private String name;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rpg_id", nullable = false)
+    private OneShotRPG rpg;
 
-    @Column(nullable = false)
-    private String systemRpg;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "participation_rpg_id", nullable = false)
+    private ParticipationRPG participationRPG;
 
-    @Column(nullable = false)
-    private String description;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "event_id")
+    private Event event;
 
-    @OneToMany(mappedBy = "rpg", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<RPGSession> sessionsRPG = new ArrayList<>();
+    @CreatedDate
+    @Column(name = "start_date_time")
+    private LocalDateTime startDateTime;
+
+    @Column(name = "finish_date_time")
+    private LocalDateTime finishDateTime;
+
+    @Column(name = "link_evaluation")
+    private String linkEvaluation;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -53,12 +61,12 @@ public class OneShotRPG implements Serializable {
     @Column(nullable = false)
     private Boolean removed = false;
 
-    public OneShotRPG() {}
+    public RPGSession() {}
 
-    public OneShotRPG(String name, String systemRpg, String description) {
-        this.name = name;
-        this.systemRpg = systemRpg;
-        this.description = description;
+    public RPGSession(OneShotRPG rpg, ParticipationRPG participationRPG, Event event) {
+        this.rpg = rpg;
+        this.participationRPG = participationRPG;
+        this.event = event;
     }
 
 }
