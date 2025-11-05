@@ -2,6 +2,8 @@ package com.projectLudoteca.ludoteca.common.entity;
 
 import com.projectLudoteca.ludoteca.common.enums.ResultEscapeRoomSession;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -12,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "escape_room_session")
 public class EscapeRoomSession implements Serializable {
