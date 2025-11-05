@@ -2,6 +2,7 @@ package com.projectLudoteca.ludoteca.common.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "password_reset")
 public class PasswordReset implements Serializable {
@@ -29,7 +31,7 @@ public class PasswordReset implements Serializable {
     @Column(nullable = false)
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -61,38 +63,6 @@ public class PasswordReset implements Serializable {
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.used = used;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setExpiresAt(LocalDateTime expiresAt) {
-        this.expiresAt = expiresAt;
-    }
-
-    public void setUsed(boolean used) {
-        this.used = used;
-    }
-
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
-    }
-
-    public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
     }
 
 }

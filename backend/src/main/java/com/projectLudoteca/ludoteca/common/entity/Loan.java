@@ -32,15 +32,15 @@ public class Loan implements Serializable {
     @Column(name = "status", nullable = false)
     private GameStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "game_id", nullable = false)
     private Game game;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "event_id")
     private Event event;
 

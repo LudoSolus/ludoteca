@@ -32,6 +32,6 @@ public class LoginUserHandler {
             throw new RuntimeException("Senha inválida");
         }
 
-        return jwtService.generateToken(user.getPublicId(), user.getEmail(), user.getUserType().name());
+        return jwtService.generateToken(user.getPublicId(), user.getEmail(), user.getUserRole().name());
     }
 }

@@ -11,6 +11,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -45,6 +47,9 @@ public class EscapeRoom implements Serializable {
     private AgeRange ageRange;
 
     private String sensitiveTopics;
+
+    @OneToMany(mappedBy = "escapeRoom", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EscapeRoomSession> sessionsEscapeRoom = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)

@@ -42,6 +42,7 @@ public class Event implements Serializable {
     @Column(name = "status", nullable = false)
     private EventStatus status;
 
+    @Column(name = "link_evaluation")
     private String linkEvaluation;
 
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -49,6 +50,9 @@ public class Event implements Serializable {
 
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Loan> loans = new ArrayList<>();
+
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EscapeRoomSession> sessionsEscapeRoom = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
