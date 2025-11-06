@@ -1,6 +1,6 @@
 package com.projectLudoteca.ludoteca.common.entity;
 
-import com.projectLudoteca.ludoteca.common.entity.id.ParticipationEventId;
+import com.projectLudoteca.ludoteca.common.entity.id.ParticipationEscapeRoomId;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,21 +10,21 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "participation_event")
-public class ParticipationEvent {
+@Table(name = "participation_escape_room")
+public class ParticipationEscapeRoom {
 
     @EmbeddedId
-    private ParticipationEventId id;
-
-    @ManyToOne
-    @MapsId("eventId")
-    @JoinColumn(name = "event_id")
-    private Event event;
+    private ParticipationEscapeRoomId id;
 
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @MapsId("escapeRoomSessionId")
+    @JoinColumn(name = "escape_room_session_id")
+    private EscapeRoomSession escapeRoomSession;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -40,18 +40,6 @@ public class ParticipationEvent {
     @Column(nullable = false)
     private Boolean removed = false;
 
-    public ParticipationEvent() {}
+    public ParticipationEscapeRoom() {}
 
-    public ParticipationEvent(Event event, User user) {
-        this.event = event;
-        this.user = user;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

@@ -9,41 +9,39 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "password_reset")
-public class PasswordReset implements Serializable {
+@Table(name = "one_shot_rpg")
+public class OneShotRPG implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(updatable = false, nullable = false)
+    @Column(columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID id;
 
     @Column(nullable = false)
-    private String code;
+    private String name;
 
     @Column(nullable = false)
-    private String email;
+    private String systemRpg;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(nullable = false)
+    private String description;
+
+    @OneToMany(mappedBy = "rpg", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<RPGSession> sessionsRPG = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private LocalDateTime expiresAt;
-
-    @Column(nullable = false)
-    private boolean used = false;
 
     @LastModifiedDate
     @Column(name = "updated_at")
@@ -55,14 +53,12 @@ public class PasswordReset implements Serializable {
     @Column(nullable = false)
     private Boolean removed = false;
 
-    public PasswordReset() {}
+    public OneShotRPG() {}
 
-    public PasswordReset(User user, String email, LocalDateTime createdAt, LocalDateTime expiresAt, boolean used) {
-        this.user = user;
-        this.email = email;
-        this.createdAt = createdAt;
-        this.expiresAt = expiresAt;
-        this.used = used;
+    public OneShotRPG(String name, String systemRpg, String description) {
+        this.name = name;
+        this.systemRpg = systemRpg;
+        this.description = description;
     }
 
 }
