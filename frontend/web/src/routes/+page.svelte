@@ -12,10 +12,8 @@
   const eventos = [
     {
       title: "Evento 55",
-      dateStart: "20/07",
-      timeStart: "08:00",
-      dateEnd: "20/07",
-      timeEnd: "18:00",
+      dateStart: new Date("2025-07-20T08:00:00"),
+      dateEnd: new Date("2025-07-20T18:00:00"),
       activities: [
         { icon: faGamepad, text: "Jogos de Tabuleiro" },
         { icon: faDice, text: "RPG’s" },
@@ -30,10 +28,8 @@
     },
     {
       title: "Noite do Horror",
-      dateStart: "21/07",
-      timeStart: "19:00",
-      dateEnd: "21/07",
-      timeEnd: "23:59",
+      dateStart: new Date("2025-07-21T19:00:00"),
+      dateEnd: new Date("2025-07-21T23:59:00"),
       activities: [
         { icon: faGhost, text: "RPG de Terror" },
         { icon: faHeart, text: "Card Games" },
@@ -55,9 +51,7 @@
       <EventCard
         title={evento.title}
         dateStart={evento.dateStart}
-        timeStart={evento.timeStart}
         dateEnd={evento.dateEnd}
-        timeEnd={evento.timeEnd}
         activities={evento.activities}
         address={evento.address}
         image={evento.image}

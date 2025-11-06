@@ -5,13 +5,25 @@
   import Button from "$lib/components/atoms/Button.svelte";
 
   export let title: string;
-  export let dateStart: string;
-  export let timeStart: string;
-  export let dateEnd: string;
-  export let timeEnd: string;
+  export let dateStart: Date;
+  export let dateEnd: Date;
   export let activities: { icon: IconDefinition; text: string }[] = [];
   export let address: string[] = [];
   export let image: string;
+
+ 
+  const formatDate = (date: Date) =>
+    date.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+  const formatTime = (date: Date) =>
+    date.toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 </script>
 
 <div
@@ -20,7 +32,6 @@
          justify-between items-start w-full max-w-3xl text-black"
 >
   <div class="flex-1 space-y-4">
-    
     <h2
       class="font-inknut font-medium"
       style="font-size:18px; line-height:22px; letter-spacing:0;"
@@ -28,7 +39,6 @@
       {title}
     </h2>
 
-    
     <div class="space-y-2 mt-2">
       {#each activities as activity}
         <div
@@ -41,7 +51,6 @@
       {/each}
     </div>
 
-    
     <div
       class="mt-4 font-inknut font-medium"
       style="font-size:18px; line-height:22px; letter-spacing:0;"
@@ -56,20 +65,20 @@
       </div>
     </div>
 
-    
     <div class="mt-6">
       <Button text="Detalhes →" onClick={() => {}} />
     </div>
   </div>
 
-  
   <div class="flex-shrink-0 mt-6 sm:mt-0 sm:ml-8 flex flex-col items-end gap-3">
     <div
       class="text-right text-sm font-inknut font-medium text-gray-800"
       style="font-size:18px; line-height:22px; letter-spacing:0;"
     >
-      <p>{dateStart} - {dateEnd}</p>
-      <p>{timeStart} - {timeEnd}</p>
+      
+      <p>{formatDate(dateStart)} - {formatDate(dateEnd)}</p>
+      
+      <p>{formatTime(dateStart)} - {formatTime(dateEnd)}</p>
     </div>
 
     <img
