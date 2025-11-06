@@ -3,6 +3,8 @@ package com.projectLudoteca.ludoteca.common.entity;
 import com.projectLudoteca.ludoteca.common.enums.UserRole;
 import com.projectLudoteca.ludoteca.common.util.PublicIdGenerator;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(
         name = "users",
@@ -60,8 +64,8 @@ public class User implements Serializable {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "educational_institution_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "educational_institution_id", nullable = false)
     private EducationalInstitution educationalInstitution;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -69,6 +73,21 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Loan> loans = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Character> characters = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ParticipationEvent> participationsEvent = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ParticipationEscapeRoom> participationsEscapeRoom = new ArrayList<>();
+
+    @OneToMany(mappedBy = "presenter", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EscapeRoomSession> participationsPresenterEscapeRoom = new ArrayList<>();
+
+    @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ParticipationRPG> participationsRPG = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type", nullable = false)
@@ -106,102 +125,6 @@ public class User implements Serializable {
         this.birthDate = birthDate;
         this.educationalInstitution = educationalInstitution;
         this.userRole = userRole;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getPublicId() {
-        return publicId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhone() { return phone; }
-
-    public void setPhone(String phone) { this.phone = phone; }
-
-    public String getRa() {
-        return ra;
-    }
-
-    public void setRa(String ra) {
-        this.ra = ra;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public EducationalInstitution getEducationalInstitution() { return educationalInstitution; }
-
-    public void setEducationalInstitution(EducationalInstitution educationalInstitution) { this.educationalInstitution = educationalInstitution; }
-
-    public List<PasswordReset> getPasswordResets() { return passwordResets; };
-
-    public List<Loan> getLoans() { return loans; }
-
-    public UserRole getUserType() {
-        return userRole;
-    }
-
-    public void setUserType(UserRole userRole) {
-        this.userRole = userRole;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public Boolean getRemoved() {
-        return removed;
-    }
-
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
     }
 
 }

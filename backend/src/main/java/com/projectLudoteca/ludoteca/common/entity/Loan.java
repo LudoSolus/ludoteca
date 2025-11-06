@@ -32,13 +32,17 @@ public class Loan implements Serializable {
     @Column(name = "status", nullable = false)
     private GameStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "game_id", nullable = false)
     private Game game;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "event_id")
+    private Event event;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -56,11 +60,12 @@ public class Loan implements Serializable {
 
     public Loan() {}
 
-    public Loan(LocalDateTime dateReturn, GameStatus status, User user, Game game) {
+    public Loan(LocalDateTime dateReturn, GameStatus status, User user, Game game, Event event) {
         this.dateReturn = dateReturn;
         this.status = status;
         this.user = user;
         this.game = game;
+        this.event = event;
     }
 
     public UUID getId() { return id; }
@@ -82,6 +87,10 @@ public class Loan implements Serializable {
     public Game getGame() { return game; }
 
     public void setGame(Game game) { this.game = game; }
+
+    public Event getLoan() { return event; }
+
+    public void setEvent(Event event) { this.event = event; }
 
     public Boolean getRemoved() { return removed; }
 

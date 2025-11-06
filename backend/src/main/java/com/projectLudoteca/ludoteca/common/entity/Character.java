@@ -14,36 +14,29 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "password_reset")
-public class PasswordReset implements Serializable {
+public class Character implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(updatable = false, nullable = false)
+    @Column(columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID id;
 
     @Column(nullable = false)
-    private String code;
+    private String name;
 
     @Column(nullable = false)
-    private String email;
+    private String description;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(nullable = false)
     private User user;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private LocalDateTime expiresAt;
-
-    @Column(nullable = false)
-    private boolean used = false;
 
     @LastModifiedDate
     @Column(name = "updated_at")
@@ -55,14 +48,12 @@ public class PasswordReset implements Serializable {
     @Column(nullable = false)
     private Boolean removed = false;
 
-    public PasswordReset() {}
+    public Character() {}
 
-    public PasswordReset(User user, String email, LocalDateTime createdAt, LocalDateTime expiresAt, boolean used) {
-        this.user = user;
-        this.email = email;
-        this.createdAt = createdAt;
-        this.expiresAt = expiresAt;
-        this.used = used;
+    public Character(UUID id, String name, String description, User user) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
     }
 
 }
