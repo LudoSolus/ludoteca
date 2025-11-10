@@ -1,8 +1,32 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+	import { goto } from "$app/navigation";
+	import { LoginUserCommand } from "$lib/api/commands/login-user/login-user.command";
+	import Login from "$lib/components/templates/Login.svelte";
+	import { CommandsHandlerService } from "$lib/shared/handlers/command/commands-handler.service";
+	import axios from "axios";
+	import { toast } from "svoast";
 
-<style>
-    p{
-        color: var(--primary-color);
-    }
-</style>
+    const commandsHandler = new CommandsHandlerService(axios);
+    let loginUserLoading: boolean = false
+
+	function loginUser(data: Record<string, string>) {
+		loginUserLoading = true;
+		const command = new LoginUserCommand(
+			data.email,
+			data.password
+		);
+		commandsHandler.handle(command).subscribe({
+			next: (data) => {
+				const token = data.data.resultData;
+				goto("/user/home")
+				loginUserLoading = false;
+			},
+			error: (err) => {
+                toast.error(err.message, { closable: true });
+				loginUserLoading = false;
+			}
+		});
+	}
+</script>
+
+<Login {loginUserLoading} {loginUser}/>
