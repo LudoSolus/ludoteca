@@ -137,7 +137,7 @@
 	}
 </script>
 
-<div class="form-container sm: flex w-full flex-wrap items-start gap-0 sm:gap-3 xl:gap-5">
+<div class="form-container flex w-full flex-wrap items-start gap-0 sm:gap-3 xl:gap-5">
 	<Input
 		label={'Nome Completo'}
 		placeholder={'João dos Santos'}
