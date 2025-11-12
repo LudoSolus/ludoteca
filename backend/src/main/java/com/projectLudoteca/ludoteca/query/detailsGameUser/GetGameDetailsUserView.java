@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.query.gameDetailsUser;
+package com.projectLudoteca.ludoteca.query.detailsGameUser;
 
 public record GetGameDetailsUserView(String title,
                                      String description,

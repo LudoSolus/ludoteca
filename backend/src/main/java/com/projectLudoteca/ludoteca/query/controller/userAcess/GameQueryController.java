@@ -1,9 +1,9 @@
 package com.projectLudoteca.ludoteca.query.controller.userAcess;
 
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
-import com.projectLudoteca.ludoteca.query.gameDetailsUser.GetGameDetailsUserHandler;
-import com.projectLudoteca.ludoteca.query.gameDetailsUser.GetGameDetailsUserQuery;
-import com.projectLudoteca.ludoteca.query.gameDetailsUser.GetGameDetailsUserView;
+import com.projectLudoteca.ludoteca.query.detailsGameUser.GetGameDetailsUserHandler;
+import com.projectLudoteca.ludoteca.query.detailsGameUser.GetGameDetailsUserQuery;
+import com.projectLudoteca.ludoteca.query.detailsGameUser.GetGameDetailsUserView;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
