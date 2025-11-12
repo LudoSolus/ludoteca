@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -32,7 +31,6 @@ public class Event implements Serializable {
     @Column(nullable = false)
     private String description;
 
-    @CreatedDate
     @Column(name = "start_date", updatable = false, nullable = false)
     private LocalDateTime startDate;
 
@@ -42,6 +40,27 @@ public class Event implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private EventStatus status;
+
+    @Column(length = 100, nullable = false)
+    private String street;
+
+    @Column(length = 10, nullable = false)
+    private String number;
+
+    @Column(length = 50)
+    private String supplement;
+
+    @Column(length = 50, nullable = false)
+    private String neighborhood;
+
+    @Column(length = 50, nullable = false)
+    private String city;
+
+    @Column(length = 2, nullable = false)
+    private String state;
+
+    @Column(length = 9, nullable = false)
+    private String zipCode;
 
     @Column(name = "link_evaluation")
     private String linkEvaluation;
@@ -57,6 +76,9 @@ public class Event implements Serializable {
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RPGSession> sessionsRPG = new ArrayList<>();
+
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<GameEvent> gamesEvent = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -74,12 +96,18 @@ public class Event implements Serializable {
 
     public Event() {}
 
-    public Event(String name, String description, LocalDateTime startDate, LocalDateTime finalDate, EventStatus status, String linkEvaluation) {
+    public Event (String name, String description, LocalDateTime finishDate, EventStatus status, String street, String number, String supplement, String neighborhood, String city, String state, String zipCode, String linkEvaluation ) {
         this.name = name;
         this.description = description;
-        this.startDate = startDate;
-        this.finalDate = finalDate;
+        this.finalDate = finishDate;
         this.status = status;
+        this.street = street;
+        this.number = number;
+        this.supplement = supplement;
+        this.neighborhood = neighborhood;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
         this.linkEvaluation = linkEvaluation;
     }
 

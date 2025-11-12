@@ -28,7 +28,6 @@ public class EscapeRoomSession implements Serializable {
     @Column(columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID id;
 
-    @CreatedDate
     @Column(name = "start_date_time")
     private LocalDateTime startDateTime;
 
@@ -74,20 +73,17 @@ public class EscapeRoomSession implements Serializable {
     @Column(nullable = false)
     private Boolean removed = false;
 
-    public Event getEvent() {
-        return event;
-    }
+    public EscapeRoomSession() {}
 
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public EscapeRoom getEscapeRoom() {
-        return escapeRoom;
-    }
-
-    public void setEscapeRoom(EscapeRoom escapeRoom) {
+    public EscapeRoomSession(LocalDateTime startDateTime, LocalDateTime finishDateTime, Integer conclusionTimeMinutes, ResultEscapeRoomSession result, String linkEvaluation, User presenter, EscapeRoom escapeRoom, Event event) {
+        this.startDateTime = startDateTime;
+        this.finishDateTime = finishDateTime;
+        this.conclusionTimeMinutes = conclusionTimeMinutes;
+        this.result = result;
+        this.linkEvaluation = linkEvaluation;
+        this.presenter = presenter;
         this.escapeRoom = escapeRoom;
+        this.event = event;
     }
 
 }

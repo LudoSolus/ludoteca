@@ -37,7 +37,6 @@ public class RPGSession implements Serializable {
     @JoinColumn(name = "event_id")
     private Event event;
 
-    @CreatedDate
     @Column(name = "start_date_time")
     private LocalDateTime startDateTime;
 
@@ -63,10 +62,13 @@ public class RPGSession implements Serializable {
 
     public RPGSession() {}
 
-    public RPGSession(OneShotRPG rpg, ParticipationRPG participationRPG, Event event) {
+    public RPGSession(LocalDateTime startDateTime, LocalDateTime finishDateTime, OneShotRPG rpg, ParticipationRPG participationRPG, Event event, String linkEvaluation) {
+        this.startDateTime = startDateTime;
+        this.finishDateTime = finishDateTime;
         this.rpg = rpg;
         this.participationRPG = participationRPG;
         this.event = event;
+        this.linkEvaluation = linkEvaluation;
     }
 
 }
