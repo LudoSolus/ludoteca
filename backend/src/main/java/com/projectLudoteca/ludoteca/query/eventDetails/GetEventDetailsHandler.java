@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.query.controller.eventDetails;
+package com.projectLudoteca.ludoteca.query.eventDetails;
 
 import com.projectLudoteca.ludoteca.common.entity.Event;
 import com.projectLudoteca.ludoteca.common.repository.EventRepository;

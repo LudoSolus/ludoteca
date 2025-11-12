@@ -2,6 +2,8 @@ package com.projectLudoteca.ludoteca.common.entity;
 
 import com.projectLudoteca.ludoteca.common.enums.GameStatus;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -10,6 +12,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 public class Loan implements Serializable {
 
@@ -67,39 +71,5 @@ public class Loan implements Serializable {
         this.game = game;
         this.event = event;
     }
-
-    public UUID getId() { return id; }
-
-    public LocalDateTime getDateLoan() { return dateLoan; }
-
-    public LocalDateTime getDateReturn() { return dateReturn; }
-
-    public void setDateReturn(LocalDateTime dateReturn) { this.dateReturn = dateReturn; }
-
-    public GameStatus getStatus() { return status; }
-
-    public void setStatus(GameStatus status) { this.status = status; }
-
-    public User getUser() { return user; }
-
-    public void setUser(User user) { this.user = user; }
-
-    public Game getGame() { return game; }
-
-    public void setGame(Game game) { this.game = game; }
-
-    public Event getLoan() { return event; }
-
-    public void setEvent(Event event) { this.event = event; }
-
-    public Boolean getRemoved() { return removed; }
-
-    public void setRemoved(Boolean removed) { this.removed = removed; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-
-    public LocalDateTime getDeletedAt() { return deletedAt; }
 
 }

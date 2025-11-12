@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.query.controller.eventDetails;
+package com.projectLudoteca.ludoteca.query.eventDetails;
 
 import java.util.UUID;
 
