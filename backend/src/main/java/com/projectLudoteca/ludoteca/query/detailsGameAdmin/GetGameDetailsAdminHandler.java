@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.query.gameDetailsAdmin;
+package com.projectLudoteca.ludoteca.query.detailsGameAdmin;
 
 import com.projectLudoteca.ludoteca.common.entity.Game;
 import com.projectLudoteca.ludoteca.common.repository.GameRepository;

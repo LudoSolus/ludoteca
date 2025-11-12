@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.query.gameDetailsAdmin;
+package com.projectLudoteca.ludoteca.query.detailsGameAdmin;
 
 import java.time.LocalDateTime;
 import java.util.List;

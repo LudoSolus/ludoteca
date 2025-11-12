@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.query.gameDetailsUser;
+package com.projectLudoteca.ludoteca.query.detailsGameUser;
 
 import com.projectLudoteca.ludoteca.common.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
