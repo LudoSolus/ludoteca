@@ -3,6 +3,7 @@
 	import { LoginUserCommand } from "$lib/api/commands/login-user/login-user.command";
 	import Login from "$lib/components/templates/Login.svelte";
 	import { CommandsHandlerService } from "$lib/shared/handlers/command/commands-handler.service";
+	import { authService } from "$lib/shared/stores/auth";
 	import axios from "axios";
 	import { toast } from "svoast";
 
@@ -18,6 +19,7 @@
 		commandsHandler.handle(command).subscribe({
 			next: (data) => {
 				const token = data.data.resultData;
+				authService.login(token);
 				goto("/user/home")
 				loginUserLoading = false;
 			},

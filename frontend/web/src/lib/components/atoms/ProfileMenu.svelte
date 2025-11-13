@@ -2,14 +2,9 @@
 	import { faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 
-	export let userId: string;
 	export let userPublicId: string;
-
-	function onProfile() {
-		console.log('Indo para o perfil do usuário - ', userId);
-	}
-
-	function onLogout() {}
+	export let onProfileClick: () => void;
+	export let onLogoutClick: () => void;
 </script>
 
 <div class="relative mt-1 w-40 rounded-lg border border-gray-300 bg-white p-2 text-black shadow-lg">
@@ -22,7 +17,7 @@
 
 	<button
 		class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition hover:bg-yellow-100"
-		on:click={onProfile}
+		on:click={onProfileClick}
 	>
 		<Fa icon={faUser} class="h-4 w-4" />
 		<span class="font-bold">Perfil</span>
@@ -30,7 +25,7 @@
 
 	<button
 		class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition hover:bg-yellow-100"
-		on:click={onLogout}
+		on:click={onLogoutClick}
 	>
 		<Fa icon={faRightFromBracket} class="h-4 w-4" />
 		<span class="font-bold">Sair</span>
