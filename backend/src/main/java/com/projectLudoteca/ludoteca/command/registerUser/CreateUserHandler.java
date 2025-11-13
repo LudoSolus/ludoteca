@@ -32,7 +32,7 @@ public class CreateUserHandler {
     }
 
     @Transactional
-    public CreateUserCommandView handle(CreateUserCommand command) {
+    public String handle(CreateUserCommand command) {
         if (command.name() == null || command.name().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome é obrigatório.");
         }
@@ -109,8 +109,8 @@ public class CreateUserHandler {
 
         repository.save(user);
 
-        String token = jwtService.generateToken(user.getPublicId(), user.getEmail(), user.getUserRole().name());
+        String token = jwtService.generateToken(user.getId(), user.getName(),user.getPublicId(), user.getEmail(), user.getUserRole().name());
 
-        return new CreateUserCommandView(user.getId(), user.getName(), token);
+        return token;
     }
 }

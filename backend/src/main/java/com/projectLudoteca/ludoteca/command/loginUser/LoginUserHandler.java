@@ -23,7 +23,7 @@ public class LoginUserHandler {
     }
 
     @Transactional
-    public LoginUserCommandView handle(LoginUserCommand command) {
+    public String handle(LoginUserCommand command) {
 
         User user = userRepository.findByEmail(command.email())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
@@ -32,8 +32,6 @@ public class LoginUserHandler {
             throw new RuntimeException("Senha inválida");
         }
 
-        String token = jwtService.generateToken(user.getPublicId(), user.getEmail(), user.getUserRole().name());
-
-        return new LoginUserCommandView(user.getId(), user.getName(), token);
+        return jwtService.generateToken(user.getId(), user.getName(),user.getPublicId(), user.getEmail(), user.getUserRole().name());
     }
 }
