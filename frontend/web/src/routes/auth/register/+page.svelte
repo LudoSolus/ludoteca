@@ -8,6 +8,7 @@
 	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import { onlyNumbers } from '$lib/shared/helpers/only-numbers';
+	import { authService } from '$lib/shared/stores/auth';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
 	import { toast } from 'svoast';
@@ -50,6 +51,7 @@
 			next: (data) => {
 				toast.success('Conta criada com sucesso!', { closable: true });
 				const token = data.data.resultData;
+				authService.login(token);
 				goto("/user/home")
 				registerUserLoading = false;
 			},
