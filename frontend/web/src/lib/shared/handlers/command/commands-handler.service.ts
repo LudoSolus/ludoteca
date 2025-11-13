@@ -4,11 +4,16 @@ import type { ICommandResult } from './command-result.interface';
 import type { ICommand } from './command.interface';
 import type { Axios, AxiosResponse } from 'axios';
 import { toast } from 'svoast';
+import { authService } from '$lib/shared/stores/auth';
+import { get } from 'svelte/store';
 
 export class CommandsHandlerService {
   constructor(
     public axios: Axios,
-  ) { }
+  ) {
+    const token = get(authService.getUserToken());
+    if(token) axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
 
   handle(command: ICommand): Observable<AxiosResponse<ICommandResult>> {
     return command.execute(this).pipe(
