@@ -32,7 +32,7 @@ public class CreateUserHandler {
     }
 
     @Transactional
-    public String handle(CreateUserCommand command) {
+    public CreateUserCommandView handle(CreateUserCommand command) {
         if (command.name() == null || command.name().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome é obrigatório.");
         }
@@ -111,6 +111,6 @@ public class CreateUserHandler {
 
         String token = jwtService.generateToken(user.getPublicId(), user.getEmail(), user.getUserRole().name());
 
-        return token;
+        return new CreateUserCommandView(user.getId(), user.getName(), token);
     }
 }
