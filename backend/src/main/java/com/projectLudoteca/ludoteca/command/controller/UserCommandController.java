@@ -3,8 +3,10 @@ package com.projectLudoteca.ludoteca.command.controller;
 import com.projectLudoteca.ludoteca.command.confirmationPasswordReset.ConfirmationPasswordResetCommand;
 import com.projectLudoteca.ludoteca.command.confirmationPasswordReset.ConfirmationPasswordResetHandler;
 import com.projectLudoteca.ludoteca.command.loginUser.LoginUserCommand;
+import com.projectLudoteca.ludoteca.command.loginUser.LoginUserCommandView;
 import com.projectLudoteca.ludoteca.command.loginUser.LoginUserHandler;
 import com.projectLudoteca.ludoteca.command.registerUser.CreateUserCommand;
+import com.projectLudoteca.ludoteca.command.registerUser.CreateUserCommandView;
 import com.projectLudoteca.ludoteca.command.registerUser.CreateUserHandler;
 import com.projectLudoteca.ludoteca.command.requestPasswordReset.RequestPasswordResetCommand;
 import com.projectLudoteca.ludoteca.command.requestPasswordReset.RequestPasswordResetHandler;
@@ -40,11 +42,11 @@ public class UserCommandController {
 
     @PostMapping("/register")
     @Operation(summary = "Registrar novo usuário", description = "Cria um usuário com dados válidos")
-    public ResponseEntity<ApiResponse<String>> createUser(@RequestBody @Validated CreateUserCommand command) {
+    public ResponseEntity<ApiResponse<CreateUserCommandView>> createUser(@RequestBody @Validated CreateUserCommand command) {
 
-        String token = registerHandler.handle(command);
+        CreateUserCommandView view = registerHandler.handle(command);
 
-        ApiResponse<String> response = new ApiResponse<>(token);
+        ApiResponse<CreateUserCommandView> response = new ApiResponse<>(view);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
@@ -52,10 +54,10 @@ public class UserCommandController {
 
     @PostMapping("/login")
     @Operation(summary = "Login do usuário", description = "Realiza login retornando um token JWT")
-    public ResponseEntity<ApiResponse<String>> login(@RequestBody @Validated LoginUserCommand command) {
-        String token = loginHandler.handle(command);
+    public ResponseEntity<ApiResponse<LoginUserCommandView>> login(@RequestBody @Validated LoginUserCommand command) {
+        LoginUserCommandView view = loginHandler.handle(command);
 
-        ApiResponse<String> response = new ApiResponse<>(token);
+        ApiResponse<LoginUserCommandView> response = new ApiResponse<>(view);
 
         return ResponseEntity.ok(response);
     }
