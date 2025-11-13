@@ -5,6 +5,7 @@ import com.projectLudoteca.ludoteca.common.entity.User;
 import com.projectLudoteca.ludoteca.common.exception.BusinessException;
 import com.projectLudoteca.ludoteca.common.repository.EducationalInstitutionRepository;
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
+import com.projectLudoteca.ludoteca.infrastructure.security.config.JwtService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,13 +16,15 @@ import java.util.UUID;
 @Service
 public class UpdateUserHandler {
 
-    private UserRepository userRepository;
-    private EducationalInstitutionRepository educationalInstitutionRepository;
+    private final UserRepository userRepository;
+    private final EducationalInstitutionRepository educationalInstitutionRepository;
+    private final JwtService jwtService;
 
     @Autowired
-    public UpdateUserHandler(UserRepository userRepository, EducationalInstitutionRepository educationalInstitutionRepository) {
+    public UpdateUserHandler(UserRepository userRepository, EducationalInstitutionRepository educationalInstitutionRepository, JwtService jwtService) {
         this.userRepository = userRepository;
         this.educationalInstitutionRepository = educationalInstitutionRepository;
+        this.jwtService = jwtService;
     }
 
     @Transactional
@@ -61,7 +64,9 @@ public class UpdateUserHandler {
         // Salva o usuário atualizado
         userRepository.save(user);
 
-        return "Usuário atualizado com sucesso!";
+        String token = jwtService.generateToken(user.getId(), user.getName(),user.getPublicId(), user.getEmail(), user.getUserRole().name());
+
+        return token;
     }
 
     private boolean isAllFieldsNull(UpdateUserCommand command) {
