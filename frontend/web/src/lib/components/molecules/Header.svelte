@@ -103,7 +103,7 @@
 	{/if}
 	<div>
 		<ProfilePicture
-			userName="Felipe"
+			userName={authData!.name}
 			width={profilePictureSize}
 			height={profilePictureSize}
 			fontSize="18px"
