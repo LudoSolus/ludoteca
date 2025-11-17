@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.query.controller.userAcess;
+package com.projectLudoteca.ludoteca.query.controller.adminAcess;
 
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
 import com.projectLudoteca.ludoteca.query.listAllUsersAdminForAdmin.GetAllUsersForAdminHandler;
@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/queries/users")
-public class UserQueryController {
+@RequestMapping("/queries/admin/users")
+public class UserQueryAdminController {
 
     private final GetAllUsersForAdminHandler handler;
 
-    public UserQueryController(GetAllUsersForAdminHandler handler) {
+    public UserQueryAdminController(GetAllUsersForAdminHandler handler) {
         this.handler = handler;
     }
 
     @GetMapping("/list-all-users")
-    @Operation(summary = "Lista de todos os usuários do sistema", description = "Realiza uma busca de todos os usuários do sistema")
+    @Operation(summary = "Lista de todos os usuários do sistema", description = "Realiza uma busca de todos os usuários do sistema para o administrador")
     public ResponseEntity<ApiResponse<List<GetAllUsersForAdminView>>> getAllUsers() {
         List<GetAllUsersForAdminView> viewList = handler.handleGetAllUsers();
 
