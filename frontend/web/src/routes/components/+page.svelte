@@ -4,8 +4,9 @@
 	import ProfilePicture from '$lib/components/atoms/ProfilePicture.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
 	import UserContainer from '$lib/components/atoms/UserContainer.svelte';
-	import { faArrowLeftLong, faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
+	import { faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import EscapeRoomContainer from '$lib/components/atoms/EscapeRoomContainer.svelte';
+	import GoBack from '$lib/components/molecules/GoBack.svelte';
 
 	type SelectInputOption = {
 		label: string;
@@ -27,6 +28,12 @@
 </script>
 
 <div class="mt-6 flex flex-col items-center gap-4">
+	<div class="w-full px-2 sm:px-5 md:px-10">
+		<GoBack title="Perfil" description="Todos os personagens que participam dessa campanha" type="admin" />
+	</div>
+	<div class="w-full px-2 sm:px-5 md:px-10">
+		<GoBack title="Perfil" description="Tela de perfil, veja suas informações" type="user" />
+	</div>
 	<EscapeRoomContainer title="Código Sombrio" />
 	<Button text={'Entrar'} onClick={() => {}} />
 	<Button text={'Entrar'} onClick={() => {}} leftIcon={faTrash} />
