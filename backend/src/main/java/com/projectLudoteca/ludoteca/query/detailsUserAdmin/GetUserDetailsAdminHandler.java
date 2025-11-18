@@ -23,8 +23,6 @@ public class GetUserDetailsAdminHandler {
             throw new IllegalArgumentException("O id do usuário não pode ser nulo.");
         }
 
-        System.out.println("\n\n\n\nID: " + query.id() + "\n\n\n\n");
-
         User user = userRepository.findUserNative(query.id()).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
 
         return new GetUserDetailsAdminView(user.getId(),
@@ -39,23 +37,6 @@ public class GetUserDetailsAdminHandler {
                         user.getEmail(),
                         getAgeCategory(user.getBirthDate()),
                         user.getUserRole().name());
-
-//        return userRepository.findById(query.id())
-//                .map(user -> new GetUserDetailsAdminView(
-//                        user.getId().toString(),
-//                        user.getPublicId(),
-//                        user.getEducationalInstitution() != null
-//                                ? user.getEducationalInstitution().getInstitutionName()
-//                                : "N/A",
-//                        user.getPhone(),
-//                        user.getRa() != null
-//                                ? user.getRa()
-//                                : "N/A",
-//                        user.getEmail(),
-//                        getAgeCategory(user.getBirthDate()),
-//                        user.getUserRole().name()
-//                ))
-//                .orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
 
     }
 
