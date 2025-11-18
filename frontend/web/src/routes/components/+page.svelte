@@ -8,7 +8,8 @@
 	import EscapeRoomContainer from '$lib/components/atoms/EscapeRoomContainer.svelte';
 	import RpgContainer from '$lib/components/atoms/RpgContainer.svelte';
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
-
+	let eventDate: Date = new Date("2025-09-05");
+	
 	type SelectInputOption = {
 		label: string;
 		value: string;
@@ -28,7 +29,7 @@
 	}
 </script>
 
- <RpgContainer title="Era Glacial de Ragnar" system="D&D" startDate="05/09/2025"/>
+<RpgContainer title="Era Glacial de Ragnar" system="D&D" startDate={eventDate} />
 
 <div class="mt-6 flex flex-col items-center gap-4">
 	<div class="w-full px-2 sm:px-5 md:px-10">
