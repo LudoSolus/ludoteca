@@ -1,6 +1,7 @@
 package com.projectLudoteca.ludoteca.command.registerGame;
 
 import com.projectLudoteca.ludoteca.common.entity.Game;
+import com.projectLudoteca.ludoteca.common.enums.GameCategory;
 import com.projectLudoteca.ludoteca.common.exception.BusinessException;
 import com.projectLudoteca.ludoteca.common.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class CreateGameHandler {
         Game game = new Game();
         game.setBarcode(command.barcode());
         game.setTitle(command.title());
-        game.setCategory(command.category());
+        game.setCategory(GameCategory.valueOf(command.category().toUpperCase()));
         game.setDescription(command.description());
         game.setMinPlayers(command.minPlayers());
         game.setMaxPlayers(command.maxPlayers());

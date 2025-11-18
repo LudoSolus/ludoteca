@@ -26,7 +26,7 @@ public class GetEventDetailsHandler {
                 .map(ge -> new GetEventDetailsView.ListGamesView(
                         ge.getGame().getTitle(),
                         ge.getGame().getIsAvailable(),
-                        ge.getGame().getCategory(),
+                        ge.getGame().getCategory().name(),
                         ge.getGame().getMinPlayers(),
                         ge.getGame().getMaxPlayers()
                 ))
