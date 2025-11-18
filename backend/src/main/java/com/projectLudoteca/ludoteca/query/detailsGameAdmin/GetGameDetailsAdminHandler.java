@@ -33,7 +33,7 @@ public class GetGameDetailsAdminHandler {
                 game.getBarcode(),
                 game.getTitle(),
                 game.getDescription(),
-                game.getCategory(),
+                game.getCategory().name(),
                 game.getMinPlayers(),
                 game.getMaxPlayers(),
                 game.getLinkInstructionManual(),

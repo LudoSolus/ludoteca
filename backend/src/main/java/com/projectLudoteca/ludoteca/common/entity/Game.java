@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.projectLudoteca.ludoteca.common.enums.GameCategory;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,8 +29,9 @@ public class Game implements Serializable {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
-    private String category;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category", nullable = false)
+    private GameCategory category;
 
     @Column(length = 1000, nullable = false)
     private String description;
@@ -72,7 +74,7 @@ public class Game implements Serializable {
     public Game() {
     }
 
-    public Game(Integer barcode, String title, String category, String description, Integer minPlayers, Integer maxPlayers, Boolean isAvailable, String linkInstructionManual, String linkVideoTutorial) {
+    public Game(Integer barcode, String title, GameCategory category, String description, Integer minPlayers, Integer maxPlayers, Boolean isAvailable, String linkInstructionManual, String linkVideoTutorial) {
         this.barcode = barcode;
         this.title = title;
         this.category = category;
