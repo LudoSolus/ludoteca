@@ -84,9 +84,9 @@ public class UserCommandController {
     @Operation(summary = "Atualiza dados do usuário", description = "Realiza a atualização dos dados do usuário")
     public ResponseEntity<ApiResponse<String>> update(@RequestBody @Validated UpdateUserCommand command, @AuthenticationPrincipal User user) {
 
-        String message = updateHandler.handle(user, command);
+        String token = updateHandler.handle(user, command);
 
-        ApiResponse<String> response = new ApiResponse<>(message);
+        ApiResponse<String> response = new ApiResponse<>(token);
 
         return ResponseEntity.ok(response);
     }

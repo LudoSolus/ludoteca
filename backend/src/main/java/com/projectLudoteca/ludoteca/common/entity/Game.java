@@ -7,9 +7,13 @@ import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+@Getter
+@Setter
 @Entity
 public class Game implements Serializable {
 
@@ -48,6 +52,9 @@ public class Game implements Serializable {
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Loan> loans = new ArrayList<>();
 
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<GameEvent> gamesEvent = new ArrayList<>();
+
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -75,96 +82,6 @@ public class Game implements Serializable {
         this.isAvailable = isAvailable;
         this.linkInstructionManual = linkInstructionManual;
         this.linkVideoTutorial = linkVideoTutorial;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public Integer getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(Integer barcode) {
-        this.barcode = barcode;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getMinPlayers() {
-        return minPlayers;
-    }
-
-    public void setMinPlayers(Integer minPlayers) {
-        this.minPlayers = minPlayers;
-    }
-
-    public Integer getMaxPlayers() {
-        return maxPlayers;
-    }
-
-    public void setMaxPlayers(Integer maxPlayers) {
-        this.maxPlayers = maxPlayers;
-    }
-
-    public Boolean getIsAvailable() {
-        return isAvailable;
-    }
-
-    public void setIsAvailable(Boolean isAvailable) {
-        this.isAvailable = isAvailable;
-    }
-
-    public String getLinkInstructionManual() { return linkInstructionManual; }
-
-    public void setLinkInstructionManual(String linkInstructionManual) { this.linkInstructionManual = linkInstructionManual; }
-
-    public String getLinkVideoTutorial() { return linkVideoTutorial; }
-
-    public void setLinkVideoTutorial(String linkVideoTutorial) { this.linkVideoTutorial = linkVideoTutorial; }
-
-    public List<Loan> getLoans() { return loans; }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public Boolean getRemoved() {
-        return removed;
-    }
-
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
     }
 
 }

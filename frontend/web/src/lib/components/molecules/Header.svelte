@@ -6,6 +6,9 @@
 	import { faBars } from '@fortawesome/free-solid-svg-icons';
 	import IconButton from '../atoms/IconButton.svelte';
 	import ProfileMenu from '../atoms/ProfileMenu.svelte';
+	import { authService } from '$lib/shared/stores/auth';
+	import { goto } from '$app/navigation';
+	import { decodeAuthJwt } from '$lib/shared/helpers/decode-jwt';
 
 	interface Route {
 		name: string;
@@ -14,9 +17,13 @@
 
 	let { type }: { type: 'admin' | 'user' } = $props();
 
+	const profilePictureSize = $derived($device == 'desktop' ? '45px' : '40px');
 	const currentPath = $derived(page.url.pathname);
 	let menuIsVisible: boolean = $state(false);
 	let profileMenuIsVisible: boolean = $state(false);
+	const token = authService.getUserToken();
+	let authData = $derived(decodeAuthJwt($token));
+	
 
 	const adminRoutes: Route[] = [
 		{ name: 'Dashboard', path: '/admin' },
@@ -66,7 +73,16 @@
 		}
 	}
 
-	const profilePictureSize = $derived($device == 'desktop' ? '45px' : '40px');
+	function handleOnLogout() {
+		hiddeProfileMenu();
+		authService.logout();
+		goto('/auth/login');
+	}
+
+	function handleOnProfileClick() {
+		hiddeProfileMenu();
+		goto('/profile');
+	}
 </script>
 
 <header class="header-box flex h-15 w-full items-center justify-between px-7 py-2">
@@ -87,7 +103,7 @@
 	{/if}
 	<div>
 		<ProfilePicture
-			userName="Felipe"
+			userName={authData!.name}
 			width={profilePictureSize}
 			height={profilePictureSize}
 			fontSize="18px"
@@ -111,7 +127,11 @@
 
 	{#if profileMenuIsVisible}
 		<div class="absolute top-15 right-3 z-12">
-			<ProfileMenu userId="asadasd" userPublicId="123" />
+			<ProfileMenu
+				userPublicId={authData!.publicId}
+				onLogoutClick={handleOnLogout}
+				onProfileClick={handleOnProfileClick}
+			/>
 		</div>
 	{/if}
 </header>

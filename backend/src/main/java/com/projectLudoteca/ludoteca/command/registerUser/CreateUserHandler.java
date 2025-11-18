@@ -80,9 +80,9 @@ public class CreateUserHandler {
             throw new IllegalArgumentException("CPF já cadastrado!");
         }
 
-        UserRole type = UserRole.USER;
+        UserRole role = UserRole.USER;
         if(command.ra() != null && !command.ra().trim().isEmpty()) {
-            type = UserRole.STUDENT;
+            role = UserRole.STUDENT;
             if (repository.existsByRa(command.ra())) {
                 throw new IllegalArgumentException("RA já cadastrado!");
             }
@@ -98,7 +98,7 @@ public class CreateUserHandler {
         user.setPhone(command.phone());
         user.setRa(command.ra());
         user.setBirthDate(command.birthDate());
-        user.setUserType(type);
+        user.setUserRole(role);
 
         EducationalInstitution  educationalInstitution = new EducationalInstitution();
 
@@ -109,7 +109,7 @@ public class CreateUserHandler {
 
         repository.save(user);
 
-        String token = jwtService.generateToken(user.getPublicId(), user.getEmail(), user.getUserType().name());
+        String token = jwtService.generateToken(user.getId(), user.getName(),user.getPublicId(), user.getEmail(), user.getUserRole().name());
 
         return token;
     }

@@ -25,7 +25,7 @@ public class EducationalInstitution implements Serializable {
 
     private String institutionName;
 
-    @OneToMany(mappedBy = "educationalInstitution", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "educationalInstitution", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<User> users = new ArrayList<>();
 
     public EducationalInstitution() {}

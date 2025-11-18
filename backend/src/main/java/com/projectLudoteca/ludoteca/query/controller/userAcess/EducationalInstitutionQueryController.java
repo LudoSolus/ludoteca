@@ -1,9 +1,8 @@
-package com.projectLudoteca.ludoteca.query.controller;
+package com.projectLudoteca.ludoteca.query.controller.userAcess;
 
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
-import com.projectLudoteca.ludoteca.query.handler.GetAllEducationalInstitutionsHandler;
-import com.projectLudoteca.ludoteca.query.model.EducationalInstitutionView;
-import com.projectLudoteca.ludoteca.query.model.UserView;
+import com.projectLudoteca.ludoteca.query.listAllEducationInstitutions.GetAllEducationalInstitutionsHandler;
+import com.projectLudoteca.ludoteca.query.listAllEducationInstitutions.GetAllEducationalInstitutionsView;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +21,10 @@ public class EducationalInstitutionQueryController {
     }
 
     @GetMapping("/list-all-educational-institutions")
-    public ResponseEntity<ApiResponse<List<EducationalInstitutionView>>> getAllEducationalInstitutions() {
+    public ResponseEntity<ApiResponse<List<GetAllEducationalInstitutionsView>>> getAllEducationalInstitutions() {
 
-        List<EducationalInstitutionView> institutions = getAllEducationalInstitutionsHandler.getAllEducationalInstitutions();
-        ApiResponse<List<EducationalInstitutionView>> response = new ApiResponse<>(institutions);
+        List<GetAllEducationalInstitutionsView> institutions = getAllEducationalInstitutionsHandler.getAllEducationalInstitutions();
+        ApiResponse<List<GetAllEducationalInstitutionsView>> response = new ApiResponse<>(institutions);
 
         return ResponseEntity.ok(response);
     }

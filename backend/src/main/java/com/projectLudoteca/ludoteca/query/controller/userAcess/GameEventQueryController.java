@@ -1,10 +1,9 @@
-package com.projectLudoteca.ludoteca.query.controller;
+package com.projectLudoteca.ludoteca.query.controller.userAcess;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/queries/games")
-public class GameQueryController {
-
+@RequestMapping("/queries/games-event")
+public class GameEventQueryController {
 }

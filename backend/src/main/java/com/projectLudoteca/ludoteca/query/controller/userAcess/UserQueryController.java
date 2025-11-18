@@ -1,8 +1,8 @@
-package com.projectLudoteca.ludoteca.query.controller;
+package com.projectLudoteca.ludoteca.query.controller.userAcess;
 
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
-import com.projectLudoteca.ludoteca.query.handler.GetAllUsersHandler;
-import com.projectLudoteca.ludoteca.query.model.UserView;
+import com.projectLudoteca.ludoteca.query.listAllUsersAdminForAdmin.GetAllUsersForAdminHandler;
+import com.projectLudoteca.ludoteca.query.listAllUsersAdminForAdmin.GetAllUsersForAdminView;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,18 +15,18 @@ import java.util.List;
 @RequestMapping("/queries/users")
 public class UserQueryController {
 
-    private final GetAllUsersHandler handler;
+    private final GetAllUsersForAdminHandler handler;
 
-    public UserQueryController(GetAllUsersHandler handler) {
+    public UserQueryController(GetAllUsersForAdminHandler handler) {
         this.handler = handler;
     }
 
     @GetMapping("/list-all-users")
     @Operation(summary = "Lista de todos os usuários do sistema", description = "Realiza uma busca de todos os usuários do sistema")
-    public ResponseEntity<ApiResponse<List<UserView>>> getAllUsers() {
-        List<UserView> users = handler.handleGetAllUsers();
+    public ResponseEntity<ApiResponse<List<GetAllUsersForAdminView>>> getAllUsers() {
+        List<GetAllUsersForAdminView> viewList = handler.handleGetAllUsers();
 
-        ApiResponse<List<UserView>> response = new ApiResponse<>(users);
+        ApiResponse<List<GetAllUsersForAdminView>> response = new ApiResponse<>(viewList);
 
         return ResponseEntity.ok(response);
     }

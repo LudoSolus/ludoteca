@@ -2,6 +2,8 @@ package com.projectLudoteca.ludoteca.common.entity;
 
 import com.projectLudoteca.ludoteca.common.enums.GameStatus;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -10,6 +12,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 public class Loan implements Serializable {
 
@@ -32,13 +36,17 @@ public class Loan implements Serializable {
     @Column(name = "status", nullable = false)
     private GameStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "game_id", nullable = false)
     private Game game;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "event_id")
+    private Event event;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -56,41 +64,12 @@ public class Loan implements Serializable {
 
     public Loan() {}
 
-    public Loan(LocalDateTime dateReturn, GameStatus status, User user, Game game) {
+    public Loan(LocalDateTime dateReturn, GameStatus status, User user, Game game, Event event) {
         this.dateReturn = dateReturn;
         this.status = status;
         this.user = user;
         this.game = game;
+        this.event = event;
     }
-
-    public UUID getId() { return id; }
-
-    public LocalDateTime getDateLoan() { return dateLoan; }
-
-    public LocalDateTime getDateReturn() { return dateReturn; }
-
-    public void setDateReturn(LocalDateTime dateReturn) { this.dateReturn = dateReturn; }
-
-    public GameStatus getStatus() { return status; }
-
-    public void setStatus(GameStatus status) { this.status = status; }
-
-    public User getUser() { return user; }
-
-    public void setUser(User user) { this.user = user; }
-
-    public Game getGame() { return game; }
-
-    public void setGame(Game game) { this.game = game; }
-
-    public Boolean getRemoved() { return removed; }
-
-    public void setRemoved(Boolean removed) { this.removed = removed; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-
-    public LocalDateTime getDeletedAt() { return deletedAt; }
 
 }
