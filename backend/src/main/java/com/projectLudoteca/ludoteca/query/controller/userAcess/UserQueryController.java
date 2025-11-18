@@ -15,20 +15,4 @@ import java.util.List;
 @RequestMapping("/queries/users")
 public class UserQueryController {
 
-    private final GetAllUsersForAdminHandler handler;
-
-    public UserQueryController(GetAllUsersForAdminHandler handler) {
-        this.handler = handler;
-    }
-
-    @GetMapping("/list-all-users")
-    @Operation(summary = "Lista de todos os usuários do sistema", description = "Realiza uma busca de todos os usuários do sistema")
-    public ResponseEntity<ApiResponse<List<GetAllUsersForAdminView>>> getAllUsers() {
-        List<GetAllUsersForAdminView> viewList = handler.handleGetAllUsers();
-
-        ApiResponse<List<GetAllUsersForAdminView>> response = new ApiResponse<>(viewList);
-
-        return ResponseEntity.ok(response);
-    }
-
 }

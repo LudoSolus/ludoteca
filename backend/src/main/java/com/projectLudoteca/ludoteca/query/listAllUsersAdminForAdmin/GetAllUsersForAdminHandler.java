@@ -16,7 +16,7 @@ public class GetAllUsersForAdminHandler {
         this.repository = repository;
     }
 
-    public List<GetAllUsersForAdminView> handleGetAllUsers() {
+    public List<GetAllUsersForAdminView> handle() {
 
         return repository.findAll()
                          .stream()
