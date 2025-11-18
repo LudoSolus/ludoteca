@@ -1,7 +1,7 @@
 package com.projectLudoteca.ludoteca.command.controller;
 
-import com.projectLudoteca.ludoteca.command.model.CreateEducationalInstitutionCommand;
-import com.projectLudoteca.ludoteca.command.service.EducationalInstitutionService;
+import com.projectLudoteca.ludoteca.command.registerEducationalInstitution.CreateEducationalInstitutionCommand;
+import com.projectLudoteca.ludoteca.command.registerEducationalInstitution.CreateEducationalInstitutionHandler;
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class EducationalInstitutionCommandController {
 
-    private EducationalInstitutionService service;
+    private CreateEducationalInstitutionHandler createEducationalInstitutionHandler;
 
-    public EducationalInstitutionCommandController(EducationalInstitutionService service) {
-        this.service = service;
+    public EducationalInstitutionCommandController(CreateEducationalInstitutionHandler createEducationalInstitutionHandler) {
+        this.createEducationalInstitutionHandler = createEducationalInstitutionHandler;
     }
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<String>> createUser(@RequestBody @Validated CreateEducationalInstitutionCommand command) {
-        service.createEducationalInstitution(command);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(ApiResponse.created("Instituição registrada com sucesso", "Sucesso"));
+        createEducationalInstitutionHandler.handle(command);
+
+        ApiResponse<String> response = new ApiResponse<>("Instituição registrada com sucesso");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 }

@@ -13,20 +13,35 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Trata exceções genéricas de runtime (ex: IllegalArgumentException, IllegalStateException, etc.)
+     */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ApiResponse<Void>> handleRuntimeException(RuntimeException ex) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.error(ex.getMessage(), HttpStatus.BAD_REQUEST));
+        ApiResponse<Void> response = new ApiResponse<>();
+        response.setErrorCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
+        response.setErrorName("RuntimeException");
+        response.setErrorMessage(ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    /**
+     * Trata erros de autenticação (ex: login inválido)
+     */
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ApiResponse<Void>> handleBadCredentials(BadCredentialsException ex) {
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(ApiResponse.error("Credenciais inválidas", HttpStatus.UNAUTHORIZED));
+        ApiResponse<Void> response = new ApiResponse<>();
+        response.setErrorCode(String.valueOf(HttpStatus.UNAUTHORIZED.value()));
+        response.setErrorName("BadCredentials");
+        response.setErrorMessage("Credenciais inválidas");
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
+    /**
+     * Trata erros de validação em DTOs anotados com @Valid
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Void>> handleValidationErrors(MethodArgumentNotValidException ex) {
         String errors = ex.getBindingResult()
@@ -35,15 +50,39 @@ public class GlobalExceptionHandler {
                 .map(err -> err.getField() + ": " + err.getDefaultMessage())
                 .collect(Collectors.joining(", "));
 
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.error("Erro de validação: " + errors, HttpStatus.BAD_REQUEST));
+        ApiResponse<Void> response = new ApiResponse<>();
+        response.setErrorCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
+        response.setErrorName("ValidationError");
+        response.setErrorMessage("Erro de validação: " + errors);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    /**
+     * Trata exceções genéricas não previstas.
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleGenericException(Exception ex) {
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.error("Erro interno no servidor", HttpStatus.INTERNAL_SERVER_ERROR));
+        ApiResponse<Void> response = new ApiResponse<>();
+        response.setErrorCode(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+        response.setErrorName("InternalServerError");
+        response.setErrorMessage("Erro interno no servidor: " + ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
+
+    /**
+     * Trata exceções de negócio personalizadas.
+     */
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiResponse<Void>> handleBusinessException(BusinessException ex) {
+        ApiResponse<Void> response = new ApiResponse<>();
+        response.setErrorCode(ex.getErrorCode());
+        response.setErrorName("BusinessException");
+        response.setErrorMessage(ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+
 }

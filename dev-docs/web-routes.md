@@ -5,11 +5,12 @@
 --/login  
 --/reset-password 
 
-/home  
-/profile  
-/history  
-/event/:id  
-/board-game/:id  
+/user  
+--/home  
+--/profile  
+--/history  
+--/event/:id  
+--/board-game/:id  
 
 /admin  
 --/users  
@@ -47,23 +48,23 @@ Rota: /auth/reset-password
 Rota para trocar sua senha quando ela foi esquecida.
 
 ### Home
-Rota: /home   
+Rota: /user/home   
 Tela padrão do sistema, mostra os próximos eventos e as campanhas de RPG abertas.
 
 ### Perfil
-Rota: /profile  
+Rota: /user/profile  
 Tela para o usuário ver seu perfil e conseguir editar seus dados.
 
 ### Histórico
-Rota: /history   
+Rota: /user/history   
 Tela para o usuário ver seu histórico e os seus dados estatísticos na plataforma.
 
 ### Evento
-Rota: /event/:id   
+Rota: /user/event/:id   
 Tela para usuários comuns verem detalhes do evento.
 
 ### Jogo de tabuleiro
-Rota: /board-game/:id   
+Rota: /user/board-game/:id   
 Tela para usuários comuns verem detalhes do jogo de tabuleiro.
 
 ### Administração

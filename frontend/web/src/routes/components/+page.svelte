@@ -7,8 +7,16 @@
 	import UserContainer from '$lib/components/atoms/UserContainer.svelte';
 	import { ECategory } from '$lib/shared/enums/category.enum';
 	import { EUserType } from '$lib/shared/enums/user-type.enum';
-	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
-	import { faArrowLeftLong, faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
+	import { faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
+	import EscapeRoomContainer from '$lib/components/atoms/EscapeRoomContainer.svelte';
+	import RpgContainer from '$lib/components/atoms/RpgContainer.svelte';
+	import GoBack from '$lib/components/molecules/GoBack.svelte';
+	let eventDate: Date = new Date("2025-09-05");
+	
+	type SelectInputOption = {
+		label: string;
+		value: string;
+	};
 
 	let selectedPlan = '';
 	const planOptions: SelectInputOption[] = [
@@ -24,7 +32,16 @@
 	}
 </script>
 
+<RpgContainer title="Era Glacial de Ragnar" system="D&D" startDate={eventDate} />
+
 <div class="mt-6 flex flex-col items-center gap-4">
+	<div class="w-full px-2 sm:px-5 md:px-10">
+		<GoBack title="Perfil" description="Todos os personagens que participam dessa campanha" type="admin" />
+	</div>
+	<div class="w-full px-2 sm:px-5 md:px-10">
+		<GoBack title="Perfil" description="Tela de perfil, veja suas informações" type="user" />
+	</div>
+	<EscapeRoomContainer title="Código Sombrio" />
 	<Button text={'Entrar'} onClick={() => {}} />
 	<Button text={'Entrar'} onClick={() => {}} leftIcon={faTrash} />
 	<Button text={'Entrar'} onClick={() => {}} rightIcon={faArrowRight} />
@@ -59,7 +76,7 @@
 		}}
 		error={'Nome inválido'}
 	/>
-		<SelectInput
+	<SelectInput
 		label="Plano"
 		bind:value={selectedPlan}
 		placeholder="Selecione o plano"
@@ -72,6 +89,7 @@
 	<ProfilePicture userName={'Felipe Scalco'} />
 	<UserContainer email={'guilherme.123@gmail.com'} ageGroup={'Adulto'} />
 	<UserContainer email={'josenildo.comisuamae.gamer@gmail.com'} ageGroup={'Criança'} isRpgMaster />
+
 	<SelectInput
 		label="Plano"
 		bind:value={selectedPlan}
@@ -80,6 +98,7 @@
 		onChange={handleSelect}
 		width="300px"
 	/>
+
 	<div class="mt-6 flex flex-col items-start gap-4">
 		<BoardGame title={'Catan: O Jogo'} category={ECategory.Negociacao} minParticipants={3} maxParticipants={4} />
 		<BoardGame title={'Cidades Sombrias: Salem 1692'} category={ECategory.BlefeEnganacao} minParticipants={4} maxParticipants={12} isActivate={true} />
@@ -93,26 +112,7 @@
 		<BoardGame title={'Inovatec: UTFPR'} category={ECategory.Outros} minParticipants={2} maxParticipants={4} isActivate={true} />
 	</div>
 
-	<!-- <div class="p-4 bg-gray-100">
-		<h3 class="text-xl font-bold mb-4">Exemplo com Flexbox</h3>
-		
-		<div class="
-			flex 
-			flex-wrap 
-			gap-4 
-			md:gap-6 
-			lg:gap-8
-		">
-			<div class="bg-sky-500 text-white font-bold p-6 rounded-lg flex-grow sm:flex-grow-0">Item 1</div>
-			<div class="bg-sky-500 text-white font-bold p-6 rounded-lg flex-grow sm:flex-grow-0">Item 2</div>
-			<div class="bg-sky-500 text-white font-bold p-6 rounded-lg flex-grow sm:flex-grow-0">Item 3</div>
-			<div class="bg-sky-500 text-white font-bold p-6 rounded-lg flex-grow sm:flex-grow-0">Item 4</div>
-			<div class="bg-sky-500 text-white font-bold p-6 rounded-lg flex-grow sm:flex-grow-0">Item 5</div>
-		</div>
-	</div> -->
-
 </div>
-
 
 <style>
 	div {

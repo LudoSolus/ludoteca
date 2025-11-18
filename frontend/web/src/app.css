@@ -9,6 +9,8 @@
     --hover-color: #847818;
     --active-color: #3A3405;
 
+    --tw-border-style: solid;
+
     /* CONFIGURAÇÔES TOAST*/
     --svoast-bg: #fff;
     --svoast-text: #1b1803;
@@ -17,7 +19,7 @@
 }
 
 html {
-    height: 100vh;
+    height: -webkit-fill-available;
     font-family: "Inknut Antiqua", serif;
     color: #000;
     font-size: 16px;
@@ -29,7 +31,7 @@ html {
 
 body {
     height: 100%;
-    overflow-y: auto;
+    overflow-y: inherit;
     overflow-x: hidden;
     scrollbar-width: thin;
 }
@@ -40,4 +42,9 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-thumb {
     border-radius: 20px;
+}
+
+a{
+    color: var(--link-color);
+    text-decoration: underline;
 }

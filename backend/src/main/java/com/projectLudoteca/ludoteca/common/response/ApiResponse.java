@@ -1,43 +1,64 @@
 package com.projectLudoteca.ludoteca.common.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.http.HttpStatus;
+import java.util.List;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<T> {
 
-    private boolean success;
-    private String message;
-    private T data;
-    private int status;
-    private String path; // opcional: útil para debugging no frontend
+    private T resultData;
+    private String errorCode;
+    private String errorName;
+    private String errorMessage;
 
-    public ApiResponse(boolean success, String message, T data, HttpStatus status, String path) {
-        this.success = success;
-        this.message = message;
-        this.data = data;
-        this.status = status.value();
-        this.path = path;
+    public ApiResponse() {}
+
+    public ApiResponse(T resultData) {
+        this.resultData = resultData;
     }
 
-    public static <T> ApiResponse<T> success(String message, T data) {
-        return new ApiResponse<>(true, message, data, HttpStatus.OK, null);
+    public ApiResponse(String errorCode, String errorName, String errorMessage) {
+        this.errorCode = errorCode;
+        this.errorName = errorName;
+        this.errorMessage = errorMessage;
     }
 
-    public static <T> ApiResponse<T> created(String message, T data) {
-        return new ApiResponse<>(true, message, data, HttpStatus.CREATED, null);
+    public static <T> ApiResponse<T> success(T data) {
+        return new ApiResponse<>(data);
     }
 
-    public static <T> ApiResponse<T> error(String message, HttpStatus status) {
-        return new ApiResponse<>(false, message, null, status, null);
+    public static <T> ApiResponse<T> error(String code, String name, String message) {
+        return new ApiResponse<>(code, name, message);
     }
 
-    // Getters e Setters
-    public boolean isSuccess() { return success; }
-    public String getMessage() { return message; }
-    public T getData() { return data; }
-    public int getStatus() { return status; }
-    public String getPath() { return path; }
+    public T getResultData() {
+        return resultData;
+    }
 
-    public void setPath(String path) { this.path = path; }
+    public void setResultData(T resultData) {
+        this.resultData = resultData;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorName() {
+        return errorName;
+    }
+
+    public void setErrorName(String errorName) {
+        this.errorName = errorName;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
 }

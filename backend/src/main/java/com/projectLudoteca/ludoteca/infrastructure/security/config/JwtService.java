@@ -8,6 +8,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class JwtService {
@@ -17,10 +18,13 @@ public class JwtService {
 
     private static final long EXPIRATION_TIME = 5000 * 60 * 60;
 
-    public String generateToken(String publicId, String email) {
+    public String generateToken(UUID id, String name, String publicId, String email, String role) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("id", id);
         claims.put("publicId", publicId);
+        claims.put("name", name);
         claims.put("email", email);
+        claims.put("role", role);
 
         return Jwts.builder()
                 .setClaims(claims)
