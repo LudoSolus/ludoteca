@@ -5,7 +5,7 @@
 	export let email: string;
 	export let ageGroup: string;
 	export let isRpgMaster: boolean = false;
-    export let onClick: () => void = () => {};
+	export let onClick: () => void = () => {};
 </script>
 
 <button class="flex items-center justify-between" on:click={onClick}>
@@ -13,7 +13,7 @@
 		class="type-icon-box flex items-center justify-center"
 		style="background-color: {isRpgMaster ? '#022780' : '#992C2C'};"
 	>
-		<Fa icon={isRpgMaster ? faCrown : faUser} color="#fff" size="1x" />
+		<Fa icon={isRpgMaster ? faCrown : faUser} color="#fff" size="2x" />
 	</div>
 
 	<p class="name-text">
@@ -36,7 +36,7 @@
 		border-top-right-radius: 50px;
 		border-bottom-right-radius: 50px;
 		padding-right: 20px;
-        cursor: pointer;
+		cursor: pointer;
 	}
 
 	.type-icon-box {
