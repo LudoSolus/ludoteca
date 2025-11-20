@@ -26,7 +26,7 @@ public class GetGameDetailsUserHandler {
                 .map(game -> new GetGameDetailsUserView(
                         game.getTitle(),
                         game.getDescription(),
-                        game.getCategory(),
+                        game.getCategory().name(),
                         game.getMinPlayers(),
                         game.getMaxPlayers(),
                         game.getLinkInstructionManual(),

@@ -9,11 +9,11 @@
 	--hover-color: #847818;
 	--active-color: #3a3405;
 
-	/* CONFIGURAÇÔES TOAST*/
 	--svoast-bg: #fff;
 	--svoast-text: #1b1803;
 	--svoast-radius: 4px;
 	--svoast-font-size: 14px;
+    --tw-border-style: solid;
 }
 
 html {
