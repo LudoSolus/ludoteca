@@ -8,19 +8,19 @@ import { authService } from '$lib/shared/stores/auth';
 import { get } from 'svelte/store';
 
 export class CommandsHandlerService {
-  constructor(
-    public axios: Axios,
-  ) {
-    const token = get(authService.getUserToken());
-    if(token) axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  }
+	constructor(public axios: Axios) {
+		if (authService.isAuthenticated())
+			axios.defaults.headers.common['Authorization'] = `Bearer ${get(authService.getUserToken())}`;
+	}
 
-  handle(command: ICommand): Observable<AxiosResponse<ICommandResult>> {
-    return command.execute(this).pipe(
-      catchError(err => {
-        toast.error(err?.response?.data?.errorMessage || 'Ocorreu um erro na requisição.', { closable: true });
-        return throwError(() => err);
-      }),
-    );
-  }
+	handle(command: ICommand): Observable<AxiosResponse<ICommandResult>> {
+		return command.execute(this).pipe(
+			catchError((err) => {
+				toast.error(err?.response?.data?.errorMessage || 'Ocorreu um erro na requisição.', {
+					closable: true
+				});
+				return throwError(() => err);
+			})
+		);
+	}
 }
