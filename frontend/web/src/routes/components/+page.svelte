@@ -1,16 +1,16 @@
 <script lang="ts">
 	import BoardGame from '$lib/components/atoms/BoardGame.svelte';
 	import Button from '$lib/components/atoms/Button.svelte';
-	import Input from '$lib/components/atoms/Input.svelte';
+	import Input from '$lib/components/atoms/FormInput.svelte';
 	import ProfilePicture from '$lib/components/atoms/ProfilePicture.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
 	import UserContainer from '$lib/components/atoms/UserContainer.svelte';
 	import { ECategory } from '$lib/shared/enums/category.enum';
-	import { EUserType } from '$lib/shared/enums/user-type.enum';
 	import { faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import EscapeRoomContainer from '$lib/components/atoms/EscapeRoomContainer.svelte';
 	import RpgContainer from '$lib/components/atoms/RpgContainer.svelte';
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
+	import { EUserRole } from '$lib/shared/enums/user-role.enum';
 	let eventDate: Date = new Date("2025-09-05");
 	
 	type SelectInputOption = {
@@ -104,11 +104,11 @@
 		<BoardGame title={'Cidades Sombrias: Salem 1692'} category={ECategory.BlefeEnganacao} minParticipants={4} maxParticipants={12} isActivate={true} />
 		<BoardGame title={'Daybreak'} category={ECategory.Cooperativos} minParticipants={1} maxParticipants={4} isActivate={true} />
 		<BoardGame title={'Sherlock Holmes: Consulting Detective'} category={ECategory.Deducao} minParticipants={1} maxParticipants={8} />
-		<BoardGame userType={EUserType.admin} title={'Dixit: Odyssey'} category={ECategory.PartyGame} minParticipants={3} maxParticipants={12} isActivate={true} />
+		<BoardGame userType={EUserRole.ADMIN} title={'Dixit: Odyssey'} category={ECategory.PartyGame} minParticipants={3} maxParticipants={12} isActivate={true} />
 		<BoardGame title={'Tá na mala'} category={ECategory.Destreza} minParticipants={2} maxParticipants={4} isActivate={true} />
-		<BoardGame userType={EUserType.admin} title={'Hex'} category={ECategory.JogosAbstratos} minParticipants={2} isActivate={true} />
+		<BoardGame userType={EUserRole.ADMIN} title={'Hex'} category={ECategory.JogosAbstratos} minParticipants={2} isActivate={true} />
 		<BoardGame title={'Mental Blocks'} category={ECategory.LogicaQuebraCabeca} minParticipants={2} maxParticipants={9} />
-		<BoardGame userType={EUserType.admin} title={'Cthulhu: Death May Die'} category={ECategory.AventuraTematicos} minParticipants={1} maxParticipants={5} />
+		<BoardGame userType={EUserRole.ADMIN} title={'Cthulhu: Death May Die'} category={ECategory.AventuraTematicos} minParticipants={1} maxParticipants={5} />
 		<BoardGame title={'Inovatec: UTFPR'} category={ECategory.Outros} minParticipants={2} maxParticipants={4} isActivate={true} />
 	</div>
 

@@ -1,3 +1,5 @@
+import type { ECategory } from "$lib/shared/enums/category.enum";
+
 export interface GetEventDetailsResponse {
 	name: string;
 	startDate: Date;
@@ -12,10 +14,10 @@ export interface GetEventDetailsResponse {
 	listGames: GameDetailsForEvent[];
 }
 
-interface GameDetailsForEvent {
+export interface GameDetailsForEvent {
 	nameGame: string;
 	isAvailable: boolean;
-	category: string;
+	category: ECategory;
 	minPlayers: number;
 	maxPlayers: number;
 }
