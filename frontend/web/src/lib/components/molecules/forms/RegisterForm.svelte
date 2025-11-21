@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { IEducationalInstitution } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.interface';
-	import Input from '$lib/components/atoms/Input.svelte';
+	import Input from '$lib/components/atoms/FormInput.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
 	import { Validators } from '$lib/shared/helpers/validators';
 	import type { InputController } from '$lib/shared/interfaces/input-controller';

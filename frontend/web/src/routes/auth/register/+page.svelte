@@ -5,7 +5,7 @@
 	import { ListEducationalInstitutionsQuery } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.query';
 	import Register from '$lib/components/templates/Register.svelte';
 	import { UserRole } from '$lib/shared/enums/user-role.enum';
-	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
+	imporEUserRoleandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import { onlyNumbers } from '$lib/shared/helpers/only-numbers';
 	import { authService } from '$lib/shared/stores/auth';
@@ -58,7 +58,7 @@
 			error: (err) => {
 				registerUserLoading = false;
 			}
-		});
+		});EUserRole
 	}
 </script>
 

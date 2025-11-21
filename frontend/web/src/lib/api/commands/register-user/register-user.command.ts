@@ -1,6 +1,5 @@
 import { PUBLIC_API_URL } from "$env/static/public";
-import { EErrorCode } from "$lib/shared/enums/error-code.enum";
-import type { UserRole } from "$lib/shared/enums/user-role.enum";
+import type { EUserRole } from "$lib/shared/enums/user-role.enum";
 import type { ICommandResult } from "$lib/shared/handlers/command/command-result.interface";
 import type { ICommand } from "$lib/shared/handlers/command/command.interface";
 import type { CommandsHandlerService } from "$lib/shared/handlers/command/commands-handler.service";
@@ -17,7 +16,7 @@ export class RegisterUserCommand implements ICommand {
             private phone: string,
             private ra: string | null,
             private birthDate: Date,
-            private userRole: UserRole,
+            private userRole: EUserRole,
             private institutionId: string,
     ) { }
 

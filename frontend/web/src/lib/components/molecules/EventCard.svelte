@@ -3,6 +3,8 @@
   import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
   import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
   import Button from "$lib/components/atoms/Button.svelte";
+	import { formatDate } from "$lib/shared/helpers/format-date";
+	import { formatTime } from "$lib/shared/helpers/format-time";
 
   export let title: string;
   export let dateStart: Date;
@@ -10,20 +12,6 @@
   export let activities: { icon: IconDefinition; text: string }[] = [];
   export let address: string[] = [];
   export let image: string;
-
- 
-  const formatDate = (date: Date) =>
-    date.toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-
-  const formatTime = (date: Date) =>
-    date.toLocaleTimeString("pt-BR", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
 </script>
 
 <div

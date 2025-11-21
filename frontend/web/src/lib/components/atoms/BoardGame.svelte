@@ -5,14 +5,14 @@
   import { categoryIconMap } from '$lib/shared/helpers/category-icon.map';
   import Tooltip from '$lib/components/atoms/Tooltip.svelte';
   import Icon from '$lib/components/atoms/icons/Icon.svelte';
-  import { EUserType } from '$lib/shared/enums/user-type.enum';
+	import { EUserRole } from '$lib/shared/enums/user-role.enum';
 
   // Props
   export let title: string;
   export let category: ECategory;
   export let minParticipants: number | undefined = undefined;
   export let maxParticipants: number | undefined = undefined;
-  export let userType: EUserType = EUserType.user;
+  export let userType: EUserRole = EUserRole.USER;
   
   export let isActivate: boolean = false;
 
@@ -43,10 +43,10 @@
   $: participantsText = [minParticipants, maxParticipants].filter(Boolean).join('-'); 
 
   // REACTIVE CLASSES
-  $: isAdmin = userType === EUserType.admin;
+  $: isAdmin = userType === EUserRole.ADMIN;
 
   // Container Classes
-  const containerBaseClasses = 'flex items-center border-2 border-solid border-black rounded-r-[2rem] rounded-l-md h-12 min-[480px]:h-[10vw] min-[590px]:h-14 cursor-pointer relative';
+  const containerBaseClasses = 'flex items-center border-2 border-solid border-black rounded-r-[2rem] rounded-l-md min-h-12 min-[480px]:min-h-[10vw] min-[590px]:min-h-14 h-12 min-[480px]:h-[10vw] min-[590px]:h-14 cursor-pointer relative';
   const containerWidthUser = 'w-[94vw] min-[590px]:w-136';
   const containerWidthAdmin = 'w-[94vw] min-[590px]:w-154';
   $: containerClasses = `${containerBaseClasses} ${isAdmin ? containerWidthAdmin : containerWidthUser}`;
@@ -78,7 +78,7 @@
   tabindex="0"
 >
   <div
-    class="flex items-center justify-center w-16 h-full rounded-[3px] box-size:border-box"
+    class="flex items-center justify-center w-16 min-h-full rounded-[3px] box-size:border-box"
     style="background-color: {isActivate ? '#2C9959' : '#992C2C'};"
   >
     <Icon icon={faChessBoard} color="#fff" size={2} />
