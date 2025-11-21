@@ -4,8 +4,8 @@
 	import type { IEducationalInstitution } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.interface';
 	import { ListEducationalInstitutionsQuery } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.query';
 	import Register from '$lib/components/templates/Register.svelte';
-	import { UserRole } from '$lib/shared/enums/user-role.enum';
-	imporEUserRoleandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
+	import { EUserRole } from '$lib/shared/enums/user-role.enum';
+	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import { onlyNumbers } from '$lib/shared/helpers/only-numbers';
 	import { authService } from '$lib/shared/stores/auth';
@@ -44,7 +44,7 @@
 			onlyNumbers(data.phone),
 			data.ra.length > 0 ? data.ra : null,
 			data.birthDate as unknown as Date,
-			UserRole.USER,
+			EUserRole.USER,
 			data.instituteId
 		);
 		commandsHandler.handle(command).subscribe({
@@ -58,7 +58,7 @@
 			error: (err) => {
 				registerUserLoading = false;
 			}
-		});EUserRole
+		});
 	}
 </script>
 
