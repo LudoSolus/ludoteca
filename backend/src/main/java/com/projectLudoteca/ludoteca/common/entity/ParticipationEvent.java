@@ -1,5 +1,6 @@
 package com.projectLudoteca.ludoteca.common.entity;
 
+import com.projectLudoteca.ludoteca.common.entity.id.ParticipationEscapeRoomId;
 import com.projectLudoteca.ludoteca.common.entity.id.ParticipationEventId;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -45,6 +46,7 @@ public class ParticipationEvent {
     public ParticipationEvent(Event event, User user) {
         this.event = event;
         this.user = user;
+        this.id = new ParticipationEventId(user.getId(), event.getId());
     }
 
     public void setEvent(Event event) {

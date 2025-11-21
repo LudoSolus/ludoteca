@@ -3,6 +3,7 @@ package com.projectLudoteca.ludoteca.common.entity;
 import com.projectLudoteca.ludoteca.common.enums.EventStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
+@Setter
 @Entity
 public class Event implements Serializable {
 
@@ -111,39 +113,4 @@ public class Event implements Serializable {
         this.linkEvaluation = linkEvaluation;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
-
-    public void setFinalDate(LocalDateTime finalDate) {
-        this.finalDate = finalDate;
-    }
-
-    public void setStatus(EventStatus status) {
-        this.status = status;
-    }
-
-    public void setLinkEvaluation(String linkEvaluation) {
-        this.linkEvaluation = linkEvaluation;
-    }
-
-    public List<ParticipationEvent> getParticipationEvents() { return participationEvents; }
-
-    public List<Loan> getLoans() { return loans; }
-
-    public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
-    }
 }
