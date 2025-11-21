@@ -1,4 +1,4 @@
-import { writable, type Writable } from 'svelte/store';
+import { get, writable, type Writable } from 'svelte/store';
 import { decodeAuthJwt } from '../helpers/decode-jwt';
 
 class AuthService {
@@ -34,7 +34,7 @@ class AuthService {
 	}
 
 	public isAuthenticated(): boolean {
-		const token = localStorage.getItem(this.localStorageTokenKey);
+		const token = get(this.userToken);
 		if(!token) return false;
 
 		const decoded = decodeAuthJwt(token)

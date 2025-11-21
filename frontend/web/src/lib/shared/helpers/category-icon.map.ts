@@ -19,15 +19,15 @@ import MapAdventureIcon from '$lib/components/atoms/icons/MapAdventureIcon.svelt
 import ComercialIcon from '$lib/components/atoms/icons/ComercialIcon.svelte';
 
 export const categoryIconMap: Record<ECategory, IconDefinition | typeof SvelteComponent | string> = {
-  [ECategory.Estrategia]: faChess,
-  [ECategory.Cooperativos]: faHandshake,
-  [ECategory.Deducao]: faMagnifyingGlass,
-  [ECategory.PartyGame]: PersonDiceIcon as typeof SvelteComponent,
-  [ECategory.BlefeEnganacao]: faMasksTheater,
-  [ECategory.Destreza]: faBolt,
-  [ECategory.JogosAbstratos]: AbstractCubeIcon as typeof SvelteComponent,
-  [ECategory.LogicaQuebraCabeca]: faPuzzlePiece,
-  [ECategory.AventuraTematicos]: MapAdventureIcon as typeof SvelteComponent,
-  [ECategory.Negociacao]: ComercialIcon as typeof SvelteComponent,
-  [ECategory.Outros]: faGamepad
+  [ECategory.STRATEGY]: faChess,
+  [ECategory.COOPERATIVE]: faHandshake,
+  [ECategory.DEDUCTION]: faMagnifyingGlass,
+  [ECategory.PARTY_GAME]: PersonDiceIcon as typeof SvelteComponent,
+  [ECategory.BLUFF_DECEPTION]: faMasksTheater,
+  [ECategory.DEXTERITY]: faBolt,
+  [ECategory.ABSTRACT_GAMES]: AbstractCubeIcon as typeof SvelteComponent,
+  [ECategory.LOGIC_PUZZLE]: faPuzzlePiece,
+  [ECategory.ADVENTURE_THEME]: MapAdventureIcon as typeof SvelteComponent,
+  [ECategory.NEGOTIATION]: ComercialIcon as typeof SvelteComponent,
+  [ECategory.OTHER]: faGamepad
 }

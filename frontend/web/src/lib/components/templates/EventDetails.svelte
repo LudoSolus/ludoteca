@@ -2,26 +2,27 @@
 	import type { GetEventDetailsResponse } from '$lib/api/queries/get-event-details/get-event-details.interface';
 	import Fa from 'svelte-fa';
 	import GoBack from '../molecules/GoBack.svelte';
-	import { faCalendar, faFilter, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+	import { faCalendar, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 	import { formatCEP } from '$lib/shared/helpers/format-cep';
 	import { formatDate } from '$lib/shared/helpers/format-date';
 	import { formatTime } from '$lib/shared/helpers/format-time';
 	import SearchInput from '../atoms/SearchInput.svelte';
-	import IconButton from '../atoms/IconButton.svelte';
 	import BoardGame from '../atoms/BoardGame.svelte';
 
 	export let eventData: GetEventDetailsResponse;
 
 	let searchInputValue: string = '';
 
-	function handleOnSearchInput(value: string) {}
-
 	function handleOnClickFilter() {}
+
+	$: filteredGamesList = eventData.listGames.filter((game) => {
+		return game.nameGame.toLowerCase().includes(searchInputValue.toLowerCase());
+	});
 </script>
 
-<main class="flex flex-col gap-10 px-3 py-7 sm:px-10 md:px-15">
+<main class="flex h-full flex-col gap-10 overflow-y-auto py-7 px-1 sm:px-10 xl:px-15">
 	<GoBack title={eventData.name} description="Detalhes do evento" type="user" />
-	<div class="flex items-start justify-between px-10">
+	<div class="flex flex-wrap items-start justify-between gap-10 pb-20 px-0 sm:px-2 lg:px-4 xl:px-10">
 		<div class="flex flex-1 flex-col gap-8">
 			<h3 class="h3">Detalhes</h3>
 			<div class="flex gap-4">
@@ -35,7 +36,7 @@
 			</div>
 			<div class="flex gap-4">
 				<Fa icon={faCalendar} size="2x" />
-				<div class="flex flex-col gap-1">
+				<div class="flex min-w-50 flex-col gap-1">
 					<p>
 						<span class="font-bold">Começo:{' '}</span>{formatDate(eventData.startDate)} - {formatTime(
 							eventData.startDate
@@ -49,33 +50,27 @@
 				</div>
 			</div>
 		</div>
-		<div class="flex flex-1 flex-col gap-8">
-			<h3 class="h3">Jogos</h3>
-			<div class="flex w-150 items-center justify-start gap-5">
-				<SearchInput
-					bind:value={searchInputValue}
-					placeholder="Pesquisar..."
-					onInput={handleOnSearchInput}
-				/>
-				<IconButton
-					icon={faFilter}
-					onClick={handleOnClickFilter}
-					variant="naked"
-					size="2x"
-					width="44px"
-					height="44px"
-				/>
-			</div>
-			<div class="flex flex-col gap-2 max-h-76 overflow-y-auto">
-				{#each eventData.listGames as game}
-					<BoardGame
-						title={game.nameGame}
-						category={game.category}
-						minParticipants={game.minPlayers}
-						maxParticipants={game.maxPlayers}
-						isActivate={game.isAvailable}
-					/>
-				{/each}
+		<div class="flex flex-1 flex-col items-center justify-center gap-8">
+			<h3 class="h3 w-full text-start">Jogos</h3>
+			<div class="flex flex-col gap-8">
+				<div class="flex max-w-150 w-full items-center justify-start gap-5">
+					<SearchInput bind:value={searchInputValue} placeholder="Pesquisar..." />
+				</div>
+				<div class="flex max-h-76 w-fit flex-col gap-2 overflow-y-auto px-1 md:px-4 py-2">
+					{#if filteredGamesList.length > 0}
+						{#each filteredGamesList as game}
+							<BoardGame
+								title={game.nameGame}
+								category={game.category}
+								minParticipants={game.minPlayers}
+								maxParticipants={game.maxPlayers}
+								isActivate={game.isAvailable}
+							/>
+						{/each}
+					{:else}
+						<p>Nenhum jogo encontrado.</p>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>

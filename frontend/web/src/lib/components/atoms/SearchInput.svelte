@@ -7,7 +7,7 @@
 	export let value: string | null = null;
 	export let placeholder: string | null = null;
 	export let label: string | null = null;
-	export let onInput: (value: string) => void;
+	export let onInput: (value: string) => void = () => {};
 
 	function handleInput(event: any) {
 		value = event.target.value;
