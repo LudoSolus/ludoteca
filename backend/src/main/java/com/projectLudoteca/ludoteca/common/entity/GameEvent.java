@@ -17,7 +17,7 @@ public class GameEvent {
     private GameEventId id;
 
     @ManyToOne
-    @MapsId("gameId") // mapeia o campo studentId da chave composta
+    @MapsId("gameId")
     @JoinColumn(name = "game_id")
     private Game game;
 
@@ -45,6 +45,7 @@ public class GameEvent {
     public GameEvent(Game game, Event event) {
         this.game = game;
         this.event = event;
+        this.id = new GameEventId(game.getId(), event.getId());
     }
 
     public void setGame(Game game) {
