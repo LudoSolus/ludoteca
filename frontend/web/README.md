@@ -76,7 +76,7 @@ npm install
 Crie um arquivo `.env` na raiz do projeto:
 
 ```env
-PUBLIC_API_URL=http://127.0.0.1:1234/
+PUBLIC_API_URL=http://127.0.0.1:1234
 ```
 
 4. **Inicie o servidor de desenvolvimento**
@@ -266,7 +266,7 @@ Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
 
 ```env
 # URL da API Backend
-PUBLIC_API_URL=http://127.0.0.1:9999/
+PUBLIC_API_URL=http://127.0.0.1:1234
 
 # Outras configurações (se necessário)
 # PUBLIC_APP_NAME=Ludoteca
