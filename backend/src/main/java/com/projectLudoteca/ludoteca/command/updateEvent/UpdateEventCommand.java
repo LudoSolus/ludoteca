@@ -15,7 +15,7 @@ public record UpdateEventCommand(String name,
                                  String city,
                                  String state,
                                  String zipCode,
-                                 Boolean hasBoardgames,
+                                 Boolean hasBoardGames,
                                  Boolean hasRpg,
                                  Boolean hasEscapeRoom,
                                  List<UUID> gamesIds) {

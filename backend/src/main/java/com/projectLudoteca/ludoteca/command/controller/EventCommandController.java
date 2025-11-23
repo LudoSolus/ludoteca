@@ -27,7 +27,7 @@ public class EventCommandController {
     }
 
     @PostMapping("/register")
-    @Operation(summary = "Registrar novo jogo", description = "Cria um jogo com dados válidos")
+    @Operation(summary = "Registrar novo evento", description = "Cria um evento com dados válidos")
     public ResponseEntity<ApiResponse<String>> createGame(@RequestBody @Validated CreateEventCommand command) {
 
         String message = createEventHandler.handle(command);

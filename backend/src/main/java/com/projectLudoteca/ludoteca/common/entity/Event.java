@@ -67,6 +67,12 @@ public class Event implements Serializable {
     @Column(name = "link_evaluation")
     private String linkEvaluation;
 
+    private Boolean hasBoardGames = false;
+
+    private Boolean hasRpg = false;
+
+    private Boolean hasEscapeRoom = false;
+
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ParticipationEvent> participationEvents = new ArrayList<>();
 
@@ -98,7 +104,7 @@ public class Event implements Serializable {
 
     public Event() {}
 
-    public Event (String name, String description, LocalDateTime finishDate, EventStatus status, String street, String number, String supplement, String neighborhood, String city, String state, String zipCode, String linkEvaluation ) {
+    public Event (String name, String description, LocalDateTime finishDate, EventStatus status, String street, String number, String supplement, String neighborhood, String city, String state, String zipCode, String linkEvaluation, Boolean hasBoardGames, Boolean hasRpg, Boolean hasEscapeRoom) {
         this.name = name;
         this.description = description;
         this.finalDate = finishDate;
@@ -111,6 +117,9 @@ public class Event implements Serializable {
         this.state = state;
         this.zipCode = zipCode;
         this.linkEvaluation = linkEvaluation;
+        this.hasBoardGames = hasBoardGames;
+        this.hasRpg = hasRpg;
+        this.hasEscapeRoom = hasEscapeRoom;
     }
 
 }
