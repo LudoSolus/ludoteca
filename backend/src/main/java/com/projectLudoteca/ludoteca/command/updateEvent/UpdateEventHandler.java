@@ -48,7 +48,7 @@ public class UpdateEventHandler {
                         command.city() == null &&
                         command.state() == null &&
                         command.zipCode() == null &&
-                        command.hasBoardgames() == null &&
+                        command.hasBoardGames() == null &&
                         command.hasRpg() == null &&
                         command.hasEscapeRoom() == null &&
                         command.gamesIds() == null;
@@ -69,7 +69,6 @@ public class UpdateEventHandler {
         if (command.finalDate() != null)
             event.setFinalDate(command.finalDate());
 
-        // Endereço
         if (command.street() != null) event.setStreet(command.street());
         if (command.number() != null) event.setNumber(command.number());
         if (command.supplement() != null) event.setSupplement(command.supplement());
@@ -78,14 +77,35 @@ public class UpdateEventHandler {
         if (command.state() != null) event.setState(command.state());
         if (command.zipCode() != null) event.setZipCode(command.zipCode());
 
-//        if (command.hasBoardgames() != null)
-//            event.setHasBoardgames(command.hasBoardgames());
-//
-//        if (command.hasRpg() != null)
-//            event.setHasRpg(command.hasRpg());
-//
-//        if (command.hasEscapeRoom() != null)
-//            event.setHasEscapeRoom(command.hasEscapeRoom());
+        boolean updatingModalidades =
+                command.hasBoardGames() != null ||
+                        command.hasRpg() != null ||
+                        command.hasEscapeRoom() != null;
+
+        if (updatingModalidades) {
+
+            boolean newHasBoardGames = command.hasBoardGames() != null
+                    ? command.hasBoardGames()
+                    : event.getHasBoardGames();
+
+            boolean newHasRpg = command.hasRpg() != null
+                    ? command.hasRpg()
+                    : event.getHasRpg();
+
+            boolean newHasEscapeRoom = command.hasEscapeRoom() != null
+                    ? command.hasEscapeRoom()
+                    : event.getHasEscapeRoom();
+
+            if (!newHasBoardGames && !newHasRpg && !newHasEscapeRoom) {
+                throw new IllegalArgumentException(
+                        "O evento deve possuir pelo menos uma modalidade: jogos de tabuleiro, RPG ou escape room."
+                );
+            }
+
+            event.setHasBoardGames(newHasBoardGames);
+            event.setHasRpg(newHasRpg);
+            event.setHasEscapeRoom(newHasEscapeRoom);
+        }
 
         eventRepository.save(event);
 

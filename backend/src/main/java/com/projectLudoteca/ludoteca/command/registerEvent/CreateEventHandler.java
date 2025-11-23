@@ -76,9 +76,18 @@ public class CreateEventHandler {
         event.setState(command.state());
         event.setZipCode(command.zipCode());
 
-        // flags
-        // você pode querer criar estes campos na entidade
-        // hasBoardGames, hasRpg, hasEscapeRoom
+        if ((command.hasBoardGames() == null || !command.hasBoardGames()) &&
+                (command.hasRpg() == null || !command.hasRpg()) &&
+                (command.hasEscapeRoom() == null || !command.hasEscapeRoom())) {
+
+            throw new IllegalArgumentException(
+                    "O evento deve possuir pelo menos uma modalidade: jogos de tabuleiro, RPG ou escape room."
+            );
+        }
+
+        event.setHasBoardGames(command.hasBoardGames());
+        event.setHasRpg(command.hasRpg());
+        event.setHasEscapeRoom(command.hasEscapeRoom());
 
         eventRepository.save(event);
 

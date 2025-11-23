@@ -15,8 +15,8 @@ public record CreateEventCommand(String name,
                                  String city,
                                  String state,
                                  String zipCode,
-                                 boolean hasBoardGames,
-                                 boolean hasRpg,
-                                 boolean hasEscapeRoom,
+                                 Boolean hasBoardGames,
+                                 Boolean hasRpg,
+                                 Boolean hasEscapeRoom,
                                  List<UUID> gamesIds) {
 }
