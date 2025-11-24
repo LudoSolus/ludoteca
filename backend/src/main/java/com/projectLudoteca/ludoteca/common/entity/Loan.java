@@ -31,7 +31,7 @@ public class Loan implements Serializable {
     @Column(name = "date_loan", updatable = false)
     private LocalDateTime dateLoan;
 
-    @Column(name = "date_return", updatable = false)
+    @Column(name = "date_return")
     private LocalDateTime dateReturn;
 
     @Enumerated(EnumType.STRING)
