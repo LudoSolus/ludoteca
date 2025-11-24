@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Loan implements Serializable {
 
     @Serial
@@ -64,8 +66,7 @@ public class Loan implements Serializable {
 
     public Loan() {}
 
-    public Loan(LocalDateTime dateReturn, GameStatus status, User user, Game game, Event event) {
-        this.dateReturn = dateReturn;
+    public Loan(GameStatus status, User user, Game game, Event event) {
         this.status = status;
         this.user = user;
         this.game = game;
