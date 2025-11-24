@@ -23,6 +23,7 @@ public class GetNextEventsHandler {
 
         return events.stream()
                 .map(event -> new GetNextEventsView(
+                        event.getId(),
                         event.getName(),
                         event.getStartDate(),
                         event.getFinalDate() != null ? event.getFinalDate().toString() : "Horário de finalização não definido",

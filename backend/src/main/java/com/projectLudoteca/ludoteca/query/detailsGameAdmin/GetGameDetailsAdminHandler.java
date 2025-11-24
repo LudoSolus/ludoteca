@@ -24,6 +24,7 @@ public class GetGameDetailsAdminHandler {
         List<GetGameDetailsAdminView.LoanHistoryView> loanHistory = game.getLoans().stream()
                 .map(loan -> new GetGameDetailsAdminView.LoanHistoryView(
                         loan.getId(),
+                        loan.getUser().getId(),
                         loan.getUser().getEmail(),
                         loan.getDateLoan()
                 ))
@@ -31,6 +32,7 @@ public class GetGameDetailsAdminHandler {
 
         return new GetGameDetailsAdminView(
                 game.getBarcode(),
+                game.getId(),
                 game.getTitle(),
                 game.getDescription(),
                 game.getCategory().name(),
