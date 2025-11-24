@@ -18,7 +18,13 @@ public class LoanGameInEventHandler {
     private final EventRepository eventRepository;
     private final GameEventRepository gameEventRepository;
 
-    public LoanGameInEventHandler(LoanRepository loanRepository, UserRepository userRepository, GameRepository gameRepository, EventRepository eventRepository, GameEventRepository gameEventRepository) {
+    public LoanGameInEventHandler(
+            LoanRepository loanRepository,
+            UserRepository userRepository,
+            GameRepository gameRepository,
+            EventRepository eventRepository,
+            GameEventRepository gameEventRepository
+    ) {
         this.loanRepository = loanRepository;
         this.userRepository = userRepository;
         this.gameRepository = gameRepository;
@@ -29,20 +35,23 @@ public class LoanGameInEventHandler {
     public String handle(LoanGameInEventCommand command) {
 
         User user = userRepository.findByPublicId(command.userPublicId())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
 
-        Game game = gameRepository.findById(command.gameId())
-                .orElseThrow(() -> new RuntimeException("Jogo não encontrado"));
+        Game game = gameRepository.findByIdAndRemovedFalse(command.gameId())
+                .orElseThrow(() -> new RuntimeException("Jogo não encontrado ou removido."));
 
         Event event = eventRepository.findById(command.eventId())
-                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Evento não encontrado."));
 
         if (!gameEventRepository.existsById(new GameEventId(command.gameId(), command.eventId()))) {
-            throw new RuntimeException("Este jogo não faz parte deste evento");
+            throw new RuntimeException("Este jogo não faz parte deste evento.");
         }
 
-        if (!game.getIsAvailable()) {
-            throw new RuntimeException("Jogo já está emprestado");
+        boolean hasActiveLoan = loanRepository
+                .existsByGameIdAndDateReturnIsNullAndRemovedFalse(command.gameId());
+
+        if (hasActiveLoan) {
+            throw new RuntimeException("Este jogo já está emprestado.");
         }
 
         Loan loan = new Loan(
@@ -53,10 +62,10 @@ public class LoanGameInEventHandler {
         );
 
         game.setIsAvailable(false);
+
         gameRepository.save(game);
         loanRepository.save(loan);
 
         return "Jogo emprestado com sucesso!";
     }
-
 }

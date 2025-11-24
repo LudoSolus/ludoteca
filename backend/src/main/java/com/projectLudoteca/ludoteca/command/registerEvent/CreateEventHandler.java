@@ -100,7 +100,7 @@ public class CreateEventHandler {
             }
         }
 
-        return "Jogo cadastrado com Sucesso!";
+        return "Evento cadastrado com Sucesso!";
     }
 
 }
