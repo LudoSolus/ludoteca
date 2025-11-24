@@ -24,6 +24,8 @@ public class GetGameDetailsUserHandler {
 
         return gameRepository.findByBarcode(query.barcode())
                 .map(game -> new GetGameDetailsUserView(
+                        game.getId(),
+                        game.getBarcode(),
                         game.getTitle(),
                         game.getDescription(),
                         game.getCategory().name(),

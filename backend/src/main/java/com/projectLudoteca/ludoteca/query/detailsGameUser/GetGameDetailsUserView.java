@@ -1,6 +1,10 @@
 package com.projectLudoteca.ludoteca.query.detailsGameUser;
 
-public record GetGameDetailsUserView(String title,
+import java.util.UUID;
+
+public record GetGameDetailsUserView(UUID id,
+                                     Integer barcode,
+                                     String title,
                                      String description,
                                      String category,
                                      Integer minPlayers,

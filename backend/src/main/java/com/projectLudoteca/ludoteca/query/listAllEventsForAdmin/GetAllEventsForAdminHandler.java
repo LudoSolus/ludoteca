@@ -20,6 +20,7 @@ public class GetAllEventsForAdminHandler {
 
         return events.stream()
                 .map(event -> new GetAllEventsForAdminView(
+                        event.getId(),
                         event.getName(),
                         event.getStartDate(),
                         event.getFinalDate() != null ? event.getFinalDate().toString() : "Horário de finalização não definido",

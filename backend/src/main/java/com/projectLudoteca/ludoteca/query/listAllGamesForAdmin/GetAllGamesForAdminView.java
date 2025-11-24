@@ -1,4 +1,6 @@
 package com.projectLudoteca.ludoteca.query.listAllGamesForAdmin;
 
-public record GetAllGamesForAdminView(String name, String category, Integer minParticipants, Integer maxParticipants) {
+import java.util.UUID;
+
+public record GetAllGamesForAdminView(UUID id, Integer barcode, String name, String category, Integer minParticipants, Integer maxParticipants) {
 }

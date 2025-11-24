@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 public record GetGameDetailsAdminView(Integer barcode,
+                                      UUID id,
                                       String title,
                                       String description,
                                       String category,
@@ -16,6 +17,7 @@ public record GetGameDetailsAdminView(Integer barcode,
 ) {
     public record LoanHistoryView(
             UUID loanId,
+            UUID userId,
             String userEmail,
             LocalDateTime loanDate
     ) {}
