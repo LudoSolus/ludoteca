@@ -3,7 +3,6 @@ package com.projectLudoteca.ludoteca.common.repository;
 import com.projectLudoteca.ludoteca.common.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -19,4 +18,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query(value = "SELECT * FROM users WHERE id = ?1", nativeQuery = true)
     Optional<User> findUserNative(UUID userId);
+
+    Optional<User> findByPublicIdAndRemovedFalse(String publicId);
+
 }

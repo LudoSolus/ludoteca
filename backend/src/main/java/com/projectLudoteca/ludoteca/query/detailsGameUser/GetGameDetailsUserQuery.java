@@ -1,4 +1,6 @@
 package com.projectLudoteca.ludoteca.query.detailsGameUser;
 
-public record GetGameDetailsUserQuery(Integer barcode) {
+import java.util.UUID;
+
+public record GetGameDetailsUserQuery(UUID id) {
 }
