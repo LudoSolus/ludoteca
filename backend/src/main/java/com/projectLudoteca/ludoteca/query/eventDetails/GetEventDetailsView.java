@@ -15,7 +15,8 @@ public record GetEventDetailsView(String name,
                                   String state,
                                   String zipCode,
                                   List<ListGamesView> listGames) {
-    public record ListGamesView(
+    public record ListGamesView( UUID id,
+            Integer barcode,
             String nameGame,
             Boolean isAvailable,
             String category,

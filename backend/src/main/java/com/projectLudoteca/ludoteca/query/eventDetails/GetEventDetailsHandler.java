@@ -24,6 +24,8 @@ public class GetEventDetailsHandler {
         List<GetEventDetailsView.ListGamesView> games = event.getGamesEvent().stream()
                 .filter(ge -> !ge.getRemoved() && ge.getGame() != null)
                 .map(ge -> new GetEventDetailsView.ListGamesView(
+                        ge.getGame().getId(),
+                        ge.getGame().getBarcode(),
                         ge.getGame().getTitle(),
                         ge.getGame().getIsAvailable(),
                         ge.getGame().getCategory().name(),

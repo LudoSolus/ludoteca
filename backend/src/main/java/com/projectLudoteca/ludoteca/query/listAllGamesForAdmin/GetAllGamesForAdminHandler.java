@@ -18,7 +18,7 @@ public class GetAllGamesForAdminHandler {
 
         return gameRepository.findAll()
                 .stream()
-                .map(g -> new GetAllGamesForAdminView(g.getTitle(), g.getCategory().name(), g.getMinPlayers(), g.getMaxPlayers()))
+                .map(g -> new GetAllGamesForAdminView(g.getId(), g.getBarcode(), g.getTitle(), g.getCategory().name(), g.getMinPlayers(), g.getMaxPlayers()))
                 .toList();
     }
 }
