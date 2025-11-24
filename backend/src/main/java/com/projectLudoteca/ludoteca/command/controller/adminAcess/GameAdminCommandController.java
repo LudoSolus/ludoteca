@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.command.controller;
+package com.projectLudoteca.ludoteca.command.controller.adminAcess;
 
 import com.projectLudoteca.ludoteca.command.registerGame.CreateGameCommand;
 import com.projectLudoteca.ludoteca.command.registerGame.CreateGameHandler;
@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/commands/games")
-public class GameCommandController {
+@RequestMapping("/commands/admin/games")
+public class GameAdminCommandController {
 
     private final CreateGameHandler createGameHandler;
 
     @Autowired
-    public GameCommandController(CreateGameHandler createGameHandler) {
+    public GameAdminCommandController(CreateGameHandler createGameHandler) {
         this.createGameHandler = createGameHandler;
     }
 

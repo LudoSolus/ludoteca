@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.command.controller;
+package com.projectLudoteca.ludoteca.command.controller.adminAcess;
 
 import com.projectLudoteca.ludoteca.command.registerEvent.CreateEventCommand;
 import com.projectLudoteca.ludoteca.command.registerEvent.CreateEventHandler;
@@ -16,12 +16,12 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/commands/admin/events")
 @Validated
-public class EventCommandController {
+public class EventAdminCommandController {
 
     private final CreateEventHandler createEventHandler;
     private final UpdateEventHandler updateEventHandler;
 
-    public EventCommandController(CreateEventHandler createEventHandler, UpdateEventHandler updateEventHandler) {
+    public EventAdminCommandController(CreateEventHandler createEventHandler, UpdateEventHandler updateEventHandler) {
         this.createEventHandler = createEventHandler;
         this.updateEventHandler = updateEventHandler;
     }

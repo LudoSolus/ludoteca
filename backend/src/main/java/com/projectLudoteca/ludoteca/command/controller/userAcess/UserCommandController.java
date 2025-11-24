@@ -1,4 +1,4 @@
-package com.projectLudoteca.ludoteca.command.controller;
+package com.projectLudoteca.ludoteca.command.controller.userAcess;
 
 import com.projectLudoteca.ludoteca.command.confirmationPasswordReset.ConfirmationPasswordResetCommand;
 import com.projectLudoteca.ludoteca.command.confirmationPasswordReset.ConfirmationPasswordResetHandler;
