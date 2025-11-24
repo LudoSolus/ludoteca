@@ -13,8 +13,6 @@
 
 	let searchInputValue: string = '';
 
-	function handleOnClickFilter() {}
-
 	$: filteredGamesList = eventData.listGames.filter((game) => {
 		return game.nameGame.toLowerCase().includes(searchInputValue.toLowerCase());
 	});
