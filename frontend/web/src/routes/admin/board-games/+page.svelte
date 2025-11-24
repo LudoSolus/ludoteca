@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { IBoardGame } from '$lib/api/queries/list-board-games/list-board-games.interface';
-	import { ListBoardGamesQuery } from '$lib/api/queries/list-board-games/list-board-games.query';
-	import BoardGamesManager from '$lib/components/templates/BoardGamesManager.svelte';
+	import type { IBoardGame } from '$lib/api/queries/board-games/list-board-games/list-board-games.interface';
+	import { ListBoardGamesQuery } from '$lib/api/queries/board-games/list-board-games/list-board-games.query';
+	import BoardGamesManager from '$lib/components/templates/admin/BoardGamesManager.svelte';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
@@ -17,7 +17,6 @@
 		queriesHandler.handle(new ListBoardGamesQuery()).subscribe({
 			next: (res) => {
 				boardGames = res.resultData;
-                console.log(boardGames)
 			},
 			error: (err) => {
 				console.log(err);

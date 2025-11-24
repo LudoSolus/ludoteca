@@ -17,8 +17,8 @@
   export let isActivate: boolean = false;
 
   // Events
-  export const onClick: () => void = () => {alert("Abrir Página do Jogo!")};
-  export const onAdminClick: () => void = () => {alert("Ação Admin!")};
+  export let onClick: () => void = () => {alert("Abrir Página do Jogo!")};
+  export let onAdminClick: () => void = () => {alert("Ação Admin!")};
 
   // Reatividade
   let clientTitleWidth: number = 0;

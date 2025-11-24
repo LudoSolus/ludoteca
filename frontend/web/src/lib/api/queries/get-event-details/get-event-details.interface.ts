@@ -1,4 +1,4 @@
-import type { ECategory } from "$lib/shared/enums/category.enum";
+import type { ECategory } from '$lib/shared/enums/category.enum';
 
 export interface GetEventDetailsResponse {
 	name: string;
@@ -15,6 +15,8 @@ export interface GetEventDetailsResponse {
 }
 
 export interface GameDetailsForEvent {
+	id: string;
+	barcode: string;
 	nameGame: string;
 	isAvailable: boolean;
 	category: ECategory;
