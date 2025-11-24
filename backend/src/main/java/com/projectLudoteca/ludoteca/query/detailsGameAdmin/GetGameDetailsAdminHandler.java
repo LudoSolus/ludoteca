@@ -18,7 +18,7 @@ public class GetGameDetailsAdminHandler {
     }
 
     public GetGameDetailsAdminView handle(GetGameDetailsAdminQuery query) {
-        Game game = gameRepository.findByBarcode(query.barcode())
+        Game game = gameRepository.findById(query.id())
                 .orElseThrow(() -> new NoSuchElementException("Jogo não encontrado."));
 
         List<GetGameDetailsAdminView.LoanHistoryView> loanHistory = game.getLoans().stream()
