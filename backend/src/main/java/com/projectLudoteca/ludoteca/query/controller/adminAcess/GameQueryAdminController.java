@@ -9,7 +9,6 @@ import com.projectLudoteca.ludoteca.query.getGameByBarcode.GetGameByBarcodeHandl
 import com.projectLudoteca.ludoteca.query.getGameByBarcode.GetGameByBarcodeQuery;
 import com.projectLudoteca.ludoteca.query.listAllGamesForAdmin.GetAllGamesForAdminHandler;
 import com.projectLudoteca.ludoteca.query.listAllGamesForAdmin.GetAllGamesForAdminView;
-import com.projectLudoteca.ludoteca.query.listAllUsersAdminForAdmin.GetAllUsersForAdminView;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/queries/admin/games")
@@ -33,11 +33,11 @@ public class GameQueryAdminController {
         this.allGamesForAdminHandler = allGamesForAdminHandler;
     }
 
-    @GetMapping("/{barcode}/details")
+    @GetMapping("/{id}/details")
     @Operation(summary = "Lista os dados de um jogo", description = "Realiza uma busca de um determinado jogo no sistema e retorna seus dados para o administrador.")
-    public ResponseEntity<ApiResponse<GetGameDetailsAdminView>> getDetails(@PathVariable Integer barcode) {
+    public ResponseEntity<ApiResponse<GetGameDetailsAdminView>> getDetails(@PathVariable UUID id) {
 
-        GetGameDetailsAdminView view = gameDetailsAdminHandler.handle(new GetGameDetailsAdminQuery(barcode));
+        GetGameDetailsAdminView view = gameDetailsAdminHandler.handle(new GetGameDetailsAdminQuery(id));
 
         ApiResponse<GetGameDetailsAdminView> response = new ApiResponse<>(view);
 
@@ -45,7 +45,7 @@ public class GameQueryAdminController {
     }
 
     @GetMapping("/{barcode}/get-game")
-    @Operation(summary = "Busca um jogo", description = "Realiza uma busca de um determinado jogo no sistema e retorna seu id e nome para o administrador.")
+    @Operation(summary = "Busca um jogo", description = "Realiza uma busca de um determinado jogo no sistema pelo seu código de barras e retorna seu id e nome para o administrador.")
     public ResponseEntity<ApiResponse<GetGameByBarcodeAdminView>> getGameDetailsAdminHandler(@PathVariable Integer barcode) {
 
         GetGameByBarcodeAdminView view = gameByBarcodeHandler.handle(new GetGameByBarcodeQuery(barcode));

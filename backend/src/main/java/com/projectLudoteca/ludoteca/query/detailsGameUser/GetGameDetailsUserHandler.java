@@ -18,11 +18,11 @@ public class GetGameDetailsUserHandler {
 
     public GetGameDetailsUserView handle(GetGameDetailsUserQuery query) {
 
-        if (query.barcode() == null) {
-            throw new IllegalArgumentException("O código de barras não pode ser nulo.");
+        if (query.id() == null) {
+            throw new IllegalArgumentException("O id não pode ser nulo.");
         }
 
-        return gameRepository.findByBarcode(query.barcode())
+        return gameRepository.findById(query.id())
                 .map(game -> new GetGameDetailsUserView(
                         game.getId(),
                         game.getBarcode(),

@@ -1,5 +1,6 @@
 package com.projectLudoteca.ludoteca.common.entity.id;
 
+import jakarta.persistence.Embeddable;
 import lombok.Getter;
 
 import java.io.Serial;
@@ -8,6 +9,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Getter
+@Embeddable
 public class ParticipationEventId implements Serializable {
 
     @Serial
