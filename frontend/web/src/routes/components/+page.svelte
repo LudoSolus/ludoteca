@@ -1,5 +1,5 @@
 <script lang="ts">
-	import BoardGame from '$lib/components/atoms/BoardGame.svelte';
+	import BoardGame from '$lib/components/molecules/BoardGame.svelte';
 	import Button from '$lib/components/atoms/Button.svelte';
 	import Input from '$lib/components/atoms/FormInput.svelte';
 	import ProfilePicture from '$lib/components/atoms/ProfilePicture.svelte';
@@ -98,19 +98,6 @@
 		onChange={handleSelect}
 		width="300px"
 	/>
-
-	<div class="mt-6 flex flex-col items-start gap-4">
-		<BoardGame title={'Catan: O Jogo'} category={ECategory.Negociacao} minParticipants={3} maxParticipants={4} />
-		<BoardGame title={'Cidades Sombrias: Salem 1692'} category={ECategory.BlefeEnganacao} minParticipants={4} maxParticipants={12} isActivate={true} />
-		<BoardGame title={'Daybreak'} category={ECategory.Cooperativos} minParticipants={1} maxParticipants={4} isActivate={true} />
-		<BoardGame title={'Sherlock Holmes: Consulting Detective'} category={ECategory.Deducao} minParticipants={1} maxParticipants={8} />
-		<BoardGame userType={EUserRole.ADMIN} title={'Dixit: Odyssey'} category={ECategory.PartyGame} minParticipants={3} maxParticipants={12} isActivate={true} />
-		<BoardGame title={'Tá na mala'} category={ECategory.Destreza} minParticipants={2} maxParticipants={4} isActivate={true} />
-		<BoardGame userType={EUserRole.ADMIN} title={'Hex'} category={ECategory.JogosAbstratos} minParticipants={2} isActivate={true} />
-		<BoardGame title={'Mental Blocks'} category={ECategory.LogicaQuebraCabeca} minParticipants={2} maxParticipants={9} />
-		<BoardGame userType={EUserRole.ADMIN} title={'Cthulhu: Death May Die'} category={ECategory.AventuraTematicos} minParticipants={1} maxParticipants={5} />
-		<BoardGame title={'Inovatec: UTFPR'} category={ECategory.Outros} minParticipants={2} maxParticipants={4} isActivate={true} />
-	</div>
 
 </div>
 

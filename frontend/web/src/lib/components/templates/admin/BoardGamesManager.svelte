@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { IBoardGame } from '$lib/api/queries/board-games/list-board-games/list-board-games.interface';
-	import BoardGame from '../../atoms/BoardGame.svelte';
+	import BoardGame from '../../molecules/BoardGame.svelte';
 	import SearchInput from '../../atoms/SearchInput.svelte';
 	import defaultImg from '$lib/assets/default.png';
 	import Button from '../../atoms/Button.svelte';

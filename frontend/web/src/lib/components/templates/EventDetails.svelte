@@ -7,7 +7,7 @@
 	import { formatDate } from '$lib/shared/helpers/format-date';
 	import { formatTime } from '$lib/shared/helpers/format-time';
 	import SearchInput from '../atoms/SearchInput.svelte';
-	import BoardGame from '../atoms/BoardGame.svelte';
+	import BoardGame from '../molecules/BoardGame.svelte';
 
 	export let eventData: GetEventDetailsResponse;
 
