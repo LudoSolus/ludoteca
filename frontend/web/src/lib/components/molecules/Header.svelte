@@ -30,8 +30,6 @@
 		{ name: 'Usuários', path: '/admin/users' },
 		{ name: 'Eventos', path: '/admin/events' },
 		{ name: 'Board Games', path: '/admin/board-games' },
-		{ name: 'RPG', path: '/admin/rpg' },
-		{ name: 'Escape Room', path: '/admin/escape-room' }
 	];
 
 	const userRoutes: Route[] = [
