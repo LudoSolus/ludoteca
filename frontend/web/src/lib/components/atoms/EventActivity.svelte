@@ -7,8 +7,7 @@
 </script>
 
 <div
-	class="flex items-center gap-4 font-medium"
-	style="font-size:18px; line-height:22px; letter-spacing:0;"
+	class="flex items-center gap-2 font-medium text-sm"
 >
 	<Icon {icon} classes="h-5 w-5 text-black" />
 	<span>{title}</span>
