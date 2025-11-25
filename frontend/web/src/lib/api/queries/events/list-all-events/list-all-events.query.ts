@@ -12,7 +12,7 @@ export class ListAllEventsQuery implements IQuery<IListEvent[]> {
     constructor() {}
 
     execute(queriesHandler: QueriesHandlerService): Observable<IQueryResult<IListEvent[]>> {
-        const url = `${PUBLIC_API_URL}/queries/admin/games/list-all-games`;
+        const url = `${PUBLIC_API_URL}/queries/admin/events/list-all-events`;
         return from(queriesHandler.axios.get<IQueryResult<IListEvent[]>>(url)).pipe(
             map((result: AxiosResponse<IQueryResult<IListEvent[]>>) => {
                 if (!result || !result.data || !result.data.resultData)
