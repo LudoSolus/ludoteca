@@ -10,6 +10,7 @@ import com.projectLudoteca.ludoteca.common.repository.GameRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,7 +33,13 @@ public class UpdateEventHandler {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Evento não encontrado."));
 
-        if (event.getStatus() == EventStatus.COMPLETED) {
+        LocalDateTime now = LocalDateTime.now();
+
+        if(now.isAfter(event.getFinalDate())) {
+            event.setStatus(EventStatus.COMPLETED);
+        }
+
+        if (event.getStatus() == EventStatus.COMPLETED)  {
             throw new RuntimeException("Este evento já foi finalizado e não pode ser editado.");
         }
 
