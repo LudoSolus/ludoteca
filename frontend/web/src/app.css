@@ -13,7 +13,7 @@
 	--svoast-text: #1b1803;
 	--svoast-radius: 4px;
 	--svoast-font-size: 14px;
-    --tw-border-style: solid;
+	--tw-border-style: solid;
 }
 
 html {
@@ -33,7 +33,7 @@ body {
 	overflow-y: auto;
 	overflow-x: hidden;
 	scrollbar-width: thin;
-    background: rgba(254, 236, 126, 0.1);
+	background: rgba(254, 236, 126, 0.1);
 }
 
 body::-webkit-scrollbar {
@@ -51,5 +51,15 @@ a {
 
 .h3 {
 	font-weight: 600;
-	font-size: 30px;
+	font-size: 24px;
+}
+
+.inter {
+	font-family: 'Inter', sans-serif;
+}
+
+@media (min-width: 768px) {
+	.h3 {
+		font-size: 30px;
+	}
 }

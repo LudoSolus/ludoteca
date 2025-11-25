@@ -1,78 +1,106 @@
 <script lang="ts">
-  import Fa from "svelte-fa";
-  import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-  import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-  import Button from "$lib/components/atoms/Button.svelte";
-	import { formatDate } from "$lib/shared/helpers/format-date";
-	import { formatTime } from "$lib/shared/helpers/format-time";
+	import Fa from 'svelte-fa';
+	import {
+		faArrowRight,
+		faChessBoard,
+		faDice,
+		faLocationDot
+	} from '@fortawesome/free-solid-svg-icons';
+	import Button from '$lib/components/atoms/Button.svelte';
+	import { formatDate } from '$lib/shared/helpers/format-date';
+	import { formatTime } from '$lib/shared/helpers/format-time';
+	import defaultEventImg from '$lib/assets/event-boardgame.png';
+	import EventActivity from '../atoms/EventActivity.svelte';
+	import { formatCEP } from '$lib/shared/helpers/format-cep';
+	import escapeRoomKey from '$lib/assets/key-svgrepo-com.svg';
+	import { device } from '$lib/shared/hooks/useDevice';
 
-  export let title: string;
-  export let dateStart: Date;
-  export let dateEnd: Date;
-  export let activities: { icon: IconDefinition; text: string }[] = [];
-  export let address: string[] = [];
-  export let image: string;
+	interface EventAddressData {
+		street: string;
+		number: string;
+		neighborhood: string;
+		city: string;
+		state: string;
+		zipCode: string;
+	}
+
+	export let name: string;
+	export let startDate: Date;
+	export let endDate: Date;
+	export let hasBoardGame: boolean;
+	export let hasRpg: boolean;
+	export let hasEscapeRoom: boolean;
+	export let address: EventAddressData;
 </script>
 
 <div
-  class="bg-[#fff6c4] border border-black rounded-[10px] p-6 
-         shadow-[0px_4px_4px_rgba(0,0,0,0.25)] flex flex-col sm:flex-row 
-         justify-between items-start w-full max-w-3xl text-black"
+	class="event-card flex w-75 min-w-75 flex-col items-start justify-between gap-6 p-4 sm:w-120 sm:min-w-120 sm:p-6"
 >
-  <div class="flex-1 space-y-4">
-    <h2
-      class="font-inknut font-medium"
-      style="font-size:18px; line-height:22px; letter-spacing:0;"
-    >
-      {title}
-    </h2>
+	<div class="flex w-full items-start justify-between gap-2">
+		<h4 class="h-14 max-h-14 overflow-hidden text-lg font-bold sm:text-xl">
+			{name}
+		</h4>
+		<div class="inter flex items-center gap-1 font-medium sm:gap-3">
+			<div class="felx flex-col items-center">
+				<p class="text-center">{formatDate(startDate)}</p>
+				<p class="text-center">{formatTime(startDate)}</p>
+			</div>
+			<p>-</p>
+			<div class="felx flex-col items-center">
+				<p class="text-center">{formatDate(endDate)}</p>
+				<p class="text-center">{formatTime(endDate)}</p>
+			</div>
+		</div>
+	</div>
+	<div class="flex w-full flex-col gap-4 sm:flex-row">
+		<div class="flex flex-1 flex-col gap-4">
+			<div class="space-y-2">
+				{#if hasBoardGame}
+					<EventActivity title="Jogos de Tabuleiro" icon={faChessBoard} />
+				{/if}
+				{#if hasRpg}
+					<EventActivity title="RPG's" icon={faDice} />
+				{/if}
+				{#if hasEscapeRoom}
+					<EventActivity title="Escape Room" icon={escapeRoomKey} />
+				{/if}
+			</div>
 
-    <div class="space-y-2 mt-2">
-      {#each activities as activity}
-        <div
-          class="flex items-center gap-2 font-inknut font-medium"
-          style="font-size:18px; line-height:22px; letter-spacing:0;"
-        >
-          <Fa icon={activity.icon} class="text-black w-5 h-5" />
-          <span>{activity.text}</span>
-        </div>
-      {/each}
-    </div>
+			<div class="font-medium">
+				<div class="flex gap-3">
+					<Fa icon={faLocationDot} class="mt-2 text-2xl" />
+					<div class="text-sm">
+						<p>{address.street}, n° {address.number}</p>
+						<p>Bairro: {address.neighborhood}</p>
+						<p>{address.city}, {address.state}</p>
+						<p class="inter">{formatCEP(address.zipCode)}</p>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <div
-      class="mt-4 font-inknut font-medium"
-      style="font-size:18px; line-height:22px; letter-spacing:0;"
-    >
-      <div class="flex items-start gap-2">
-        <Fa icon={faLocationDot} class="text-black w-5 h-5 mt-1" />
-        <div class="space-y-1">
-          {#each address as line}
-            <p>{line}</p>
-          {/each}
-        </div>
-      </div>
-    </div>
+		<div class="flex-1 flex shrink-0 flex-col items-end justify-between gap-3 sm:h-full">
+			<img
+				src={defaultEventImg}
+				alt="Imagem do evento"
+				class=" hidden h-35 w-35 rounded-md object-contain sm:flex"
+			/>
 
-    <div class="mt-6">
-      <Button text="Detalhes →" onClick={() => {}} />
-    </div>
-  </div>
-
-  <div class="flex-shrink-0 mt-6 sm:mt-0 sm:ml-8 flex flex-col items-end gap-3">
-    <div
-      class="text-right text-sm font-inknut font-medium text-gray-800"
-      style="font-size:18px; line-height:22px; letter-spacing:0;"
-    >
-      
-      <p>{formatDate(dateStart)} - {formatDate(dateEnd)}</p>
-      
-      <p>{formatTime(dateStart)} - {formatTime(dateEnd)}</p>
-    </div>
-
-    <img
-      src={image}
-      alt="Imagem do evento"
-      class="w-48 h-48 object-contain rounded-md"
-    />
-  </div>
+			<Button
+				text="Detalhes"
+				rightIcon={faArrowRight}
+				width={$device == 'mobile' ? '100%' : undefined}
+				onClick={() => {}}
+			/>
+		</div>
+	</div>
 </div>
+
+<style>
+	.event-card {
+		border-radius: 10px;
+		border: 1px solid black;
+		background: var(--card-background-color);
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	}
+</style>
