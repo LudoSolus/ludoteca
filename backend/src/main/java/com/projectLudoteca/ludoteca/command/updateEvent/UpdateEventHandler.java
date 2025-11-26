@@ -35,14 +35,17 @@ public class UpdateEventHandler {
 
         LocalDateTime now = LocalDateTime.now();
 
-        if(now.isAfter(event.getFinalDate())) {
+        boolean endForDate = event.getFinalDate() != null && now.isAfter(event.getFinalDate());
+
+        if (endForDate && event.getStatus() != EventStatus.COMPLETED) {
             event.setStatus(EventStatus.COMPLETED);
+            eventRepository.save(event);
         }
 
-        if (event.getStatus() == EventStatus.COMPLETED)  {
+        if (event.getStatus() == EventStatus.COMPLETED || endForDate) {
             throw new RuntimeException("Este evento já foi finalizado e não pode ser editado.");
         }
-
+        
         boolean noFieldSent =
                 command.name() == null &&
                         command.description() == null &&
