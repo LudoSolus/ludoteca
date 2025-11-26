@@ -19,15 +19,15 @@ public class EndEventHandler {
 
     public String handle(String id) {
 
-        UUID uuid;
+        UUID eventId;
 
         try{
-            uuid = UUID.fromString(id);
+            eventId = UUID.fromString(id);
         } catch (RuntimeException e) {
             throw new BusinessException("Id de evento inválido!");
         }
 
-        Event event = eventRepository.findByIdAndRemovedFalse(uuid).orElseThrow(() -> new BusinessException("Evento não encontrado ou removido."));
+        Event event = eventRepository.findByIdAndRemovedFalse(eventId).orElseThrow(() -> new BusinessException("Evento não encontrado ou removido."));
 
         if (event.getStatus() == EventStatus.SCHEDULED) {
             throw new BusinessException("Evento ainda não foi iniciado para ser finalizado!");

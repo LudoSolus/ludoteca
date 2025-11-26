@@ -2,7 +2,6 @@ package com.projectLudoteca.ludoteca.query.controller.adminAcess;
 
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
 import com.projectLudoteca.ludoteca.query.detailsUserAdmin.GetUserDetailsAdminHandler;
-import com.projectLudoteca.ludoteca.query.detailsUserAdmin.GetUserDetailsAdminQuery;
 import com.projectLudoteca.ludoteca.query.detailsUserAdmin.GetUserDetailsAdminView;
 import com.projectLudoteca.ludoteca.query.listAllUsersAdminForAdmin.GetAllUsersForAdminHandler;
 import com.projectLudoteca.ludoteca.query.listAllUsersAdminForAdmin.GetAllUsersForAdminView;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/queries/admin/users")
@@ -41,7 +39,7 @@ public class UserQueryAdminController {
     @GetMapping("/{id}/get-user")
     @Operation(summary = "Busca um usuário", description = "Realiza uma busca de um determinado usuárrio no sistema e retorna seus dados para o administrador.")
     public ResponseEntity<ApiResponse<GetUserDetailsAdminView>> getUserDetails(@PathVariable String id) {
-        GetUserDetailsAdminView viewList = userDetailsAdminHandler.handle(new GetUserDetailsAdminQuery(UUID.fromString(id)));
+        GetUserDetailsAdminView viewList = userDetailsAdminHandler.handle(id);
 
         ApiResponse<GetUserDetailsAdminView> response = new ApiResponse<>(viewList);
 
