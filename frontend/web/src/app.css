@@ -3,48 +3,63 @@
 @plugin '@tailwindcss/typography';
 
 :root {
-    --primary-color: #FEEC7E;
-    --card-background-color: rgba(254, 236, 126, 0.4);
-    --link-color: #3C65FD;
-    --hover-color: #847818;
-    --active-color: #3A3405;
+	--primary-color: #feec7e;
+	--card-background-color: rgba(254, 236, 126, 0.4);
+	--link-color: #3c65fd;
+	--hover-color: #847818;
+	--active-color: #3a3405;
 
-    --tw-border-style: solid;
-
-    /* CONFIGURAÇÔES TOAST*/
-    --svoast-bg: #fff;
-    --svoast-text: #1b1803;
-    --svoast-radius: 4px;
-    --svoast-font-size: 14px;
+	--svoast-bg: #fff;
+	--svoast-text: #1b1803;
+	--svoast-radius: 4px;
+	--svoast-font-size: 14px;
+	--tw-border-style: solid;
 }
 
 html {
-    height: -webkit-fill-available;
-    font-family: "Inknut Antiqua", serif;
-    color: #000;
-    font-size: 16px;
-    font-weight: 300;
-    box-sizing: border-box;
-    transition: all 0.2s ease-in-out;
-    overflow: hidden;
+	height: 100vh;
+	height: 100dvh;
+	font-family: 'Inknut Antiqua', serif;
+	color: #000;
+	font-size: 16px;
+	font-weight: 300;
+	box-sizing: border-box;
+	transition: all 0.2s ease-in-out;
+	overflow: hidden;
 }
 
 body {
-    height: 100%;
-    overflow-y: inherit;
-    overflow-x: hidden;
-    scrollbar-width: thin;
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-width: thin;
+	background: rgba(254, 236, 126, 0.1);
 }
 
 body::-webkit-scrollbar {
-    width: 12px;
+	width: 12px;
 }
 
 body::-webkit-scrollbar-thumb {
-    border-radius: 20px;
+	border-radius: 20px;
 }
 
-a{
-    color: var(--link-color);
-    text-decoration: underline;
+a {
+	color: var(--link-color);
+	text-decoration: underline;
+}
+
+.h3 {
+	font-weight: 600;
+	font-size: 24px;
+}
+
+.inter {
+	font-family: 'Inter', sans-serif;
+}
+
+@media (min-width: 768px) {
+	.h3 {
+		font-size: 30px;
+	}
 }

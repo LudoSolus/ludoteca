@@ -18,12 +18,13 @@ public class GetGameDetailsAdminHandler {
     }
 
     public GetGameDetailsAdminView handle(GetGameDetailsAdminQuery query) {
-        Game game = gameRepository.findByBarcode(query.barcode())
+        Game game = gameRepository.findById(query.id())
                 .orElseThrow(() -> new NoSuchElementException("Jogo não encontrado."));
 
         List<GetGameDetailsAdminView.LoanHistoryView> loanHistory = game.getLoans().stream()
                 .map(loan -> new GetGameDetailsAdminView.LoanHistoryView(
                         loan.getId(),
+                        loan.getUser().getId(),
                         loan.getUser().getEmail(),
                         loan.getDateLoan()
                 ))
@@ -31,9 +32,10 @@ public class GetGameDetailsAdminHandler {
 
         return new GetGameDetailsAdminView(
                 game.getBarcode(),
+                game.getId(),
                 game.getTitle(),
                 game.getDescription(),
-                game.getCategory(),
+                game.getCategory().name(),
                 game.getMinPlayers(),
                 game.getMaxPlayers(),
                 game.getLinkInstructionManual(),

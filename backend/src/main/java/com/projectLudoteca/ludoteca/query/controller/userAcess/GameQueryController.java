@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/queries/games")
 public class GameQueryController {
@@ -21,11 +23,11 @@ public class GameQueryController {
         this.gameDetailsUserHandler = gameDetailsUserHandler;
     }
 
-    @GetMapping("/{barcode}/details")
+    @GetMapping("/{id}/details")
     @Operation(summary = "Lista os dados de um jogo", description = "Realiza uma busca de um determinado jogo no sistema e retorna seus dados para o usuário.")
-    public ResponseEntity<ApiResponse<GetGameDetailsUserView>> getDetails(@PathVariable Integer barcode) {
+    public ResponseEntity<ApiResponse<GetGameDetailsUserView>> getDetails(@PathVariable UUID id) {
 
-        GetGameDetailsUserView view = gameDetailsUserHandler.handle(new GetGameDetailsUserQuery(barcode));
+        GetGameDetailsUserView view = gameDetailsUserHandler.handle(new GetGameDetailsUserQuery(id));
 
         ApiResponse<GetGameDetailsUserView> response = new ApiResponse<>(view);
 

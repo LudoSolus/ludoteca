@@ -3,8 +3,10 @@ package com.projectLudoteca.ludoteca.common.entity;
 import com.projectLudoteca.ludoteca.common.enums.EventStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,7 +16,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
+@Setter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Event implements Serializable {
 
     @Serial
@@ -65,6 +69,12 @@ public class Event implements Serializable {
     @Column(name = "link_evaluation")
     private String linkEvaluation;
 
+    private Boolean hasBoardGames = false;
+
+    private Boolean hasRpg = false;
+
+    private Boolean hasEscapeRoom = false;
+
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ParticipationEvent> participationEvents = new ArrayList<>();
 
@@ -96,7 +106,7 @@ public class Event implements Serializable {
 
     public Event() {}
 
-    public Event (String name, String description, LocalDateTime finishDate, EventStatus status, String street, String number, String supplement, String neighborhood, String city, String state, String zipCode, String linkEvaluation ) {
+    public Event (String name, String description, LocalDateTime finishDate, EventStatus status, String street, String number, String supplement, String neighborhood, String city, String state, String zipCode, String linkEvaluation, Boolean hasBoardGames, Boolean hasRpg, Boolean hasEscapeRoom) {
         this.name = name;
         this.description = description;
         this.finalDate = finishDate;
@@ -109,41 +119,9 @@ public class Event implements Serializable {
         this.state = state;
         this.zipCode = zipCode;
         this.linkEvaluation = linkEvaluation;
+        this.hasBoardGames = hasBoardGames;
+        this.hasRpg = hasRpg;
+        this.hasEscapeRoom = hasEscapeRoom;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
-
-    public void setFinalDate(LocalDateTime finalDate) {
-        this.finalDate = finalDate;
-    }
-
-    public void setStatus(EventStatus status) {
-        this.status = status;
-    }
-
-    public void setLinkEvaluation(String linkEvaluation) {
-        this.linkEvaluation = linkEvaluation;
-    }
-
-    public List<ParticipationEvent> getParticipationEvents() { return participationEvents; }
-
-    public List<Loan> getLoans() { return loans; }
-
-    public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
-    }
 }

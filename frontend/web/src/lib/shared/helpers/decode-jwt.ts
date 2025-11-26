@@ -1,10 +1,10 @@
 import { jwtDecode } from "jwt-decode";
-import { UserRole } from "../enums/user-role.enum";
+import { EUserRole } from "../enums/user-role.enum";
 
 export interface JwtAuthData{
     name: string
     id: string
-    role: UserRole
+    role: EUserRole
     publicId: string
     email: string
     iat: Date
@@ -20,7 +20,7 @@ export function decodeAuthJwt(token: string | null): JwtAuthData | undefined{
     return {
         name: decoded.name || "",
         id: decoded.sub || "",
-        role: decoded.role || UserRole.USER,
+        role: decoded.role || EUserRole.USER,
         publicId: decoded.publicId || "",
         email: decoded.email || "",
         iat: new Date((decoded.iat || 0) * 1000),

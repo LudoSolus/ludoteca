@@ -8,8 +8,8 @@ import { get } from 'svelte/store';
 
 export class QueriesHandlerService {
 	constructor(public axios: Axios) {
-		const token = get(authService.getUserToken());
-		if (token) axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+		if (authService.isAuthenticated())
+			axios.defaults.headers.common['Authorization'] = `Bearer ${get(authService.getUserToken())}`;
 	}
 
 	public handle<T>(query: IQuery<T>): Observable<IQueryResult<T>> {

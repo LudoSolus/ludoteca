@@ -5,7 +5,7 @@ import { redirect } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 import { authService } from '$lib/shared/stores/auth';
 import { decodeAuthJwt } from '$lib/shared/helpers/decode-jwt';
-import { UserRole } from '$lib/shared/enums/user-role.enum';
+import { EUserRole } from '$lib/shared/enums/user-role.enum';
 
 export const load: LayoutLoad = async () => {
 	if (!authService.isAuthenticated()) {
@@ -19,7 +19,7 @@ export const load: LayoutLoad = async () => {
         throw redirect(302, '/auth/login');
     }
 
-    if(userAuthData.role == UserRole.ADMIN){
+    if(userAuthData.role == EUserRole.ADMIN){
         throw redirect(303, '/admin');
     }
 

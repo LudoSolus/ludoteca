@@ -5,11 +5,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "game_event")
 public class GameEvent {
 
@@ -17,7 +19,7 @@ public class GameEvent {
     private GameEventId id;
 
     @ManyToOne
-    @MapsId("gameId") // mapeia o campo studentId da chave composta
+    @MapsId("gameId")
     @JoinColumn(name = "game_id")
     private Game game;
 
@@ -45,6 +47,7 @@ public class GameEvent {
     public GameEvent(Game game, Event event) {
         this.game = game;
         this.event = event;
+        this.id = new GameEventId(game.getId(), event.getId());
     }
 
     public void setGame(Game game) {

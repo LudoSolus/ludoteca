@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Input from '$lib/components/atoms/Input.svelte';
+	import Input from '$lib/components/atoms/FormInput.svelte';
 	import { Validators } from '$lib/shared/helpers/validators';
 	import type { InputController } from '$lib/shared/interfaces/input-controller';
 

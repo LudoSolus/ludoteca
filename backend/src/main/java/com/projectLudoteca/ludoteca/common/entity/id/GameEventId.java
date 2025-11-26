@@ -1,10 +1,13 @@
 package com.projectLudoteca.ludoteca.common.entity.id;
 
+import lombok.Getter;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
+@Getter
 public class GameEventId implements Serializable {
 
     @Serial
@@ -17,14 +20,6 @@ public class GameEventId implements Serializable {
 
     public GameEventId(UUID gameId, UUID eventId) {
         this.gameId = gameId;
-        this.eventId = eventId;
-    }
-
-    public UUID getGameId() {
-        return gameId;
-    }
-
-    public void getEventId(UUID eventId) {
         this.eventId = eventId;
     }
 

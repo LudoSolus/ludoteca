@@ -1,13 +1,18 @@
 <script lang="ts">
+	import BoardGame from '$lib/components/molecules/BoardGame.svelte';
 	import Button from '$lib/components/atoms/Button.svelte';
-	import Input from '$lib/components/atoms/Input.svelte';
+	import Input from '$lib/components/atoms/FormInput.svelte';
 	import ProfilePicture from '$lib/components/atoms/ProfilePicture.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
 	import UserContainer from '$lib/components/atoms/UserContainer.svelte';
+	import { ECategory } from '$lib/shared/enums/category.enum';
 	import { faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import EscapeRoomContainer from '$lib/components/atoms/EscapeRoomContainer.svelte';
+	import RpgContainer from '$lib/components/atoms/RpgContainer.svelte';
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
-
+	import { EUserRole } from '$lib/shared/enums/user-role.enum';
+	let eventDate: Date = new Date("2025-09-05");
+	
 	type SelectInputOption = {
 		label: string;
 		value: string;
@@ -26,6 +31,8 @@
 		console.log('Plano selecionado:', value);
 	}
 </script>
+
+<RpgContainer title="Era Glacial de Ragnar" system="D&D" startDate={eventDate} />
 
 <div class="mt-6 flex flex-col items-center gap-4">
 	<div class="w-full px-2 sm:px-5 md:px-10">
@@ -91,6 +98,7 @@
 		onChange={handleSelect}
 		width="300px"
 	/>
+
 </div>
 
 <style>

@@ -1,15 +1,18 @@
 package com.projectLudoteca.ludoteca.common.entity;
 
+import com.projectLudoteca.ludoteca.common.entity.id.GameEventId;
 import com.projectLudoteca.ludoteca.common.entity.id.ParticipationEscapeRoomId;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "participation_escape_room")
 public class ParticipationEscapeRoom {
 
@@ -41,5 +44,11 @@ public class ParticipationEscapeRoom {
     private Boolean removed = false;
 
     public ParticipationEscapeRoom() {}
+
+    public ParticipationEscapeRoom(EscapeRoomSession escapeRoomSession, User user) {
+        this.escapeRoomSession = escapeRoomSession;
+        this.user = user;
+        this.id = new ParticipationEscapeRoomId(user.getId(), escapeRoomSession.getId());
+    }
 
 }
