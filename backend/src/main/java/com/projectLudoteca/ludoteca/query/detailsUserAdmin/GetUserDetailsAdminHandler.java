@@ -23,7 +23,7 @@ public class GetUserDetailsAdminHandler {
             throw new IllegalArgumentException("O id do usuário não pode ser nulo.");
         }
 
-        User user = userRepository.findUserNative(query.id()).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
+        User user = userRepository.findUserNativeAndRemovedFalse(query.id()).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
 
         return new GetUserDetailsAdminView(user.getId(),
                         user.getPublicId(),
