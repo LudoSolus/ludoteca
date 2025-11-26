@@ -4,34 +4,45 @@
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
 
 	export let boardGameDetails: IGetBoardGameDetailsWithLoanResponse;
+	export let handleOnEdit: () => void;
+	export let handleOnDelete: () => void;
 </script>
 
 <main class="flex h-full flex-col gap-10 overflow-y-auto px-1 py-7 sm:px-10 xl:px-15">
-	<GoBack title={boardGameDetails.title} description="Detalhes do jogo" onEdit={() => {}} onDelete={() => {}} />
+	<GoBack
+		title={boardGameDetails.title}
+		description="Detalhes do jogo"
+		onEdit={handleOnEdit}
+		onDelete={handleOnDelete}
+	/>
 	<div
 		class="flex flex-wrap items-start justify-between gap-10 px-0 pb-20 sm:px-2 lg:px-4 xl:px-10"
 	>
 		<section class="flex w-full flex-1 flex-col items-start justify-start gap-4">
 			<p class="lg:min-h-50">{boardGameDetails.description}</p>
-			<div class="flex flex-col items-start justify-start gap-2 w-full">
-				<div class="flex gap-2 w-full">
+			<div class="flex w-full flex-col items-start justify-start gap-2">
+				<div class="flex w-full gap-2">
 					<p class="font-bold">Categoria:</p>
 					<p>{boardGameDetails.category}</p>
 				</div>
-				<div class="flex gap-2 w-full">
+				<div class="flex w-full gap-2">
 					<p class="font-bold">Participantes:</p>
 					<p>{boardGameDetails.minPlayers} a {boardGameDetails.maxPlayers} participantes</p>
 				</div>
-				<div class="flex gap-2 w-full flex-wrap">
+				<div class="flex w-full flex-wrap gap-2">
 					<p class="font-bold">Manual:</p>
-					<a href={boardGameDetails.linkInstructionManual} class="anchor w-full truncate" target="_blank"
-						>{boardGameDetails.linkInstructionManual}</a
+					<a
+						href={boardGameDetails.linkInstructionManual}
+						class="anchor w-full truncate"
+						target="_blank">{boardGameDetails.linkInstructionManual}</a
 					>
 				</div>
-				<div class="flex gap-2 w-full flex-wrap">
+				<div class="flex w-full flex-wrap gap-2">
 					<p class="font-bold">Tutorial:</p>
-					<a href={boardGameDetails.linkVideoTutorial} class="anchor w-full truncate" target="_blank"
-						>{boardGameDetails.linkVideoTutorial}</a
+					<a
+						href={boardGameDetails.linkVideoTutorial}
+						class="anchor w-full truncate"
+						target="_blank">{boardGameDetails.linkVideoTutorial}</a
 					>
 				</div>
 			</div>

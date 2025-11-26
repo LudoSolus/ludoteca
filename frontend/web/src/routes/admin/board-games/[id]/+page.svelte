@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { IGetBoardGameDetailsWithLoanResponse } from '$lib/api/queries/board-games/get-board-game-details-with-loan/get-board-game-details-with-loan.interface';
 	import { GetBoardGameDetailsWithLoanQuery } from '$lib/api/queries/board-games/get-board-game-details-with-loan/get-board-game-details-with-loan.query';
@@ -31,7 +32,13 @@
 </script>
 
 {#if boardGameDetails}
-	<BoardGameDetails {boardGameDetails} />
+	<BoardGameDetails
+		{boardGameDetails}
+		handleOnDelete={() => {}}
+		handleOnEdit={() => {
+			goto(`/admin/board-games/${$page.params.id}/edit`);
+		}}
+	/>
 {:else}
 	<p>Carregando...</p>
 {/if}
