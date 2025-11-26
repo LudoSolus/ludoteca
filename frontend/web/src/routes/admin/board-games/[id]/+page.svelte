@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import type { IGetBoardGameDetailsResponse } from '$lib/api/queries/board-games/get-board-game-details/get-board-game-details.interface';
-	import { GetBoardGameDetailsQuery } from '$lib/api/queries/board-games/get-board-game-details/get-board-game-details.query';
+	import type { IGetBoardGameDetailsWithLoanResponse } from '$lib/api/queries/board-games/get-board-game-details-with-loan/get-board-game-details-with-loan.interface';
+	import { GetBoardGameDetailsWithLoanQuery } from '$lib/api/queries/board-games/get-board-game-details-with-loan/get-board-game-details-with-loan.query';
 	import BoardGameDetails from '$lib/components/templates/admin/BoardGameDetails.svelte';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import axios from 'axios';
@@ -9,7 +9,7 @@
 
 	const queriesHandler = new QueriesHandlerService(axios);
 
-	let boardGameDetails: IGetBoardGameDetailsResponse | null = null;
+	let boardGameDetails: IGetBoardGameDetailsWithLoanResponse | null = null;
 
 	onMount(() => {
 		fetchBoardGame();
@@ -19,7 +19,7 @@
 		const boardGameId = $page.params.id;
 		if (!boardGameId) return;
 
-		queriesHandler.handle(new GetBoardGameDetailsQuery(boardGameId)).subscribe({
+		queriesHandler.handle(new GetBoardGameDetailsWithLoanQuery(boardGameId)).subscribe({
 			next: (res) => {
 				boardGameDetails = res.resultData;
 			},

@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { IGetBoardGameDetailsResponse } from '$lib/api/queries/board-games/get-board-game-details/get-board-game-details.interface';
+	import type { IGetBoardGameDetailsWithLoanResponse } from '$lib/api/queries/board-games/get-board-game-details-with-loan/get-board-game-details-with-loan.interface';
 	import LoanHistoryContainer from '$lib/components/atoms/LoanHistoryContainer.svelte';
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
 
-	export let boardGameDetails: IGetBoardGameDetailsResponse;
+	export let boardGameDetails: IGetBoardGameDetailsWithLoanResponse;
 </script>
 
 <main class="flex h-full flex-col gap-10 overflow-y-auto px-1 py-7 sm:px-10 xl:px-15">
-	<GoBack title={boardGameDetails.title} description="Detalhes do jogo" type="admin" />
+	<GoBack title={boardGameDetails.title} description="Detalhes do jogo" onEdit={() => {}} onDelete={() => {}} />
 	<div
 		class="flex flex-wrap items-start justify-between gap-10 px-0 pb-20 sm:px-2 lg:px-4 xl:px-10"
 	>
