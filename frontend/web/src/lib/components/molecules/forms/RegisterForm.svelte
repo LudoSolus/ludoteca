@@ -3,7 +3,7 @@
 	import Input from '$lib/components/atoms/FormInput.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
 	import { Validators } from '$lib/shared/helpers/validators';
-	import type { InputController } from '$lib/shared/interfaces/input-controller';
+	import type { IFormController } from '$lib/shared/interfaces/input-controller';
 	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
 
 	type FormField =
@@ -28,7 +28,7 @@
 
 	const validators = new Validators();
 
-	const formController: Record<FormField, InputController> = $state({
+	const formController: IFormController<FormField> = $state({
 		name: {
 			value: formValues.name,
 			touched: false,
