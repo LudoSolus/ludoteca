@@ -3,6 +3,7 @@ package com.projectLudoteca.ludoteca.command.returnedGame;
 import com.projectLudoteca.ludoteca.common.entity.Game;
 import com.projectLudoteca.ludoteca.common.entity.Loan;
 import com.projectLudoteca.ludoteca.common.enums.GameStatus;
+import com.projectLudoteca.ludoteca.common.exception.BusinessException;
 import com.projectLudoteca.ludoteca.common.repository.GameRepository;
 import com.projectLudoteca.ludoteca.common.repository.LoanRepository;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,15 @@ public class ReturnGameHandler {
         this.loanRepository = loanRepository;
     }
 
-    public String handle(UUID gameId) {
+    public String handle(String id) {
+
+        UUID gameId;
+
+        try{
+            gameId = UUID.fromString(id);
+        } catch (RuntimeException e) {
+            throw new BusinessException("Id de jogo inválido!");
+        }
 
         Game game = gameRepository.findByIdAndRemovedFalse(gameId)
                 .orElseThrow(() -> new RuntimeException("Jogo não encontrado ou removido."));

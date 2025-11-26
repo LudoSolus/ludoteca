@@ -36,9 +36,9 @@ public class LoanAdminCommandController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("{id}/return-game")
+    @PostMapping("/{id}/return-game")
     @Operation(summary = "Registrar a devolução do empréstimo", description = "Efetua a devolução do jogo emprestado recebendo o id do jogo.")
-    public ResponseEntity<ApiResponse<String>> returnLoan(@PathVariable @Validated UUID id) {
+    public ResponseEntity<ApiResponse<String>> returnLoan(@PathVariable @Validated String id) {
 
         String message = returnGameHandler.handle(id);
 
