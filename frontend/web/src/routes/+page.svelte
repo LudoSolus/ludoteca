@@ -1,12 +1,13 @@
 <script lang="ts">
+  import MockHeader from "$lib/components/molecules/MockHeader.svelte";
   import EventCard from "$lib/components/molecules/EventCard.svelte";
   import {
     faGamepad,
     faDice,
     faKey,
     faGhost,
-    faPuzzlePiece,
-    faHeart
+    faHeart,
+    faPuzzlePiece
   } from "@fortawesome/free-solid-svg-icons";
 
   const eventos = [
@@ -42,20 +43,45 @@
       ],
       image: "/images/event-boardgame.png",
     },
+    {
+      title: "Festival de Estratégia",
+      dateStart: new Date("2025-07-22T14:00:00"),
+      dateEnd: new Date("2025-07-22T22:00:00"),
+      activities: [
+        { icon: faPuzzlePiece, text: "Jogos de Estratégia" },
+        { icon: faGamepad, text: "Competição de Tabuleiro" },
+        { icon: faHeart, text: "Zona Casual" },
+      ],
+      address: [
+        "Praça Central, nº 200",
+        "Jardim Europa",
+        "Cornélio Procópio, PR",
+      ],
+      image: "/images/event-boardgame.png",
+    }
   ];
 </script>
 
-<main class="min-h-screen bg-[#fffcee] p-10 space-y-12">
-  <section class="flex flex-col items-center gap-8">
-    {#each eventos as evento}
-      <EventCard
-        title={evento.title}
-        dateStart={evento.dateStart}
-        dateEnd={evento.dateEnd}
-        activities={evento.activities}
-        address={evento.address}
-        image={evento.image}
-      />
-    {/each}
-  </section>
+<MockHeader />
+
+<main class="bg-white min-h-screen w-full px-6 py-10">
+  <div class="w-full max-w-[1300px] bg-white">
+    <section>
+      <h1 class="text-3xl font-bold mb-4 text-left font-inknut">Próximos Eventos</h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        {#each eventos as evento}
+          <div class="rounded-xl p-3 bg-white min-h-[380px] flex">
+            <EventCard
+              title={evento.title}
+              dateStart={evento.dateStart}
+              dateEnd={evento.dateEnd}
+              activities={evento.activities}
+              address={evento.address}
+              image={evento.image}
+            />
+          </div>
+        {/each}
+      </div>
+    </section>
+  </div>
 </main>
