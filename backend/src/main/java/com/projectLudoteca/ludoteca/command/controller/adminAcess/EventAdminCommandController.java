@@ -43,9 +43,9 @@ public class EventAdminCommandController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping("{id}/update")
+    @PutMapping("/{id}/update")
     @Operation(summary = "Atualiza dados do evento", description = "Realiza a atualização dos dados do evento")
-    public ResponseEntity<ApiResponse<String>> update(@RequestBody @Validated UpdateEventCommand command, @PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<String>> update(@RequestBody @Validated UpdateEventCommand command, @PathVariable String id) {
 
         String message = updateEventHandler.handle(id, command);
 
@@ -54,7 +54,7 @@ public class EventAdminCommandController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("{id}/start")
+    @PutMapping("/{id}/start")
     @Operation(summary = "Inicializa um evento.", description = "Inicia um evento a partir do id do evento.")
     public ResponseEntity<ApiResponse<String>> startEvent(@PathVariable String id) {
 
@@ -65,7 +65,7 @@ public class EventAdminCommandController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("{id}/end")
+    @PutMapping("/{id}/end")
     @Operation(summary = "Finaliza um evento.", description = "Finaliza um evento a partir do id do evento.")
     public ResponseEntity<ApiResponse<String>> endEvent(@PathVariable String id) {
 

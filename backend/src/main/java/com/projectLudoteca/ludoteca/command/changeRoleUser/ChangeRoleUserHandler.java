@@ -17,9 +17,17 @@ public class ChangeRoleUserHandler {
         this.userRepository = userRepository;
     }
 
-    public String handle(UUID userId, ChangeRoleUserCommand command) {
-        User user = userRepository.findUserNativeAndRemovedFalse(userId).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+    public String handle(String id, ChangeRoleUserCommand command) {
 
+        UUID userId;
+
+        try{
+            userId = UUID.fromString(id);
+        } catch (RuntimeException e) {
+            throw new BusinessException("Id de usuário inválido!");
+        }
+
+        User user = userRepository.findUserNativeAndRemovedFalse(userId).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
 
         if (command.isAdmin() == null) {
             throw new IllegalArgumentException("Requisição não pode ser nula ou vazia.");
