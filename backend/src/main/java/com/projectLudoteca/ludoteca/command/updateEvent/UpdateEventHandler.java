@@ -45,7 +45,7 @@ public class UpdateEventHandler {
         if (event.getStatus() == EventStatus.COMPLETED || endForDate) {
             throw new RuntimeException("Este evento já foi finalizado e não pode ser editado.");
         }
-        
+
         boolean noFieldSent =
                 command.name() == null &&
                         command.description() == null &&
