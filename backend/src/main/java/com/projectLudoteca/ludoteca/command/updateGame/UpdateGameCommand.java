@@ -1,8 +1,6 @@
-package com.projectLudoteca.ludoteca.command.registerGame;
+package com.projectLudoteca.ludoteca.command.updateGame;
 
-import java.time.LocalDateTime;
-
-public record CreateGameCommand(Integer barcode,
+public record UpdateGameCommand(Integer barcode,
                                 String title,
                                 String category,
                                 String description,
