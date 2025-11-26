@@ -1,4 +1,4 @@
-import type { ECategory } from "$lib/shared/enums/category.enum";
+import type { ECategory } from '$lib/shared/enums/category.enum';
 
 export interface IGetBoardGameDetailsResponse {
 	barcode: number;
@@ -9,12 +9,4 @@ export interface IGetBoardGameDetailsResponse {
 	maxPlayers: number;
 	linkInstructionManual: string;
 	linkVideoTutorial: string;
-	loanHistory: ILoanHistory[];
-}
-
-export interface ILoanHistory {
-	loanId: string;
-	loanDate: Date;
-	userId: string;
-	userEmail: string;
 }
