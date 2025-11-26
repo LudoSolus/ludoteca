@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Input from '$lib/components/atoms/FormInput.svelte';
+	import FormInput from '$lib/components/atoms/FormInput.svelte';
 	import { Validators } from '$lib/shared/helpers/validators';
-	import type { InputController } from '$lib/shared/interfaces/input-controller';
+	import type { IFormController } from '$lib/shared/interfaces/input-controller';
 
 	type FormField = 'email' | 'password';
 
@@ -12,7 +12,7 @@
 
 	const validators = new Validators();
 
-	const formController: Record<FormField, InputController> = $state({
+	const formController: IFormController<FormField> = $state({
 		email: {
 			value: formValues.email,
 			touched: false,
@@ -48,7 +48,7 @@
 </script>
 
 <div class="form-container flex w-full flex-wrap items-center gap-0 sm:gap-3 xl:gap-5">
-	<Input
+	<FormInput
 		label={'E-mail'}
 		placeholder={'joao@gmail.com'}
 		type="email"
@@ -58,7 +58,7 @@
 		error={formController.email.error}
 		onInput={(value) => onInput('email', value)}
 	/>
-	<Input
+	<FormInput
 		label={'Senha'}
 		type="password"
 		width="450px"

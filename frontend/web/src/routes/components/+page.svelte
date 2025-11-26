@@ -11,8 +11,8 @@
 	import RpgContainer from '$lib/components/atoms/RpgContainer.svelte';
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
 	import { EUserRole } from '$lib/shared/enums/user-role.enum';
-	let eventDate: Date = new Date("2025-09-05");
-	
+	let eventDate: Date = new Date('2025-09-05');
+
 	type SelectInputOption = {
 		label: string;
 		value: string;
@@ -36,10 +36,15 @@
 
 <div class="mt-6 flex flex-col items-center gap-4">
 	<div class="w-full px-2 sm:px-5 md:px-10">
-		<GoBack title="Perfil" description="Todos os personagens que participam dessa campanha" type="admin" />
+		<GoBack
+			title="Perfil"
+			description="Todos os personagens que participam dessa campanha"
+			onEdit={() => {}}
+			onDelete={() => {}}
+		/>
 	</div>
 	<div class="w-full px-2 sm:px-5 md:px-10">
-		<GoBack title="Perfil" description="Tela de perfil, veja suas informações" type="user" />
+		<GoBack title="Perfil" description="Tela de perfil, veja suas informações" />
 	</div>
 	<EscapeRoomContainer title="Código Sombrio" />
 	<Button text={'Entrar'} onClick={() => {}} />
@@ -98,7 +103,6 @@
 		onChange={handleSelect}
 		width="300px"
 	/>
-
 </div>
 
 <style>
