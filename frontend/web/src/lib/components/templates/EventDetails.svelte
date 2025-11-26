@@ -19,7 +19,7 @@
 </script>
 
 <main class="flex h-full flex-col gap-10 overflow-y-auto py-7 px-1 sm:px-10 xl:px-15">
-	<GoBack title={eventData.name} description="Detalhes do evento" type="user" />
+	<GoBack title={eventData.name} description="Detalhes do evento" />
 	<div class="flex flex-wrap items-start justify-between gap-10 pb-20 px-0 sm:px-2 lg:px-4 xl:px-10">
 		<div class="flex flex-1 flex-col gap-8">
 			<h3 class="h3">Detalhes</h3>
