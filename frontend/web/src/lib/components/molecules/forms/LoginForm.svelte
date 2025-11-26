@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Input from '$lib/components/atoms/FormInput.svelte';
+	import FormInput from '$lib/components/atoms/FormInput.svelte';
 	import { Validators } from '$lib/shared/helpers/validators';
 	import type { IFormController } from '$lib/shared/interfaces/input-controller';
 
@@ -48,7 +48,7 @@
 </script>
 
 <div class="form-container flex w-full flex-wrap items-center gap-0 sm:gap-3 xl:gap-5">
-	<Input
+	<FormInput
 		label={'E-mail'}
 		placeholder={'joao@gmail.com'}
 		type="email"
@@ -58,7 +58,7 @@
 		error={formController.email.error}
 		onInput={(value) => onInput('email', value)}
 	/>
-	<Input
+	<FormInput
 		label={'Senha'}
 		type="password"
 		width="450px"
