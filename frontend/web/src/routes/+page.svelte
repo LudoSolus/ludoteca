@@ -1,83 +1,78 @@
 <script lang="ts">
-  import MockHeader from "$lib/components/molecules/MockHeader.svelte";
+  import Header from "$lib/components/molecules/Header.svelte"; 
   import EventCard from "$lib/components/molecules/EventCard.svelte";
-  import {
-    faGamepad,
-    faDice,
-    faKey,
-    faGhost,
-    faHeart,
-    faPuzzlePiece
-  } from "@fortawesome/free-solid-svg-icons";
 
   const eventos = [
     {
-      title: "Evento 55",
-      dateStart: new Date("2025-07-20T08:00:00"),
-      dateEnd: new Date("2025-07-20T18:00:00"),
-      activities: [
-        { icon: faGamepad, text: "Jogos de Tabuleiro" },
-        { icon: faDice, text: "RPG’s" },
-        { icon: faKey, text: "Escape Room" },
-      ],
-      address: [
-        "Rua dos Expedicionários, nº 56",
-        "Bairro Alvorada",
-        "Cornélio Procópio, PR",
-      ],
-      image: "/images/event-boardgame.png",
+      name: "Evento 55",
+      startDate: new Date("2025-07-20T08:00:00"),
+      endDate: new Date("2025-07-20T18:00:00"),
+      hasBoardGame: true,
+      hasRpg: true,
+      hasEscapeRoom: true,
+      address: {
+        street: "Rua dos Expedicionários",
+        number: "56",
+        neighborhood: "Bairro Alvorada",
+        city: "Cornélio Procópio",
+        state: "PR",
+        zipCode: "86300-000"
+      }
     },
     {
-      title: "Noite do Horror",
-      dateStart: new Date("2025-07-21T19:00:00"),
-      dateEnd: new Date("2025-07-21T23:59:00"),
-      activities: [
-        { icon: faGhost, text: "RPG de Terror" },
-        { icon: faHeart, text: "Card Games" },
-        { icon: faPuzzlePiece, text: "Puzzle Zone" },
-      ],
-      address: [
-        "Av. Central, nº 1020",
-        "Centro",
-        "Cornélio Procópio, PR",
-      ],
-      image: "/images/event-boardgame.png",
+      name: "Noite do Horror",
+      startDate: new Date("2025-07-21T19:00:00"),
+      endDate: new Date("2025-07-21T23:59:00"),
+      hasBoardGame: false,
+      hasRpg: true,
+      hasEscapeRoom: false,
+      address: {
+        street: "Av. Central",
+        number: "1020",
+        neighborhood: "Centro",
+        city: "Cornélio Procópio",
+        state: "PR",
+        zipCode: "86300-000"
+      }
     },
     {
-      title: "Festival de Estratégia",
-      dateStart: new Date("2025-07-22T14:00:00"),
-      dateEnd: new Date("2025-07-22T22:00:00"),
-      activities: [
-        { icon: faPuzzlePiece, text: "Jogos de Estratégia" },
-        { icon: faGamepad, text: "Competição de Tabuleiro" },
-        { icon: faHeart, text: "Zona Casual" },
-      ],
-      address: [
-        "Praça Central, nº 200",
-        "Jardim Europa",
-        "Cornélio Procópio, PR",
-      ],
-      image: "/images/event-boardgame.png",
+      name: "Festival de Estratégia",
+      startDate: new Date("2025-07-22T14:00:00"),
+      endDate: new Date("2025-07-22T22:00:00"),
+      hasBoardGame: true,
+      hasRpg: false,
+      hasEscapeRoom: false,
+      address: {
+        street: "Praça Central",
+        number: "200",
+        neighborhood: "Jardim Europa",
+        city: "Cornélio Procópio",
+        state: "PR",
+        zipCode: "86300-000"
+      }
     }
   ];
 </script>
 
-<MockHeader />
 
-<main class="bg-white min-h-screen w-full px-6 py-10">
-  <div class="w-full max-w-[1300px] bg-white">
+<Header type="user" />
+
+<main class="bg-[#fffcee] min-h-screen w-full px-6 py-10">
+  <div class="w-full max-w-[1600px] ml-0">
     <section>
-      <h1 class="text-3xl font-bold mb-4 text-left font-inknut">Próximos Eventos</h1>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <h1 class="text-3xl font-bold mb-6 text-left font-inknut">Próximos Eventos</h1>
+
+      <div class="flex flex-wrap justify-start gap-x-8 gap-y-10 items-stretch">
         {#each eventos as evento}
-          <div class="rounded-xl p-3 bg-white min-h-[380px] flex">
+          <div class="w-[30rem] min-h-[22rem] flex">
             <EventCard
-              title={evento.title}
-              dateStart={evento.dateStart}
-              dateEnd={evento.dateEnd}
-              activities={evento.activities}
+              name={evento.name}
+              startDate={evento.startDate}
+              endDate={evento.endDate}
+              hasBoardGame={evento.hasBoardGame}
+              hasRpg={evento.hasRpg}
+              hasEscapeRoom={evento.hasEscapeRoom}
               address={evento.address}
-              image={evento.image}
             />
           </div>
         {/each}
