@@ -6,9 +6,8 @@
 	import { ECategory } from '$lib/shared/enums/category.enum';
 	import { Validators } from '$lib/shared/helpers/validators';
 	import { device } from '$lib/shared/hooks/useDevice';
-	import type { IFormController } from '$lib/shared/interfaces/input-controller';
+	import { inputIsTouched, type IFormController } from '$lib/shared/interfaces/input-controller';
 	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
-	import { faHouseChimneyUser } from '@fortawesome/free-solid-svg-icons';
 
 	type FormField = keyof ICreateBoardGameRequest;
 
@@ -22,49 +21,49 @@
 	const formController: IFormController<FormField> = $state({
 		barcode: {
 			value: formValues.barcode,
-			touched: false,
+			touched: inputIsTouched(formValues.barcode),
 			error: null,
 			required: true
 		},
 		title: {
 			value: formValues.title,
-			touched: false,
+			touched: inputIsTouched(formValues.title),
 			error: null,
 			required: true
 		},
 		category: {
 			value: formValues.category,
-			touched: false,
+			touched: inputIsTouched(formValues.category),
 			error: null,
 			required: true
 		},
 		description: {
 			value: formValues.description,
-			touched: false,
+			touched: inputIsTouched(formValues.description),
 			error: null,
 			required: true
 		},
 		minPlayers: {
 			value: formValues.minPlayers,
-			touched: false,
+			touched: inputIsTouched(formValues.minPlayers),
 			error: null,
 			required: true
 		},
 		maxPlayers: {
 			value: formValues.maxPlayers,
-			touched: false,
+			touched: inputIsTouched(formValues.maxPlayers),
 			error: null,
 			required: true
 		},
 		linkInstructionManual: {
 			value: formValues.linkInstructionManual,
-			touched: false,
+			touched: inputIsTouched(formValues.linkInstructionManual),
 			error: null,
 			required: true
 		},
 		linkVideoTutorial: {
 			value: formValues.linkVideoTutorial,
-			touched: false,
+			touched: inputIsTouched(formValues.linkVideoTutorial),
 			error: null,
 			required: true
 		}
