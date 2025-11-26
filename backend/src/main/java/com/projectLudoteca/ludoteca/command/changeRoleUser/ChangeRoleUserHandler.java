@@ -18,7 +18,7 @@ public class ChangeRoleUserHandler {
     }
 
     public String handle(UUID userId, ChangeRoleUserCommand command) {
-        User user = userRepository.findUserNative(userId).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+        User user = userRepository.findUserNativeAndRemovedFalse(userId).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
 
 
         if (command.isAdmin() == null) {

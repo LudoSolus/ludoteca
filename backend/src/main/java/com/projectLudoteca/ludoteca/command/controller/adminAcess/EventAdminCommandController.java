@@ -1,7 +1,9 @@
 package com.projectLudoteca.ludoteca.command.controller.adminAcess;
 
+import com.projectLudoteca.ludoteca.command.endEvent.EndEventHandler;
 import com.projectLudoteca.ludoteca.command.registerEvent.CreateEventCommand;
 import com.projectLudoteca.ludoteca.command.registerEvent.CreateEventHandler;
+import com.projectLudoteca.ludoteca.command.startEvent.StartEventHandler;
 import com.projectLudoteca.ludoteca.command.updateEvent.UpdateEventCommand;
 import com.projectLudoteca.ludoteca.command.updateEvent.UpdateEventHandler;
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
@@ -20,10 +22,14 @@ public class EventAdminCommandController {
 
     private final CreateEventHandler createEventHandler;
     private final UpdateEventHandler updateEventHandler;
+    private final StartEventHandler startEventHandler;
+    private final EndEventHandler endEventHandler;
 
-    public EventAdminCommandController(CreateEventHandler createEventHandler, UpdateEventHandler updateEventHandler) {
+    public EventAdminCommandController(CreateEventHandler createEventHandler, UpdateEventHandler updateEventHandler, StartEventHandler startEventHandler, EndEventHandler endEventHandler) {
         this.createEventHandler = createEventHandler;
         this.updateEventHandler = updateEventHandler;
+        this.startEventHandler = startEventHandler;
+        this.endEventHandler = endEventHandler;
     }
 
     @PostMapping("/register")
@@ -42,6 +48,28 @@ public class EventAdminCommandController {
     public ResponseEntity<ApiResponse<String>> update(@RequestBody @Validated UpdateEventCommand command, @PathVariable UUID id) {
 
         String message = updateEventHandler.handle(id, command);
+
+        ApiResponse<String> response = new ApiResponse<>(message);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("{id}/start")
+    @Operation(summary = "Inicializa um evento.", description = "Inicia um evento a partir do id do evento.")
+    public ResponseEntity<ApiResponse<String>> startEvent(@PathVariable String id) {
+
+        String message = startEventHandler.handle(id);
+
+        ApiResponse<String> response = new ApiResponse<>(message);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("{id}/end")
+    @Operation(summary = "Finaliza um evento.", description = "Finaliza um evento a partir do id do evento.")
+    public ResponseEntity<ApiResponse<String>> endEvent(@PathVariable String id) {
+
+        String message = endEventHandler.handle(id);
 
         ApiResponse<String> response = new ApiResponse<>(message);
 
