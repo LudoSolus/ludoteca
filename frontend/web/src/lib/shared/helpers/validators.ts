@@ -115,4 +115,29 @@ export class Validators {
 
 		return null;
 	}
+
+	public url(value: string): validatorReturn {
+		if (!value) {
+			return 'Campo obrigatório.';
+		}
+
+		try {
+			new URL(value);
+			return null;
+		} catch {
+			return 'O campo deve ser um link.';
+		}
+	}
+
+	public maxLenght(value: string, max: number): validatorReturn {
+		if (!value) {
+			return 'Campo obrigatório.';
+		}
+
+		if (value.length > max) {
+			return `o campo deve ter no máximo ${max} caracteres.`;
+		}
+
+		return null;
+	}
 }
