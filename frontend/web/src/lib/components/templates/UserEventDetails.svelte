@@ -5,20 +5,13 @@
 	import { formatCEP } from '$lib/shared/helpers/format-cep';
 	import { formatDate } from '$lib/shared/helpers/format-date';
 	import { formatTime } from '$lib/shared/helpers/format-time';
-	import SearchInput from '../atoms/SearchInput.svelte';
-	import BoardGame from '../molecules/BoardGame.svelte';
 	import type { GetEventDetailsResponse } from '$lib/api/queries/events/get-event-details/get-event-details.interface';
+	import BoardGamesList from '../organisms/BoardGamesList.svelte';
 
 	export let eventData: GetEventDetailsResponse;
-
-	let searchInputValue: string = '';
-
-	$: filteredGamesList = eventData.listGames.filter((game) => {
-		return game.nameGame.toLowerCase().includes(searchInputValue.toLowerCase());
-	});
 </script>
 
-<main class="flex h-full flex-col gap-10 overflow-y-auto px-1 py-7 sm:px-10 xl:px-15 items-center">
+<main class="flex h-full flex-col items-center gap-10 overflow-y-auto px-1 py-7 sm:px-10 xl:px-15">
 	<GoBack title={eventData.name} description="Detalhes do evento" />
 	<div
 		class="flex w-full max-w-300 flex-wrap items-start justify-between gap-10 px-0 pb-20 sm:px-2 lg:px-4 xl:px-10"
@@ -51,29 +44,18 @@
 			</div>
 		</div>
 		<div class="flex flex-1 items-center justify-center">
-			<div class="flex w-full max-w-150 flex-col items-center justify-center gap-8">
-				<h3 class="h3 w-full text-start">Jogos</h3>
-				<div class="flex flex-col gap-8">
-					<div class="flex w-full max-w-150 items-center justify-start gap-5">
-						<SearchInput bind:value={searchInputValue} placeholder="Pesquisar..." />
-					</div>
-					<div class="flex max-h-76 w-fit flex-col gap-2 overflow-y-auto px-1 py-2 md:px-4">
-						{#if filteredGamesList.length > 0}
-							{#each filteredGamesList as game}
-								<BoardGame
-									title={game.nameGame}
-									category={game.category}
-									minParticipants={game.minPlayers}
-									maxParticipants={game.maxPlayers}
-									isActivate={game.isAvailable}
-								/>
-							{/each}
-						{:else}
-							<p>Nenhum jogo encontrado.</p>
-						{/if}
-					</div>
-				</div>
-			</div>
+			<BoardGamesList
+				gamesList={eventData.listGames.map((game) => ({
+					id: game.id,
+					barcode: game.barcode,
+					name: game.nameGame,
+					category: game.category,
+					minParticipants: game.minPlayers,
+					maxParticipants: game.maxPlayers,
+					isAvailable: game.isAvailable
+				}))}
+				onClickGame={(gameId) => {}}
+			/>
 		</div>
 	</div>
 </main>
