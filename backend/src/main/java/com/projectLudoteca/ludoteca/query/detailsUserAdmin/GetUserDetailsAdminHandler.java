@@ -37,6 +37,7 @@ public class GetUserDetailsAdminHandler {
 
         return new GetUserDetailsAdminView(user.getId(),
                         user.getPublicId(),
+                        user.getName(),
                         user.getEducationalInstitution() != null
                                 ? user.getEducationalInstitution().getInstitutionName()
                                 : "N/A",
