@@ -26,7 +26,7 @@
 	<section class="flex max-w-200 flex-1 flex-col items-center justify-center gap-8 pt-0 lg:pt-20">
 		<div class="flex w-full items-center justify-between">
 			<h3 class="h3">Jogos</h3>
-			<Button text="Criar" leftIcon={faPlus} onClick={() => {}} />
+			<Button text="Criar" leftIcon={faPlus} onClick={() => goto("/admin/board-games/create")} />
 		</div>
 
 		<div class="flex w-full max-w-150 flex-col gap-4 sm:gap-8">

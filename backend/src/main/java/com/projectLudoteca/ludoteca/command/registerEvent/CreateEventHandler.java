@@ -28,6 +28,7 @@ public class CreateEventHandler {
     public String handle(CreateEventCommand command) {
         if (command.name() == null || command.name().isBlank()
                 || command.startDate() == null
+                || command.finalDate() == null
                 || command.street() == null
                 || command.number() == null
                 || command.neighborhood() == null
@@ -37,10 +38,8 @@ public class CreateEventHandler {
             throw new BusinessException("Campos obrigatórios não podem ser nulos.");
         }
 
-        if(command.finalDate() != null) {
-            if (command.finalDate().isBefore(command.startDate())) {
-                throw new BusinessException("A data final não pode ser antes da inicial.");
-            }
+        if (command.finalDate().isBefore(command.startDate())) {
+            throw new BusinessException("A data final não pode ser antes da inicial.");
         }
 
         if (command.gamesIds() != null && !command.gamesIds().isEmpty()) {
@@ -51,7 +50,7 @@ public class CreateEventHandler {
             }
         }
 
-        List<Game> games = new ArrayList<>();
+        List<Game> games;
 
         if (command.gamesIds() != null && !command.gamesIds().isEmpty()) {
             games = gameRepository.findAllById(command.gamesIds());

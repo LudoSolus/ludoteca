@@ -18,8 +18,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     boolean existsByRa(String ra);
 
-    @Query(value = "SELECT * FROM users WHERE id = ?1", nativeQuery = true)
-    Optional<User> findUserNative(UUID userId);
+    @Query(value = "SELECT * FROM users WHERE id = ?1 AND removed = false", nativeQuery = true)
+    Optional<User> findUserNativeAndRemovedFalse(UUID userId);
 
     Optional<User> findByPublicIdAndRemovedFalse(String publicId);
 

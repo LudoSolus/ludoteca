@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { IEducationalInstitution } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.interface';
-	import Input from '$lib/components/atoms/FormInput.svelte';
+	import FormInput from '$lib/components/atoms/FormInput.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
 	import { Validators } from '$lib/shared/helpers/validators';
-	import type { InputController } from '$lib/shared/interfaces/input-controller';
+	import type { IFormController } from '$lib/shared/interfaces/input-controller';
 	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
 
 	type FormField =
@@ -28,7 +28,7 @@
 
 	const validators = new Validators();
 
-	const formController: Record<FormField, InputController> = $state({
+	const formController: IFormController<FormField> = $state({
 		name: {
 			value: formValues.name,
 			touched: false,
@@ -138,7 +138,7 @@
 </script>
 
 <div class="form-container flex w-full flex-wrap items-start gap-0 sm:gap-3 xl:gap-5">
-	<Input
+	<FormInput
 		label={'Nome Completo'}
 		placeholder={'João dos Santos'}
 		width="300px"
@@ -147,7 +147,7 @@
 		error={formController.name.error}
 		onInput={(value) => onInput('name', value)}
 	/>
-	<Input
+	<FormInput
 		label={'Telefone'}
 		placeholder={'(43) 99999-9999'}
 		mask="phone"
@@ -157,7 +157,7 @@
 		error={formController.phone.error}
 		onInput={(value) => onInput('phone', value)}
 	/>
-	<Input
+	<FormInput
 		label={'E-mail'}
 		placeholder={'joao@gmail.com'}
 		type="email"
@@ -167,7 +167,7 @@
 		error={formController.email.error}
 		onInput={(value) => onInput('email', value)}
 	/>
-	<Input
+	<FormInput
 		label={'CPF'}
 		placeholder={'000.000.000-00'}
 		mask="cpf"
@@ -177,7 +177,7 @@
 		error={formController.cpf.error}
 		onInput={(value) => onInput('cpf', value)}
 	/>
-	<Input
+	<FormInput
 		label={'Data de Nascimento'}
 		type="date"
 		width="300px"
@@ -196,7 +196,7 @@
 		bind:value={formController.instituitionId.value}
 		error={formController.instituitionId.error}
 	/>
-	<Input
+	<FormInput
 		label={'Senha'}
 		type="password"
 		width="300px"
@@ -206,7 +206,7 @@
 		onInput={(value) => onInput('password', value)}
 	/>
 	{#if utfprInstituitionIsSelected()}
-		<Input
+		<FormInput
 			label={'RA'}
 			placeholder={'0000000'}
 			mask="ra"

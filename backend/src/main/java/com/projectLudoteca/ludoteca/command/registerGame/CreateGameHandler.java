@@ -39,6 +39,10 @@ public class CreateGameHandler {
             throw new BusinessException("O link do vídeo tutorial é inválido.");
         }
 
+        if (command.description().length() > 1000) {
+            throw new BusinessException("A descrição só pode ter até 1000 caracteres.");
+        }
+
         Game game = new Game();
         game.setBarcode(command.barcode());
         game.setTitle(command.title());

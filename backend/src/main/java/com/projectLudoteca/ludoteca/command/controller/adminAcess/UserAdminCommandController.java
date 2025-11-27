@@ -40,7 +40,7 @@ public class UserAdminCommandController {
 
     @PostMapping("/{id}/change-role")
     @Operation(summary = "Altera o tipo do usuário", description = "Um admin altera qual tipo um usuário pode ser.")
-    public ResponseEntity<ApiResponse<String>> changeRole(@PathVariable UUID id, @RequestBody ChangeRoleUserCommand command) {
+    public ResponseEntity<ApiResponse<String>> changeRole(@PathVariable String id, @RequestBody ChangeRoleUserCommand command) {
 
         String token = changeRoleUserHandler.handle(id, command);
 

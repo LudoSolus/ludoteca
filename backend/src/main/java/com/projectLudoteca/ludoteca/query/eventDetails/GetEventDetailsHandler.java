@@ -1,11 +1,13 @@
 package com.projectLudoteca.ludoteca.query.eventDetails;
 
 import com.projectLudoteca.ludoteca.common.entity.Event;
+import com.projectLudoteca.ludoteca.common.exception.BusinessException;
 import com.projectLudoteca.ludoteca.common.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,8 +19,17 @@ public class GetEventDetailsHandler {
         this.repository = repository;
     }
 
-    public GetEventDetailsView handle(GetEventDetailsQuery query) {
-        Event event = repository.findById(query.id())
+    public GetEventDetailsView handle(String id) {
+
+        UUID eventId;
+
+        try{
+            eventId = UUID.fromString(id);
+        } catch (RuntimeException e) {
+            throw new BusinessException("Id de evento inválido!");
+        }
+
+        Event event = repository.findById(eventId)
                 .orElseThrow(() -> new NoSuchElementException("Evento não encontrado."));
 
         List<GetEventDetailsView.ListGamesView> games = event.getGamesEvent().stream()

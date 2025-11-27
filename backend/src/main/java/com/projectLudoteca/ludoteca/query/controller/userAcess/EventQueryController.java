@@ -2,9 +2,7 @@ package com.projectLudoteca.ludoteca.query.controller.userAcess;
 
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
 import com.projectLudoteca.ludoteca.query.eventDetails.GetEventDetailsHandler;
-import com.projectLudoteca.ludoteca.query.eventDetails.GetEventDetailsQuery;
 import com.projectLudoteca.ludoteca.query.eventDetails.GetEventDetailsView;
-import com.projectLudoteca.ludoteca.query.listAllEventsForAdmin.GetAllEventsForAdminView;
 import com.projectLudoteca.ludoteca.query.nextEvents.GetNextEventsHandler;
 import com.projectLudoteca.ludoteca.query.nextEvents.GetNextEventsView;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/queries/events")
@@ -31,9 +28,9 @@ public class EventQueryController {
 
     @GetMapping("/{id}/details")
     @Operation(summary = "Lista os dados de um evento", description = "Realiza uma busca de um determinado evento no sistema e retorna seus dados.")
-    public ResponseEntity<ApiResponse<GetEventDetailsView>> getEventDetails(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<GetEventDetailsView>> getEventDetails(@PathVariable String id) {
 
-        GetEventDetailsView view = eventDetailsHandler.handle(new GetEventDetailsQuery(id));
+        GetEventDetailsView view = eventDetailsHandler.handle(id);
 
         ApiResponse<GetEventDetailsView> response = new ApiResponse<>(view);
 

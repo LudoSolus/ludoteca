@@ -1,10 +1,8 @@
-import type { ECategory } from '$lib/shared/enums/category.enum';
-
-export interface IGetBoardGameDetailsResponse {
+export interface ICreateBoardGameRequest {
 	barcode: number;
 	title: string;
+	category: string;
 	description: string;
-	category: ECategory;
 	minPlayers: number;
 	maxPlayers: number;
 	linkInstructionManual: string;

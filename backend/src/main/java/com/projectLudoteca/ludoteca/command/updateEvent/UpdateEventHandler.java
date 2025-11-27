@@ -4,6 +4,7 @@ import com.projectLudoteca.ludoteca.common.entity.Event;
 import com.projectLudoteca.ludoteca.common.entity.Game;
 import com.projectLudoteca.ludoteca.common.entity.GameEvent;
 import com.projectLudoteca.ludoteca.common.enums.EventStatus;
+import com.projectLudoteca.ludoteca.common.exception.BusinessException;
 import com.projectLudoteca.ludoteca.common.repository.EventRepository;
 import com.projectLudoteca.ludoteca.common.repository.GameEventRepository;
 import com.projectLudoteca.ludoteca.common.repository.GameRepository;
@@ -28,18 +29,29 @@ public class UpdateEventHandler {
     }
 
     @Transactional
-    public String handle(UUID id, UpdateEventCommand command) {
+    public String handle(String id, UpdateEventCommand command) {
 
-        Event event = eventRepository.findById(id)
+        UUID eventId;
+
+        try{
+            eventId = UUID.fromString(id);
+        } catch (RuntimeException e) {
+            throw new BusinessException("Id de evento inválido!");
+        }
+
+        Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new RuntimeException("Evento não encontrado."));
 
         LocalDateTime now = LocalDateTime.now();
 
-        if(now.isAfter(event.getFinalDate())) {
+        boolean endForDate = event.getFinalDate() != null && now.isAfter(event.getFinalDate());
+
+        if (endForDate && event.getStatus() != EventStatus.COMPLETED) {
             event.setStatus(EventStatus.COMPLETED);
+            eventRepository.save(event);
         }
 
-        if (event.getStatus() == EventStatus.COMPLETED)  {
+        if (event.getStatus() == EventStatus.COMPLETED || endForDate) {
             throw new RuntimeException("Este evento já foi finalizado e não pode ser editado.");
         }
 

@@ -8,10 +8,12 @@
 	type MaskType = 'phone' | 'cpf' | 'ra';
 
 	export let id: string = generateId(5);
-	export let type = 'text';
+	export let type: 'text' | 'password' | 'date' | 'email' | 'number' = 'text';
 	export let width: string = '100%';
 	export let height: string = 'fit-content';
 	export let value: string | null = null;
+	export let min: number | null = null;
+	export let max: number | null = null;
 	export let placeholder: string | null = null;
 	export let error: string | null = null;
 	export let label: string | null = null;
@@ -48,13 +50,15 @@
 </script>
 
 <div class="flex flex-col" style="width: {width}; height: {height};">
-	<label for={id} class="mb-1 font-bold text-black">
+	<label for={id} class="mb-1 w-full truncate font-bold text-black">
 		{label}
 	</label>
 
 	<div class="flex gap-1">
 		<input
 			{id}
+			{min}
+			{max}
 			type={type != 'password' ? type : showPassword ? 'text' : 'password'}
 			bind:value
 			use:maska={maskOptions}
@@ -81,12 +85,14 @@
 </div>
 
 <style>
-	label, input {
+	label,
+	input {
 		font-size: 14px;
 	}
 
 	@media (min-width: 320px) {
-		label, input {
+		label,
+		input {
 			font-size: 16px;
 		}
 	}

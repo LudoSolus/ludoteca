@@ -1,6 +1,14 @@
-export interface InputController{
-    value: string
-    error: string |null
-    touched: boolean
-    required: boolean
+export interface IInputController {
+	value: string;
+	error: string | null;
+	touched: boolean;
+	required: boolean;
+}
+
+export type IFormController<T extends string> = {
+	[key in T]: IInputController;
+};
+
+export function inputIsTouched(value: string): boolean {
+	return (!!value && value.length > 0);
 }

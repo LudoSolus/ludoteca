@@ -2,7 +2,6 @@ package com.projectLudoteca.ludoteca.query.controller.adminAcess;
 
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
 import com.projectLudoteca.ludoteca.query.detailsGameAdmin.GetGameDetailsAdminHandler;
-import com.projectLudoteca.ludoteca.query.detailsGameAdmin.GetGameDetailsAdminQuery;
 import com.projectLudoteca.ludoteca.query.detailsGameAdmin.GetGameDetailsAdminView;
 import com.projectLudoteca.ludoteca.query.getGameByBarcode.GetGameByBarcodeAdminView;
 import com.projectLudoteca.ludoteca.query.getGameByBarcode.GetGameByBarcodeHandler;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/queries/admin/games")
@@ -35,9 +33,9 @@ public class GameQueryAdminController {
 
     @GetMapping("/{id}/details")
     @Operation(summary = "Lista os dados de um jogo", description = "Realiza uma busca de um determinado jogo no sistema e retorna seus dados para o administrador.")
-    public ResponseEntity<ApiResponse<GetGameDetailsAdminView>> getDetails(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<GetGameDetailsAdminView>> getDetails(@PathVariable String id) {
 
-        GetGameDetailsAdminView view = gameDetailsAdminHandler.handle(new GetGameDetailsAdminQuery(id));
+        GetGameDetailsAdminView view = gameDetailsAdminHandler.handle(id);
 
         ApiResponse<GetGameDetailsAdminView> response = new ApiResponse<>(view);
 

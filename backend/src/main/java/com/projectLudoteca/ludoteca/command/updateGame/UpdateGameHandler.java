@@ -68,7 +68,7 @@ public class UpdateGameHandler {
             throw new BusinessException("O link do vídeo tutorial é inválido.");
         }
 
-        if (command.barcode() != null) {
+        if (command.barcode() != null && command.barcode() != game.getBarcode()) {
             if (gameRepository.existsByBarcode(command.barcode())) {
                 throw new BusinessException("Já existe um jogo com esse código de barras cadastrado no sistema.");
             }
@@ -81,7 +81,10 @@ public class UpdateGameHandler {
         if (command.category() != null) {
             game.setCategory(GameCategory.valueOf(command.category()));
         }
-        if (command.description() != null) {
+        if (command.description() != null && command.description().isBlank()) {
+            if (command.description().length() > 1000) {
+                throw new BusinessException("A descrição só pode ter até 1000 caracteres.");
+            }
             game.setDescription(command.description());
         }
         if (command.minPlayers() != null) {
