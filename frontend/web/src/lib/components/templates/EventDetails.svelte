@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { GetEventDetailsResponse } from '$lib/api/queries/get-event-details/get-event-details.interface';
 	import Fa from 'svelte-fa';
 	import GoBack from '../molecules/GoBack.svelte';
 	import { faCalendar, faLocationDot } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +7,7 @@
 	import { formatTime } from '$lib/shared/helpers/format-time';
 	import SearchInput from '../atoms/SearchInput.svelte';
 	import BoardGame from '../molecules/BoardGame.svelte';
+	import type { GetEventDetailsResponse } from '$lib/api/queries/events/get-event-details/get-event-details.interface';
 
 	export let eventData: GetEventDetailsResponse;
 
@@ -27,7 +27,7 @@
 				<Fa icon={faLocationDot} size="2x" />
 				<div>
 					<p>{eventData.street}, n° {eventData.number}</p>
-					<p>Bairro: {eventData.supplement}</p>
+					<p>Bairro: {eventData.neighborhood}</p>
 					<p>{eventData.city}, {eventData.state}</p>
 					<p>{formatCEP(eventData.zipCode)}</p>
 				</div>
