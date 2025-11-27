@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import type { GetEventDetailsResponse } from '$lib/api/queries/events/get-event-details/get-event-details.interface';
 	import { GetEventDetailsQuery } from '$lib/api/queries/events/get-event-details/get-event-details.query';
-	import UserEventDetails from '$lib/components/templates/UserEventDetails.svelte';
+	import AdminEventDetails from '$lib/components/templates/admin/AdminEventDetails.svelte';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
@@ -31,7 +31,7 @@
 </script>
 
 {#if eventData}
-	<UserEventDetails {eventData} />
+	<AdminEventDetails {eventData} />
 {:else}
 	<p>Carregando...</p>
 {/if}

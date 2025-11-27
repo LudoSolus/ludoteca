@@ -31,6 +31,7 @@
 	export let hasRpg: boolean;
 	export let hasEscapeRoom: boolean;
 	export let address: EventAddressData;
+	export let onCLickButton: () => void
 </script>
 
 <div
@@ -90,7 +91,7 @@
 				text="Detalhes"
 				rightIcon={faArrowRight}
 				width={$device == 'mobile' ? '100%' : undefined}
-				onClick={() => {}}
+				onClick={onCLickButton}
 			/>
 		</div>
 	</div>
