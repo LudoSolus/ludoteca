@@ -11,6 +11,7 @@
 
 	export let eventData: GetEventDetailsResponse;
 	export let openRegisterUser: () => void;
+	export let loanGame: (gameId: string) => void
 	
 
 	const today = new Date();
@@ -73,7 +74,7 @@
 					isAvailable: game.isAvailable
 				}))}
 				onClickGame={(gameId) => {}}
-				onClickLoanGame={(gameId) => {}}
+				onClickLoanGame={loanGame}
 			/>
 		</div>
 	</div>

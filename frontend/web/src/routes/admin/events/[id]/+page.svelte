@@ -1,9 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { RegisterParticipationInEventCommand } from '$lib/api/commands/event/register-participation-in-event/register-participation-in-event.query';
-	import type { GetEventDetailsResponse } from '$lib/api/queries/events/get-event-details/get-event-details.interface';
+	import type {
+		GameDetailsForEvent,
+		GetEventDetailsResponse
+	} from '$lib/api/queries/events/get-event-details/get-event-details.interface';
 	import { GetEventDetailsQuery } from '$lib/api/queries/events/get-event-details/get-event-details.query';
 	import EventRegisterUserModal from '$lib/components/molecules/EventRegisterUserModal.svelte';
+	import LoanGameModal from '$lib/components/molecules/LoanGameModal.svelte';
 	import AdminEventDetails from '$lib/components/templates/admin/AdminEventDetails.svelte';
 	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
@@ -15,8 +19,13 @@
 	const commandsHandler = new CommandsHandlerService(axios);
 
 	let eventData: GetEventDetailsResponse | null = null;
+
 	let eventRegisterUserModalIsOpen: boolean = false;
 	let eventRegisterUserLoading: boolean = false;
+
+	let loanGameModalIsOpen: boolean = false;
+	let loanGameLoading: boolean = false;
+	let selectedGame: GameDetailsForEvent | null = null;
 
 	onMount(() => {
 		fetchEvent();
@@ -57,10 +66,29 @@
 	function openRegisterUserModal() {
 		eventRegisterUserModalIsOpen = true;
 	}
+
+	function openLoanGameModal(gameId: string) {
+		const game = eventData?.listGames.find((g) => g.id == gameId);
+		if (!game) {
+			toast.error('Jogo escolhido não encontrado, reinicie a página!');
+			return;
+		}
+		selectedGame = game;
+		loanGameModalIsOpen = true;
+	}
+
+	function closeLoanGameModal() {
+		selectedGame = null;
+		loanGameModalIsOpen = false;
+	}
 </script>
 
 {#if eventData}
-	<AdminEventDetails {eventData} openRegisterUser={openRegisterUserModal} />
+	<AdminEventDetails
+		{eventData}
+		openRegisterUser={openRegisterUserModal}
+		loanGame={openLoanGameModal}
+	/>
 {:else}
 	<p>Carregando...</p>
 {/if}
@@ -70,3 +98,12 @@
 	isLoading={eventRegisterUserLoading}
 	onEventRegisterUser={registerParticipationInEvent}
 />
+
+{#if selectedGame}
+	<LoanGameModal
+		bind:isOpen={loanGameModalIsOpen}
+		isLoading={loanGameLoading}
+		onLoanGame={(publicId) => console.log(publicId)}
+		gameName={selectedGame.nameGame}
+	/>
+{/if}
