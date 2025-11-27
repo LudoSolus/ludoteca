@@ -64,6 +64,15 @@ public class User implements Serializable {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
+    @Column(name = "min_board_games")
+    private Integer minBoardGames = 0;
+
+    @Column(name = "min_escape_room")
+    private Integer minEscapeRoom = 0;
+
+    @Column(name = "min_rpg")
+    private Integer minRpg = 0;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "educational_institution_id", nullable = false)
     private EducationalInstitution educationalInstitution;

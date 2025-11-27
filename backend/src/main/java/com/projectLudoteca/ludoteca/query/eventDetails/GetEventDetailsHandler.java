@@ -47,6 +47,7 @@ public class GetEventDetailsHandler {
 
         return new GetEventDetailsView(
                 event.getName(),
+                event.getStatus(),
                 event.getStartDate(),
                 event.getFinalDate(),
                 event.getStreet(),
