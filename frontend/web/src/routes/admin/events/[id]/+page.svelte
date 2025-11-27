@@ -6,6 +6,7 @@
 		GetEventDetailsResponse
 	} from '$lib/api/queries/events/get-event-details/get-event-details.interface';
 	import { GetEventDetailsQuery } from '$lib/api/queries/events/get-event-details/get-event-details.query';
+	import ConfirmationModal from '$lib/components/molecules/ConfirmationModal.svelte';
 	import EventRegisterUserModal from '$lib/components/molecules/EventRegisterUserModal.svelte';
 	import LoanGameModal from '$lib/components/molecules/LoanGameModal.svelte';
 	import AdminEventDetails from '$lib/components/templates/admin/AdminEventDetails.svelte';
@@ -26,6 +27,9 @@
 	let loanGameModalIsOpen: boolean = false;
 	let loanGameLoading: boolean = false;
 	let selectedGame: GameDetailsForEvent | null = null;
+
+	let confirmStartEventModalIsOpen: boolean = false;
+	let confirmFinishEventModalIsOpen: boolean = false;
 
 	onMount(() => {
 		fetchEvent();
@@ -81,6 +85,14 @@
 		selectedGame = null;
 		loanGameModalIsOpen = false;
 	}
+
+	function openConfirmStartEventModal() {
+		confirmStartEventModalIsOpen = true;
+	}
+
+	function openConfirmFinishEventModal() {
+		confirmFinishEventModalIsOpen = true;
+	}
 </script>
 
 {#if eventData}
@@ -88,6 +100,8 @@
 		{eventData}
 		openRegisterUser={openRegisterUserModal}
 		loanGame={openLoanGameModal}
+		startEvent={openConfirmStartEventModal}
+		finishEvent={openConfirmFinishEventModal}
 	/>
 {:else}
 	<p>Carregando...</p>
@@ -97,6 +111,21 @@
 	bind:isOpen={eventRegisterUserModalIsOpen}
 	isLoading={eventRegisterUserLoading}
 	onEventRegisterUser={registerParticipationInEvent}
+/>
+
+<ConfirmationModal
+	bind:isOpen={confirmStartEventModalIsOpen}
+	onConfirm={() => alert('evento iniciado')}
+	text="Tem certeza que deseja iniciar o evento?"
+	subTitle="Depois não será possível editar as suas informações."
+	confirmButtonText="Iniciar"
+/>
+
+<ConfirmationModal
+	bind:isOpen={confirmFinishEventModalIsOpen}
+	onConfirm={() => alert('evento finalizado')}
+	text="Tem certeza que deseja finalizar o evento?"
+	confirmButtonText="Finalizar"
 />
 
 {#if selectedGame}
