@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { IBoardGame } from '$lib/api/queries/board-games/list-board-games/list-board-games.interface';
-	import BoardGame from '../../molecules/BoardGame.svelte';
-	import SearchInput from '../../atoms/SearchInput.svelte';
+	import BoardGame from '$lib/components/molecules/BoardGame.svelte';
+	import SearchInput from '$lib/components/atoms/SearchInput.svelte';
 	import defaultImg from '$lib/assets/default.png';
-	import Button from '../../atoms/Button.svelte';
+	import Button from '$lib/components/atoms/Button.svelte';
 	import { faPlus } from '@fortawesome/free-solid-svg-icons';
 	import { goto } from '$app/navigation';
 
@@ -30,6 +30,7 @@
 		</div>
 
 		<div class="flex w-full max-w-150 flex-col gap-4 sm:gap-8">
+			
 			<div class="flex w-full max-w-150 items-center justify-start gap-5 px-2 sm:px-4">
 				<SearchInput bind:value={searchInputValue} placeholder="Pesquisar..." />
 			</div>
