@@ -19,6 +19,7 @@
 	export let label: string | null = null;
 	export let onInput: (value: string) => void;
 	export let mask: MaskType | null = null;
+	export let isUppercase: boolean = false
 
 	const maskOptions: MaskInputOptions | undefined = mask ? getMaskOptions() : undefined;
 	let showPassword: boolean = false;
@@ -44,6 +45,9 @@
 	}
 
 	function handleInput(event: any) {
+		if(isUppercase){
+			event.target.value = event.target.value.toUpperCase()
+		}
 		value = event.target.value;
 		onInput(value!);
 	}
