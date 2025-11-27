@@ -10,9 +10,12 @@
 	import BoardGamesList from '$lib/components/organisms/BoardGamesList.svelte';
 
 	export let eventData: GetEventDetailsResponse;
+
+	const today = new Date();
+	$: eventStartToday = eventData.startDate == today;
 </script>
 
-<main class="flex h-full flex-col items-center gap-10 overflow-y-auto px-1 py-7 sm:px-10 xl:px-15">
+<main class="flex h-full flex-col items-center gap-10 px-1 py-7 sm:px-10 xl:px-15">
 	<GoBack
 		title={eventData.name}
 		description="Detalhes do evento"
@@ -51,6 +54,7 @@
 				</div>
 			</div>
 			<div class="flex w-full flex-col items-center gap-4">
+				<Button text="Iniciar Evento" onClick={() => {}} disabled={!eventStartToday} />
 				<Button text="Registrar Usuário" leftIcon={faUser} onClick={() => {}} />
 				<Button text="Devolver jogo" onClick={() => {}} />
 			</div>
