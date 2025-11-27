@@ -10,6 +10,10 @@ public record GetUserDetailsAdminView(UUID id,
                                     String ra,
                                     String email,
                                     String ageCategory,
-                                    String userType
+                                    String userType,
+                                    Integer hoursBoardGames,
+                                    Integer hoursEscapRoom,
+                                    Integer hoursRpg
+
 ) {
 }
