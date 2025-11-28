@@ -11,16 +11,17 @@
 	export let loading: boolean = false;
 	export let width: string = 'fit-content';
 	export let height: string = 'fit-content';
+	export let variant: 'primary' | 'secondary' = 'primary';
 </script>
 
 <button
 	style="width: {width}; height: {height};"
-	class="flex items-center justify-center gap-2 rounded-md border-2 border-black px-6 py-1"
+	class="flex items-center justify-center gap-2 rounded-md border-2 border-black px-6 py-1 {variant}"
 	disabled={disabled || loading}
 	on:click={onClick}
 >
 	{#if loading}
-		<Loading size="20px" color="#FFF" weight="3px"/>
+		<Loading size="20px" color="#FFF" weight="3px" />
 	{:else}
 		{#if leftIcon}
 			<Fa icon={leftIcon} />
@@ -34,11 +35,18 @@
 
 <style>
 	button {
-		background-color: var(--primary-color);
 		font-weight: 600;
 		box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 4px;
 		cursor: pointer;
 		transition: all 0.2s ease-in-out;
+	}
+
+	button.primary {
+		background-color: var(--primary-color);
+	}
+
+	button.secondary {
+		background-color: white;
 	}
 
 	button:hover {
@@ -52,9 +60,16 @@
 	}
 
 	button:disabled {
-		background-color: #beb05e;
 		box-shadow: none;
 		cursor: default;
 		transition: all 0.2s ease-in-out;
+	}
+
+	button.primary:disabled {
+		background-color: #beb05e;
+	}
+
+	button.secondary:disabled{
+		background-color: #b2b2b2;
 	}
 </style>

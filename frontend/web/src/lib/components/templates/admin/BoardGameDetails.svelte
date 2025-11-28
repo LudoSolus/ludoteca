@@ -8,7 +8,7 @@
 	export let handleOnDelete: () => void;
 </script>
 
-<main class="flex h-full flex-col gap-10 overflow-y-auto px-1 py-7 sm:px-10 xl:px-15">
+<main class="flex h-full flex-col gap-10 overflow-y-auto px-1 py-7 sm:px-10 xl:px-15 items-center">
 	<GoBack
 		title={boardGameDetails.title}
 		description="Detalhes do jogo"
@@ -16,7 +16,7 @@
 		onDelete={handleOnDelete}
 	/>
 	<div
-		class="flex flex-wrap items-start justify-between gap-10 px-0 pb-20 sm:px-2 lg:px-4 xl:px-10"
+		class="flex w-full max-w-350 flex-wrap items-start justify-between gap-10 px-0 pb-20 sm:px-2 lg:px-4 xl:px-10"
 	>
 		<section class="flex w-full flex-1 flex-col items-start justify-start gap-4">
 			<p class="lg:min-h-50">{boardGameDetails.description}</p>
