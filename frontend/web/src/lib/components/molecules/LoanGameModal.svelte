@@ -14,7 +14,7 @@
 		publicUserIdInput = '';
 	}
 
-	function close() {
+	function closeModal() {
 		isOpen = false;
 	}
 
@@ -34,7 +34,7 @@
 </script>
 
 {#if isOpen}
-	<Modal onConfirm={handleLoanGame} onClose={close} {isLoading} confirmButtonText="Emprestar">
+	<Modal onConfirm={handleLoanGame} onClose={closeModal} {isLoading} confirmButtonText="Emprestar">
 		<div class="flex flex-col gap-6">
 			<p class="text-center text-lg font-medium sm:text-xl">
 				Emprestar {gameName} para

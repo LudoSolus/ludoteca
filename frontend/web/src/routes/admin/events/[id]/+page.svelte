@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { LoanGameCommand } from '$lib/api/commands/board-games/loan-game/loan-game.command';
 	import type { ILoanGameRequest } from '$lib/api/commands/board-games/loan-game/loan-game.interface';
+	import { ReturnGameCommand } from '$lib/api/commands/board-games/return-game/return-game.command';
 	import { FinishEventCommand } from '$lib/api/commands/events/finish-event/finish-event.command';
 	import { RegisterParticipationInEventCommand } from '$lib/api/commands/events/register-participation-in-event/register-participation-in-event.query';
 	import { StartEventCommand } from '$lib/api/commands/events/start-event/start-event.command';
@@ -13,6 +14,7 @@
 	import ConfirmationModal from '$lib/components/molecules/ConfirmationModal.svelte';
 	import EventRegisterUserModal from '$lib/components/molecules/EventRegisterUserModal.svelte';
 	import LoanGameModal from '$lib/components/molecules/LoanGameModal.svelte';
+	import ReturnGameModal from '$lib/components/molecules/ReturnGameModal.svelte';
 	import AdminEventDetails from '$lib/components/templates/admin/AdminEventDetails.svelte';
 	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
@@ -24,13 +26,16 @@
 	const commandsHandler = new CommandsHandlerService(axios);
 
 	let eventData: GetEventDetailsResponse | null = null;
+	let selectedGame: GameDetailsForEvent | null = null;
 
 	let eventRegisterUserModalIsOpen: boolean = false;
 	let eventRegisterUserLoading: boolean = false;
 
 	let loanGameModalIsOpen: boolean = false;
 	let loanGameLoading: boolean = false;
-	let selectedGame: GameDetailsForEvent | null = null;
+
+	let returnGameModalIsOpen: boolean = false;
+	let returnGameLoading: boolean = false;
 
 	let confirmStartEventModalIsOpen: boolean = false;
 	let confirmStartEventIsLoading: boolean = false;
@@ -138,30 +143,57 @@
 		});
 	}
 
+	function returnGame(gameId: string) {
+		returnGameLoading = true;
+
+		commandsHandler.handle(new ReturnGameCommand(gameId)).subscribe({
+			next: (res) => {
+				toast.success((res as any).data.resultData ?? 'Jogo devolvido com sucesso!', {
+					closable: true
+				});
+				closeReturnGameModal();
+				returnGameLoading = false;
+			},
+			error: (err) => {
+				returnGameLoading = false;
+			}
+		});
+	}
+
 	// Funções para gerenciamento dos modais
 
 	function openRegisterUserModal() {
 		eventRegisterUserModalIsOpen = true;
 	}
 
-	function handleOnLoanGame(gameId: string) {
+	function handleOnClickLoanGame(gameId: string) {
 		const game = eventData?.listGames.find((g) => g.id == gameId);
 		if (!game) {
 			toast.error('Jogo escolhido não encontrado, reinicie a página!', { closable: true });
 			return;
 		}
 
-		if (!game.isAvailable) {
-			toast.error('O jogo já está emprestado!', { closable: true });
-			return;
-		}
 		selectedGame = game;
-		loanGameModalIsOpen = true;
+		if (!game.isAvailable) {
+			returnGameModalIsOpen = true;
+		} else {
+			loanGameModalIsOpen = true;
+		}
+	}
+
+	function openReturnGameWithoutGame() {
+		selectedGame = null;
+		returnGameModalIsOpen = true;
 	}
 
 	function closeLoanGameModal() {
 		selectedGame = null;
 		loanGameModalIsOpen = false;
+	}
+
+	function closeReturnGameModal() {
+		selectedGame = null;
+		returnGameModalIsOpen = false;
 	}
 
 	function openConfirmStartEventModal() {
@@ -177,9 +209,10 @@
 	<AdminEventDetails
 		{eventData}
 		openRegisterUser={openRegisterUserModal}
-		loanGame={handleOnLoanGame}
+		loanGame={handleOnClickLoanGame}
 		startEvent={openConfirmStartEventModal}
 		finishEvent={openConfirmFinishEventModal}
+		returnGame={openReturnGameWithoutGame}
 	/>
 {:else}
 	<p>Carregando...</p>
@@ -206,6 +239,18 @@
 	onConfirm={finishEvent}
 	text="Tem certeza que deseja finalizar o evento?"
 	confirmButtonText="Finalizar"
+/>
+
+<ReturnGameModal
+	bind:isOpen={returnGameModalIsOpen}
+	isLoading={returnGameLoading}
+	onReturnGame={(gameId) => returnGame(gameId)}
+	game={selectedGame
+		? {
+				...selectedGame,
+				title: selectedGame.nameGame
+			}
+		: null}
 />
 
 {#if selectedGame}

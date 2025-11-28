@@ -14,6 +14,7 @@
 	export let loanGame: (gameId: string) => void;
 	export let startEvent: () => void;
 	export let finishEvent: () => void;
+	export let returnGame: () => void;
 
 	const today = new Date();
 	$: eventStartToday = eventData.startDate == today;
@@ -58,9 +59,9 @@
 				</div>
 			</div>
 			<div class="flex w-full flex-col items-center gap-4">
-				<Button text="Iniciar Evento" onClick={startEvent}  />
+				<Button text="Iniciar Evento" onClick={startEvent} />
 				<Button text="Registrar Usuário" leftIcon={faUser} onClick={openRegisterUser} />
-				<Button text="Devolver jogo" onClick={() => {}} />
+				<Button text="Devolver jogo" onClick={returnGame} />
 			</div>
 		</div>
 		<div class="flex flex-1 items-center justify-center">
