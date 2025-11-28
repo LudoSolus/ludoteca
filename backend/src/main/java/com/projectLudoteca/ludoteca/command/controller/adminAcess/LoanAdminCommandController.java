@@ -4,10 +4,12 @@ import com.projectLudoteca.ludoteca.command.loanGameInEvent.LoanGameInEventComma
 import com.projectLudoteca.ludoteca.command.loanGameInEvent.LoanGameInEventHandler;
 import com.projectLudoteca.ludoteca.command.registerEvent.CreateEventCommand;
 import com.projectLudoteca.ludoteca.command.returnedGame.ReturnGameHandler;
+import com.projectLudoteca.ludoteca.common.entity.User;
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,9 +40,9 @@ public class LoanAdminCommandController {
 
     @PostMapping("/{id}/return-game")
     @Operation(summary = "Registrar a devolução do empréstimo", description = "Efetua a devolução do jogo emprestado recebendo o id do jogo.")
-    public ResponseEntity<ApiResponse<String>> returnLoan(@PathVariable @Validated String id) {
+    public ResponseEntity<ApiResponse<String>> returnLoan(@PathVariable @Validated String id, @AuthenticationPrincipal User user) {
 
-        String message = returnGameHandler.handle(id);
+        String message = returnGameHandler.handle(id, user.getId());
 
         ApiResponse<String> response = new ApiResponse<>(message);
 

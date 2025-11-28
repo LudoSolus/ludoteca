@@ -7,6 +7,7 @@ import com.projectLudoteca.ludoteca.common.entity.User;
 import com.projectLudoteca.ludoteca.common.entity.id.GameEventId;
 import com.projectLudoteca.ludoteca.common.enums.GameStatus;
 import com.projectLudoteca.ludoteca.common.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,6 +33,7 @@ public class LoanGameInEventHandler {
         this.gameEventRepository = gameEventRepository;
     }
 
+    @Transactional
     public String handle(LoanGameInEventCommand command) {
 
         User user = userRepository.findByPublicId(command.userPublicId())

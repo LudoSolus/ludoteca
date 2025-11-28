@@ -20,7 +20,7 @@ public class GetAllUsersForAdminHandler {
 
         return repository.findAll()
                          .stream()
-                         .map(u -> new GetAllUsersForAdminView(u.getId(), u.getEmail(), getAgeCategory(u.getBirthDate()), u.getUserRole().name()))
+                         .map(u -> new GetAllUsersForAdminView(u.getId(), u.getEmail(), u.getName(), getAgeCategory(u.getBirthDate()), u.getUserRole().name()))
                          .toList();
     }
 
