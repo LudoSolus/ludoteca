@@ -8,6 +8,7 @@
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
 	import Button from '$lib/components/atoms/Button.svelte';
 	import BoardGamesList from '$lib/components/organisms/BoardGamesList.svelte';
+	import { EEventStatus } from '$lib/shared/enums/event-status.enum';
 
 	export let eventData: GetEventDetailsResponse;
 	export let openRegisterUser: () => void;
@@ -24,8 +25,8 @@
 	<GoBack
 		title={eventData.name}
 		description="Detalhes do evento"
-		onDelete={() => {}}
-		onEdit={() => {}}
+		onDelete={eventData.status == EEventStatus.SCHEDULED ? () => {} : null}
+		onEdit={eventData.status == EEventStatus.SCHEDULED ? () => {} : null}
 	/>
 	<div
 		class="flex w-full max-w-350 flex-wrap items-start justify-between gap-10 px-0 pb-20 sm:px-2 lg:px-4 xl:px-10"
@@ -59,9 +60,13 @@
 				</div>
 			</div>
 			<div class="flex w-full flex-col items-center gap-4">
-				<Button text="Iniciar Evento" onClick={startEvent} />
-				<Button text="Registrar Usuário" leftIcon={faUser} onClick={openRegisterUser} />
-				<Button text="Devolver jogo" onClick={returnGame} />
+				{#if eventData.status == EEventStatus.SCHEDULED}
+					<Button text="Iniciar Evento" onClick={startEvent} />
+				{:else if eventData.status == EEventStatus.INPROGRESS}
+					<Button text="Finalizar Evento" onClick={finishEvent} />
+					<Button text="Registrar Usuário" leftIcon={faUser} onClick={openRegisterUser} />
+					<Button text="Devolver jogo" onClick={returnGame} />
+				{/if}
 			</div>
 		</div>
 		<div class="flex flex-1 items-center justify-center">
@@ -76,7 +81,7 @@
 					isAvailable: game.isAvailable
 				}))}
 				onClickGame={(gameId) => {}}
-				onClickLoanGame={loanGame}
+				onClickLoanGame={eventData.status == EEventStatus.INPROGRESS ? loanGame : null}
 			/>
 		</div>
 	</div>

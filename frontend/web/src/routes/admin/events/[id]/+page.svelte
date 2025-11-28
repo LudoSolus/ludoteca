@@ -16,6 +16,7 @@
 	import LoanGameModal from '$lib/components/molecules/LoanGameModal.svelte';
 	import ReturnGameModal from '$lib/components/molecules/ReturnGameModal.svelte';
 	import AdminEventDetails from '$lib/components/templates/admin/AdminEventDetails.svelte';
+	import { EEventStatus } from '$lib/shared/enums/event-status.enum';
 	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import axios from 'axios';
@@ -92,6 +93,7 @@
 				});
 				confirmStartEventModalIsOpen = false;
 				confirmStartEventIsLoading = false;
+				fetchEvent();
 			},
 			error: (err) => {
 				confirmStartEventIsLoading = false;
@@ -110,6 +112,7 @@
 				});
 				confirmFinishEventModalIsOpen = false;
 				confirmFinishEventisLoading = false;
+				fetchEvent();
 			},
 			error: (err) => {
 				toast.error(err, { closable: true });
@@ -136,6 +139,7 @@
 				});
 				closeLoanGameModal();
 				loanGameLoading = false;
+				fetchEvent();
 			},
 			error: (err) => {
 				loanGameLoading = false;
@@ -153,6 +157,7 @@
 				});
 				closeReturnGameModal();
 				returnGameLoading = false;
+				fetchEvent();
 			},
 			error: (err) => {
 				returnGameLoading = false;
@@ -167,6 +172,15 @@
 	}
 
 	function handleOnClickLoanGame(gameId: string) {
+		if (eventData?.status == EEventStatus.SCHEDULED) {
+			toast.info('O evento ainda não começou, não é possível emprestar jogos.');
+			return;
+		}
+		if (eventData?.status == EEventStatus.COMPLETED) {
+			toast.info('O evento já foi finalizado, não é possível emprestar jogos.');
+			return;
+		}
+		
 		const game = eventData?.listGames.find((g) => g.id == gameId);
 		if (!game) {
 			toast.error('Jogo escolhido não encontrado, reinicie a página!', { closable: true });
