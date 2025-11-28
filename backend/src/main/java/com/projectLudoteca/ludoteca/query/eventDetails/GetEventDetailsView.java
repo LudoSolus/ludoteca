@@ -1,10 +1,13 @@
 package com.projectLudoteca.ludoteca.query.eventDetails;
 
+import com.projectLudoteca.ludoteca.common.enums.EventStatus;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 public record GetEventDetailsView(String name,
+                                  EventStatus status,
                                   LocalDateTime startDate,
                                   LocalDateTime finalDate,
                                   String street,

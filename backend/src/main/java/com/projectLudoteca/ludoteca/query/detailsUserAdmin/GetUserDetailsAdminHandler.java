@@ -37,6 +37,7 @@ public class GetUserDetailsAdminHandler {
 
         return new GetUserDetailsAdminView(user.getId(),
                         user.getPublicId(),
+                        user.getName(),
                         user.getEducationalInstitution() != null
                                 ? user.getEducationalInstitution().getInstitutionName()
                                 : "N/A",
@@ -46,8 +47,10 @@ public class GetUserDetailsAdminHandler {
                                 : "N/A",
                         user.getEmail(),
                         getAgeCategory(user.getBirthDate()),
-                        user.getUserRole().name());
-
+                        user.getUserRole().name(),
+                        user.getMinBoardGames() != 0 ? (int) user.getMinBoardGames()/60 : 0,
+                        user.getMinEscapeRoom() != 0 ? (int) user.getMinEscapeRoom()/60 : 0,
+                        user.getMinRpg() != 0 ? (int) user.getMinRpg()/60 : 0);
     }
 
     private static String getAgeCategory(LocalDate birthDate) {
