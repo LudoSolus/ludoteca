@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { RegisterParticipationInEventCommand } from '$lib/api/commands/event/register-participation-in-event/register-participation-in-event.query';
+	import { FinishEventCommand } from '$lib/api/commands/events/finish-event/finish-event.command';
+	import { RegisterParticipationInEventCommand } from '$lib/api/commands/events/register-participation-in-event/register-participation-in-event.query';
+	import { StartEventCommand } from '$lib/api/commands/events/start-event/start-event.command';
 	import type {
 		GameDetailsForEvent,
 		GetEventDetailsResponse
@@ -29,7 +31,10 @@
 	let selectedGame: GameDetailsForEvent | null = null;
 
 	let confirmStartEventModalIsOpen: boolean = false;
+	let confirmStartEventIsLoading: boolean = false;
+
 	let confirmFinishEventModalIsOpen: boolean = false;
+	let confirmFinishEventisLoading: boolean = false;
 
 	onMount(() => {
 		fetchEvent();
@@ -65,6 +70,39 @@
 					eventRegisterUserLoading = false;
 				}
 			});
+	}
+
+	function startEvent() {
+		confirmStartEventIsLoading = true;
+		const eventId = $page.params.id;
+		if (!eventId) return;
+		commandsHandler.handle(new StartEventCommand(eventId)).subscribe({
+			next: (res) => {
+				toast.success(((res as any).data.resultData) ?? "Evento iniciado com sucesso!", { closable: true });
+				confirmStartEventModalIsOpen = false;
+				confirmStartEventIsLoading = false;
+			},
+			error: (err) => {
+				confirmStartEventIsLoading = false;
+			}
+		});
+	}
+
+	function finishEvent() {
+		confirmFinishEventisLoading = true;
+		const eventId = $page.params.id;
+		if (!eventId) return;
+		commandsHandler.handle(new FinishEventCommand(eventId)).subscribe({
+			next: (res) => {
+				toast.success(((res as any).data.resultData) ?? "Evento finalizado com sucesso!", { closable: true });
+				confirmFinishEventModalIsOpen = false;
+				confirmFinishEventisLoading = false;
+			},
+			error: (err) => {
+				toast.error(err, { closable: true });
+				confirmFinishEventisLoading = false;
+			}
+		});
 	}
 
 	function openRegisterUserModal() {
@@ -115,7 +153,8 @@
 
 <ConfirmationModal
 	bind:isOpen={confirmStartEventModalIsOpen}
-	onConfirm={() => alert('evento iniciado')}
+	isLoading={confirmStartEventIsLoading}
+	onConfirm={startEvent}
 	text="Tem certeza que deseja iniciar o evento?"
 	subTitle="Depois não será possível editar as suas informações."
 	confirmButtonText="Iniciar"
@@ -123,7 +162,8 @@
 
 <ConfirmationModal
 	bind:isOpen={confirmFinishEventModalIsOpen}
-	onConfirm={() => alert('evento finalizado')}
+	isLoading={confirmFinishEventisLoading}
+	onConfirm={finishEvent}
 	text="Tem certeza que deseja finalizar o evento?"
 	confirmButtonText="Finalizar"
 />
