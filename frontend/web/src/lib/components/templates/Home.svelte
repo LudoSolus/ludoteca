@@ -6,7 +6,6 @@
 	export let events: IListNextEventsResponse[];
 
 	function goToEvent(eventId: string): void {
-    console.log(eventId)
 		goto(`/user/event/${eventId}`);
 	}
 </script>
