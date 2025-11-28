@@ -43,7 +43,7 @@
 						category={game.category}
 						minParticipants={game.minParticipants}
 						maxParticipants={game.maxParticipants}
-						isActivate={game.isAvailable ? game.isAvailable : true}
+						isActivate={game.isAvailable == undefined ? true : game.isAvailable}
 						userType={!!onClickLoanGame ? EUserRole.ADMIN : EUserRole.USER}
 						onClick={() => onClickGame(game.id)}
 						onAdminClick={!!onClickLoanGame ? () => onClickLoanGame(game.id) : undefined}

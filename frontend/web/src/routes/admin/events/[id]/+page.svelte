@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { LoanGameCommand } from '$lib/api/commands/board-games/loan-game/loan-game.command';
+	import type { ILoanGameRequest } from '$lib/api/commands/board-games/loan-game/loan-game.interface';
 	import { FinishEventCommand } from '$lib/api/commands/events/finish-event/finish-event.command';
 	import { RegisterParticipationInEventCommand } from '$lib/api/commands/events/register-participation-in-event/register-participation-in-event.query';
 	import { StartEventCommand } from '$lib/api/commands/events/start-event/start-event.command';
@@ -40,6 +42,8 @@
 		fetchEvent();
 	});
 
+	// Função que utilizam as queries e commands
+
 	function fetchEvent() {
 		const eventId = $page.params.id;
 		if (!eventId) return;
@@ -78,7 +82,9 @@
 		if (!eventId) return;
 		commandsHandler.handle(new StartEventCommand(eventId)).subscribe({
 			next: (res) => {
-				toast.success(((res as any).data.resultData) ?? "Evento iniciado com sucesso!", { closable: true });
+				toast.success((res as any).data.resultData ?? 'Evento iniciado com sucesso!', {
+					closable: true
+				});
 				confirmStartEventModalIsOpen = false;
 				confirmStartEventIsLoading = false;
 			},
@@ -94,7 +100,9 @@
 		if (!eventId) return;
 		commandsHandler.handle(new FinishEventCommand(eventId)).subscribe({
 			next: (res) => {
-				toast.success(((res as any).data.resultData) ?? "Evento finalizado com sucesso!", { closable: true });
+				toast.success((res as any).data.resultData ?? 'Evento finalizado com sucesso!', {
+					closable: true
+				});
 				confirmFinishEventModalIsOpen = false;
 				confirmFinishEventisLoading = false;
 			},
@@ -105,14 +113,46 @@
 		});
 	}
 
+	function loanGame(userPublicId: string) {
+		loanGameLoading = true;
+		const eventId = $page.params.id;
+		if (!eventId || !selectedGame) return;
+
+		const body: ILoanGameRequest = {
+			userPublicId: userPublicId,
+			gameId: selectedGame?.id,
+			eventId: eventId
+		};
+
+		commandsHandler.handle(new LoanGameCommand(body)).subscribe({
+			next: (res) => {
+				toast.success((res as any).data.resultData ?? 'Empréstimo realizado com sucesso!', {
+					closable: true
+				});
+				closeLoanGameModal();
+				loanGameLoading = false;
+			},
+			error: (err) => {
+				loanGameLoading = false;
+			}
+		});
+	}
+
+	// Funções para gerenciamento dos modais
+
 	function openRegisterUserModal() {
 		eventRegisterUserModalIsOpen = true;
 	}
 
-	function openLoanGameModal(gameId: string) {
+	function handleOnLoanGame(gameId: string) {
 		const game = eventData?.listGames.find((g) => g.id == gameId);
 		if (!game) {
-			toast.error('Jogo escolhido não encontrado, reinicie a página!');
+			toast.error('Jogo escolhido não encontrado, reinicie a página!', { closable: true });
+			return;
+		}
+
+		if (!game.isAvailable) {
+			toast.error('O jogo já está emprestado!', { closable: true });
 			return;
 		}
 		selectedGame = game;
@@ -137,7 +177,7 @@
 	<AdminEventDetails
 		{eventData}
 		openRegisterUser={openRegisterUserModal}
-		loanGame={openLoanGameModal}
+		loanGame={handleOnLoanGame}
 		startEvent={openConfirmStartEventModal}
 		finishEvent={openConfirmFinishEventModal}
 	/>
@@ -172,7 +212,7 @@
 	<LoanGameModal
 		bind:isOpen={loanGameModalIsOpen}
 		isLoading={loanGameLoading}
-		onLoanGame={(publicId) => console.log(publicId)}
+		onLoanGame={(publicId) => loanGame(publicId)}
 		gameName={selectedGame.nameGame}
 	/>
 {/if}
