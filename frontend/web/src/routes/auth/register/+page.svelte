@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { RegisterUserCommand } from '$lib/api/commands/register-user/register-user.command';
+	import { RegisterUserCommand } from '$lib/api/commands/users/register-user/register-user.command';
 	import type { IEducationalInstitution } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.interface';
 	import { ListEducationalInstitutionsQuery } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.query';
 	import Register from '$lib/components/templates/Register.svelte';
