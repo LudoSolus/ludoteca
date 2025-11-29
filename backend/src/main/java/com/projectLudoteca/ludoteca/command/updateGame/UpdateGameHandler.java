@@ -81,12 +81,15 @@ public class UpdateGameHandler {
         if (command.category() != null) {
             game.setCategory(GameCategory.valueOf(command.category()));
         }
-        if (command.description() != null && command.description().isBlank()) {
+
+        if (command.description() != null && !command.description().isBlank()) {
+
             if (command.description().length() > 1000) {
                 throw new BusinessException("A descrição só pode ter até 1000 caracteres.");
             }
             game.setDescription(command.description());
         }
+
         if (command.minPlayers() != null) {
             game.setMinPlayers(command.minPlayers());
         }
