@@ -20,14 +20,14 @@
 		{label}
 	</label>
 
-	<div class="flex gap-1">
+	<div class="flex gap-1 h-full">
 		<input
 			{id}
 			type="text"
 			bind:value
 			{placeholder}
 			on:input={handleInput}
-			class={`w-full rounded-md border border-black px-3 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none`}
+			class={`w-full h-full rounded-md border border-black px-3 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none`}
 		/>
 	</div>
 </div>
@@ -35,13 +35,13 @@
 <style>
 	label,
 	input {
-		font-size: 14px;
+		font-size: 8px;
 	}
 
 	@media (min-width: 320px) {
 		label,
 		input {
-			font-size: 16px;
+			font-size: 10px;
 		}
 	}
 </style>
