@@ -12,14 +12,16 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     boolean existsByCpf(String cpf);
 
+    Optional<User> findByIdAndRemovedFalse(UUID id);
+
     Optional<User> findByEmail(String email);
 
     Optional<User> findByPublicId(String publicId);
 
     boolean existsByRa(String ra);
 
-    @Query(value = "SELECT * FROM users WHERE id = ?1", nativeQuery = true)
-    Optional<User> findUserNative(UUID userId);
+    @Query(value = "SELECT * FROM users WHERE id = ?1 AND removed = false", nativeQuery = true)
+    Optional<User> findUserNativeAndRemovedFalse(UUID userId);
 
     Optional<User> findByPublicIdAndRemovedFalse(String publicId);
 

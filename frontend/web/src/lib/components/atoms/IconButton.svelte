@@ -8,15 +8,15 @@
 	export let width: string = '100%';
 	export let height: string = '100%';
 	export let color: string = '#000';
-	export let size: IconSize = '1x';
+	export let fontSize: string | undefined = undefined;
 </script>
 
 <button
-	class="flex items-center justify-center rounded-md border-2 border-black {variant}"
-	style="width: {width}; min-width: {width}; height: {height};"
+	class="flex items-center justify-center rounded-md border-2 border-black {variant} text-[20px]"
+	style="width: {width}; min-width: {width}; height: {height}; font-size: {fontSize}"
 	on:click={onClick}
 >
-	<Fa {icon} {color} {size} />
+	<Fa {icon} {color} />
 </button>
 
 <style>

@@ -1,12 +1,14 @@
 package com.projectLudoteca.ludoteca.query.detailsUserAdmin;
 
 import com.projectLudoteca.ludoteca.common.entity.User;
+import com.projectLudoteca.ludoteca.common.exception.BusinessException;
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Service
 public class GetUserDetailsAdminHandler {
@@ -17,16 +19,25 @@ public class GetUserDetailsAdminHandler {
         this.userRepository = userRepository;
     }
 
-    public GetUserDetailsAdminView handle(GetUserDetailsAdminQuery query) {
+    public GetUserDetailsAdminView handle(String id) {
 
-        if (query.id() == null) {
+        if (id == null) {
             throw new IllegalArgumentException("O id do usuário não pode ser nulo.");
         }
 
-        User user = userRepository.findUserNative(query.id()).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
+        UUID userId;
+
+        try{
+            userId = UUID.fromString(id);
+        } catch (RuntimeException e) {
+            throw new BusinessException("Id de usuário inválido!");
+        }
+
+        User user = userRepository.findUserNativeAndRemovedFalse(userId).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
 
         return new GetUserDetailsAdminView(user.getId(),
                         user.getPublicId(),
+                        user.getName(),
                         user.getEducationalInstitution() != null
                                 ? user.getEducationalInstitution().getInstitutionName()
                                 : "N/A",
@@ -36,8 +47,10 @@ public class GetUserDetailsAdminHandler {
                                 : "N/A",
                         user.getEmail(),
                         getAgeCategory(user.getBirthDate()),
-                        user.getUserRole().name());
-
+                        user.getUserRole().name(),
+                        user.getMinBoardGames() != 0 ? (int) user.getMinBoardGames()/60 : 0,
+                        user.getMinEscapeRoom() != 0 ? (int) user.getMinEscapeRoom()/60 : 0,
+                        user.getMinRpg() != 0 ? (int) user.getMinRpg()/60 : 0);
     }
 
     private static String getAgeCategory(LocalDate birthDate) {

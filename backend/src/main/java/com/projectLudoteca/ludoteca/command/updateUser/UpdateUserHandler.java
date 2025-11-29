@@ -33,7 +33,7 @@ public class UpdateUserHandler {
             throw new BusinessException("USR_001", "Pelo menos um campo deve ser informado para atualização.");
         }
 
-        User user = userRepository.findById(auth.getId())
+        User user = userRepository.findUserNativeAndRemovedFalse(auth.getId())
                 .orElseThrow(() -> new BusinessException("USR_002", "Usuário não encontrado."));
 
         if(Objects.equals(command.email(), user.getEmail())){

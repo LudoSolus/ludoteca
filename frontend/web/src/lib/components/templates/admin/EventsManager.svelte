@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import type { IListEvent } from '$lib/api/queries/events/list-all-events/list-all-events.interface';
 	import Button from '$lib/components/atoms/Button.svelte';
 	import EventCard from '$lib/components/molecules/EventCard.svelte';
@@ -7,6 +8,11 @@
 	export let events: IListEvent[];
 
 	const now = new Date();
+
+	function goToEvent(eventId: string): void {
+		goto(`/admin/events/${eventId}`);
+	}
+
 	$: nextEvents = events.filter((e) => e.finalDate >= now);
 	$: finishedEvents = events.filter((e) => e.finalDate < now);
 </script>
@@ -31,6 +37,7 @@
 						state: event.state,
 						zipCode: event.zipCode
 					}}
+					onCLickButton={() => goToEvent(event.id)}
 					hasBoardGame
 					hasEscapeRoom
 					hasRpg
@@ -54,6 +61,7 @@
 						state: event.state,
 						zipCode: event.zipCode
 					}}
+					onCLickButton={() => goToEvent(event.id)}
 					hasBoardGame
 					hasEscapeRoom
 					hasRpg

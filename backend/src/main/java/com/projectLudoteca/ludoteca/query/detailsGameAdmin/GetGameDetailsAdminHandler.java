@@ -1,11 +1,13 @@
 package com.projectLudoteca.ludoteca.query.detailsGameAdmin;
 
 import com.projectLudoteca.ludoteca.common.entity.Game;
+import com.projectLudoteca.ludoteca.common.exception.BusinessException;
 import com.projectLudoteca.ludoteca.common.repository.GameRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,8 +19,17 @@ public class GetGameDetailsAdminHandler {
         this.gameRepository = gameRepository;
     }
 
-    public GetGameDetailsAdminView handle(GetGameDetailsAdminQuery query) {
-        Game game = gameRepository.findById(query.id())
+    public GetGameDetailsAdminView handle(String id) {
+
+        UUID gameId;
+
+        try{
+            gameId = UUID.fromString(id);
+        } catch (RuntimeException e) {
+            throw new BusinessException("Id de jogo inválido!");
+        }
+
+        Game game = gameRepository.findById(gameId)
                 .orElseThrow(() -> new NoSuchElementException("Jogo não encontrado."));
 
         List<GetGameDetailsAdminView.LoanHistoryView> loanHistory = game.getLoans().stream()

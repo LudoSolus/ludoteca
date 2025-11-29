@@ -30,6 +30,7 @@
 :root {
 	--primary-color: #feec7e;
 	--card-background-color: rgba(254, 236, 126, 0.4);
+	--modal-background-color: #FFF6C4;
 	--link-color: #3c65fd;
 	--hover-color: #847818;
 	--active-color: #3a3405;

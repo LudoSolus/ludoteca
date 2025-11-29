@@ -8,15 +8,25 @@
 	type MaskType = 'phone' | 'cpf' | 'ra';
 
 	export let id: string = generateId(5);
-	export let type = 'text';
+	export let type: 'text' | 'password' | 'date' | 'email' | 'number' = 'text';
 	export let width: string = '100%';
 	export let height: string = 'fit-content';
 	export let value: string | null = null;
+	export let min: number | null = null;
+	export let max: number | null = null;
 	export let placeholder: string | null = null;
 	export let error: string | null = null;
 	export let label: string | null = null;
-	export let onInput: (value: string) => void;
 	export let mask: MaskType | null = null;
+	export let isUppercase: boolean = false;
+	export let onInput: (value: string) => void;
+	export let onChange:
+		| ((
+				event: Event & {
+					currentTarget: EventTarget & HTMLInputElement;
+				}
+		  ) => void)
+		| undefined = undefined;
 
 	const maskOptions: MaskInputOptions | undefined = mask ? getMaskOptions() : undefined;
 	let showPassword: boolean = false;
@@ -42,24 +52,30 @@
 	}
 
 	function handleInput(event: any) {
+		if (isUppercase) {
+			event.target.value = event.target.value.toUpperCase();
+		}
 		value = event.target.value;
 		onInput(value!);
 	}
 </script>
 
 <div class="flex flex-col" style="width: {width}; height: {height};">
-	<label for={id} class="mb-1 font-bold text-black">
+	<label for={id} class="mb-1 w-full truncate font-bold text-black">
 		{label}
 	</label>
 
 	<div class="flex gap-1">
 		<input
 			{id}
+			{min}
+			{max}
 			type={type != 'password' ? type : showPassword ? 'text' : 'password'}
 			bind:value
 			use:maska={maskOptions}
 			{placeholder}
 			on:input={handleInput}
+			on:change={onChange}
 			class={`w-full rounded-md border px-3 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
 				error ? 'border-red-500 focus:ring-red-500' : 'border-black'
 			}`}
@@ -81,12 +97,14 @@
 </div>
 
 <style>
-	label, input {
+	label,
+	input {
 		font-size: 14px;
 	}
 
 	@media (min-width: 320px) {
-		label, input {
+		label,
+		input {
 			font-size: 16px;
 		}
 	}

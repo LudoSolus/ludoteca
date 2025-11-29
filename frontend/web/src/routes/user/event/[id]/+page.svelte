@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import type { GetEventDetailsResponse } from '$lib/api/queries/get-event-details/get-event-details.interface';
-	import { GetEventDetailsQuery } from '$lib/api/queries/get-event-details/get-event-details.query';
-	import EventDetails from '$lib/components/templates/EventDetails.svelte';
+	import type { GetEventDetailsResponse } from '$lib/api/queries/events/get-event-details/get-event-details.interface';
+	import { GetEventDetailsQuery } from '$lib/api/queries/events/get-event-details/get-event-details.query';
+	import UserEventDetails from '$lib/components/templates/UserEventDetails.svelte';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
@@ -31,7 +31,7 @@
 </script>
 
 {#if eventData}
-	<EventDetails {eventData} />
+	<UserEventDetails {eventData} />
 {:else}
 	<p>Carregando...</p>
 {/if}
