@@ -98,10 +98,12 @@
   <div class="grid grid-cols-[1fr_auto] -start items-start gap-6 pl-0">
     <ul class="flex flex-col gap-3 w-full">
       {#each items as item}
-        <li class="flex items-start gap-3">
-          <span class="w-3 h-3 rounded-full" style="background-color: {item.color};"></span>
-          <span class="text-gray-600 font-medium text-sm">{item.label}</span>
-        </li>
+        {#if item.value}
+          <li class="flex items-start gap-3">
+            <span class="w-3 h-3 rounded-full" style="background-color: {item.color};"></span>
+            <span class="text-gray-600 font-medium text-sm">{item.label}</span>
+          </li>
+        {/if}
       {/each}
     </ul>
   </div>

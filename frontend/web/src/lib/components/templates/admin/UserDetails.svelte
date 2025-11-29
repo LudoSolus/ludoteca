@@ -84,10 +84,10 @@
 				</div>
 			</div>
 		</section>
-		<section class="flex flex-1 w-full flex-col items-center justify-center gap-8">
+		<section class="flex flex-1 h-full w-full flex-col items-center justify-center gap-8">
 			<h3 class="h3 w-full text-start">Tempo Jogado:</h3>
 			<div
-				class="flex max-h-90 w-full flex-col flex-1 items-center gap-2 overflow-y-auto px-1 py-2 md:px-4"
+				class="flex h-full max-h-90 w-full flex-col flex-1 items-center gap-2 overflow-y-auto px-1 py-2 md:px-4"
 			>
 				{#if userDetails.hoursEscapRoom || userDetails.hoursBoardGames || userDetails.hoursRpg}
           <PieChart items={statsData} unit={'horas'}/>

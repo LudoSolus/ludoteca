@@ -10,7 +10,7 @@
   let searchInputLeftValue: string = '';
   let searchInputRightValue: string = '';
 
-  const goToUserDetails = (userId: string) => {
+  const goToUserDetails = (userId: string) => {    
     goto(`/admin/users/${userId}`);
   }
 
