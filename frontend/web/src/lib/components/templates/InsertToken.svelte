@@ -8,7 +8,6 @@
 	let userToken = '';
 
 	function onCompleteInputCode(token: string) {
-		console.log(token);
 		userToken = token;
 	}
 

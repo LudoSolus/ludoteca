@@ -7,8 +7,9 @@
 
 	type FormField = 'password' | 'confirmPassword';
 
-	let { onChangePassword } = $props<{
+	let { onChangePassword, isLoading } = $props<{
 		onChangePassword: (newPassword: string) => void;
+		isLoading: boolean;
 	}>();
 
 	const validators = new Validators();
@@ -43,12 +44,10 @@
 			formController.password.error = validators.password(formController.password.value);
 		}
 
-		if (
-			formController.password.touched &&
-			formController.confirmPassword.touched &&
-			formController.password.value != formController.confirmPassword.value
-		) {
-			formController.confirmPassword.error = 'As duas senhas devem ser iguais.';
+		if (formController.password.touched && formController.confirmPassword.touched) {
+			if (formController.password.value != formController.confirmPassword.value)
+				formController.confirmPassword.error = 'As duas senhas devem ser iguais.';
+			else formController.confirmPassword.error = null;
 		}
 
 		return Object.values(formController).every(
@@ -85,6 +84,12 @@
 		<a class="redirect-text text-[12px]" href="/auth/login">Voltar para o login</a>
 	</div>
 	<div class="w-full sm:max-w-50">
-		<Button text="Enviar" width="100%" height="35px" onClick={handleChangePassword} />
+		<Button
+			text="Enviar"
+			width="100%"
+			height="35px"
+			onClick={handleChangePassword}
+			loading={isLoading}
+		/>
 	</div>
 </div>

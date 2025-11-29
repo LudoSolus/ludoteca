@@ -3,6 +3,7 @@
 	import FormInput from '../atoms/FormInput.svelte';
 
 	export let onSendEmail: (email: string) => void;
+	export let isLoading: boolean;
 
 	let emailInput = '';
 </script>
@@ -27,6 +28,7 @@
 			text="Enviar"
 			width="100%"
 			height="35px"
+			loading={isLoading}
 			onClick={() => {
 				onSendEmail(emailInput);
 			}}
