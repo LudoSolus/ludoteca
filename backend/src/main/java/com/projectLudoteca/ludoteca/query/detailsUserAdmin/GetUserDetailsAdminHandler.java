@@ -72,5 +72,4 @@ public class GetUserDetailsAdminHandler {
             return "Infantil";
         }
     }
-
 }

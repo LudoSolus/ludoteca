@@ -30,7 +30,7 @@ public class ReturnGameHandler {
     }
 
     @Transactional
-    public String handle(String id, UUID userId) {
+    public String handle(String id) {
 
         UUID gameId;
 
@@ -46,7 +46,10 @@ public class ReturnGameHandler {
         Loan activeLoan = loanRepository.findByGameIdAndDateReturnIsNullAndRemovedFalse(gameId)
                 .orElseThrow(() -> new RuntimeException("Este jogo não está emprestado no momento."));
 
-        User user = userRepository.findByIdAndRemovedFalse(userId).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
+        UUID userId = activeLoan.getUserId();
+
+        User user = userRepository.findByIdAndRemovedFalse(userId)
+                .orElseThrow(() -> new BusinessException("Usuário não existe mais."));
 
         activeLoan.setDateReturn(LocalDateTime.now());
         activeLoan.setStatus(GameStatus.RETURNED);
