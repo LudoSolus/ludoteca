@@ -5,10 +5,12 @@ import com.projectLudoteca.ludoteca.common.entity.User;
 import com.projectLudoteca.ludoteca.common.exception.BusinessException;
 import com.projectLudoteca.ludoteca.common.repository.PasswordResetRepository;
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 @Service
@@ -26,17 +28,21 @@ public class ConfirmationPasswordResetHandler {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     public String handle(ConfirmationPasswordResetCommand command) {
 
-        PasswordReset passwordReset = passwordResetRepository.findByCode(command.code())
+        PasswordReset passwordReset = passwordResetRepository
+                .findByCodeAndUsedFalseWithUser(command.code())
                 .orElseThrow(() -> new BusinessException("Código de recuperação inválido."));
+
 
         if (passwordReset.isUsed() || passwordReset.getExpiresAt().isBefore(LocalDateTime.now())) {
             throw new BusinessException("Código expirado ou já utilizado.");
         }
 
-        User user = passwordReset.getUser();
-        user.getPasswordResets().add(passwordReset);
+        UUID userId = passwordReset.getUserId();
+        User user = userRepository.findByIdAndRemovedFalse(userId)
+                .orElseThrow(() -> new BusinessException("Usuário não existe mais."));
 
         if (passwordEncoder.matches(command.newPassword(), user.getPassword())) {
             throw new BusinessException("A nova senha não pode ser igual à senha atual.");
