@@ -15,6 +15,7 @@
 	export let min: number | null = null;
 	export let max: number | null = null;
 	export let placeholder: string | null = null;
+	export let disabled: boolean = false;
 	export let error: string | null = null;
 	export let label: string | null = null;
 	export let mask: MaskType | null = null;
@@ -70,6 +71,7 @@
 			{id}
 			{min}
 			{max}
+			{disabled}
 			type={type != 'password' ? type : showPassword ? 'text' : 'password'}
 			bind:value
 			use:maska={maskOptions}
@@ -100,6 +102,11 @@
 	label,
 	input {
 		font-size: 14px;
+	}
+
+	input:disabled{
+		background-color: rgb(236, 236, 236);
+		color: #4c4c4c;
 	}
 
 	@media (min-width: 320px) {

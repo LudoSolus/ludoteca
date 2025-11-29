@@ -75,7 +75,7 @@
 
     function handleOnProfileClick() {
         hiddeProfileMenu();
-        goto('/profile');
+        goto('/user/profile');
     }
 </script>
 

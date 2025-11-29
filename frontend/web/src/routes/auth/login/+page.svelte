@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { LoginUserCommand } from "$lib/api/commands/login-user/login-user.command";
+	import { LoginUserCommand } from "$lib/api/commands/users/login-user/login-user.command";
 	import Login from "$lib/components/templates/Login.svelte";
 	import { CommandsHandlerService } from "$lib/shared/handlers/command/commands-handler.service";
 	import { authService } from "$lib/shared/stores/auth";
