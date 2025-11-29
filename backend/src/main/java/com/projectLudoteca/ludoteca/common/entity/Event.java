@@ -35,7 +35,7 @@ public class Event implements Serializable {
     @Column(nullable = false)
     private String description;
 
-    @Column(name = "start_date", updatable = false, nullable = false)
+    @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
 
     @Column(name = "final_date", nullable = false)

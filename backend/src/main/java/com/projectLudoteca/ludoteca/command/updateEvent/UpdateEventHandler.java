@@ -96,6 +96,10 @@ public class UpdateEventHandler {
         if (command.state() != null) event.setState(command.state());
         if (command.zipCode() != null) event.setZipCode(command.zipCode());
 
+        if (event.getFinalDate().isBefore(event.getStartDate())) {
+            throw new BusinessException("A data final não pode ser antes da inicial.");
+        }
+
         boolean updatingModalidades =
                 command.hasBoardGames() != null ||
                         command.hasRpg() != null ||
