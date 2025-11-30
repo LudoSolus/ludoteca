@@ -19,8 +19,10 @@
 
     const profilePictureSize = $derived($device == 'desktop' ? '45px' : '40px');
     const currentPath = $derived(page.url.pathname);
+
     let menuIsVisible: boolean = $state(false);
     let profileMenuIsVisible: boolean = $state(false);
+
     const token = authService.getUserToken();
     let authData = $derived(decodeAuthJwt($token));
 
@@ -83,7 +85,11 @@
     {#if $device == 'desktop'}
         <div class="flex items-center justify-start gap-4">
             {#each type == 'admin' ? adminRoutes : userRoutes as route (route.path)}
-                <HeaderRoute name={route.name} path={route.path} selected={route.path == currentPath} />
+                <HeaderRoute
+                    name={route.name}
+                    path={route.path}
+                    selected={route.path == currentPath}
+                />
             {/each}
         </div>
     {:else}
@@ -95,6 +101,7 @@
             variant="naked"
         />
     {/if}
+
     <div>
         <ProfilePicture
             userName={authData!.name}
@@ -106,9 +113,7 @@
     </div>
 
     {#if $device == 'mobile' && menuIsVisible}
-        <div
-            class="header-menu absolute top-16 flex flex-col items-center justify-start gap-2 rounded-lg p-2 shadow-lg"
-        >
+        <div class="header-menu absolute top-16 flex flex-col items-center justify-start gap-2 rounded-lg p-2 shadow-lg">
             {#each type == 'admin' ? adminRoutes : userRoutes as route (route.path)}
                 <HeaderRoute
                     name={route.name}
