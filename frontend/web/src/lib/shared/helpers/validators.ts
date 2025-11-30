@@ -84,7 +84,7 @@ export class Validators {
 			return 'Senha é obrigatória.';
 		}
 		if (value.length < 8) {
-			return 'Digite pelo menos 8 caracteres.';
+			return 'Senha deve conter pelo menos 8 caracteres.';
 		}
 
 		const hasLetter = /[a-zA-Z]/.test(value);

@@ -1,4 +1,5 @@
 import type { ECategory } from '$lib/shared/enums/category.enum';
+import type { EEventStatus } from '$lib/shared/enums/event-status.enum';
 
 export interface GetEventDetailsResponse {
 	name: string;
@@ -11,6 +12,7 @@ export interface GetEventDetailsResponse {
 	city: string;
 	state: string;
 	zipCode: string;
+	status: EEventStatus;
 	listGames: GameDetailsForEvent[];
 }
 

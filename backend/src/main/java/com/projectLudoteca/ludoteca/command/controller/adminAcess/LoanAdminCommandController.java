@@ -40,9 +40,9 @@ public class LoanAdminCommandController {
 
     @PostMapping("/{id}/return-game")
     @Operation(summary = "Registrar a devolução do empréstimo", description = "Efetua a devolução do jogo emprestado recebendo o id do jogo.")
-    public ResponseEntity<ApiResponse<String>> returnLoan(@PathVariable @Validated String id, @AuthenticationPrincipal User user) {
+    public ResponseEntity<ApiResponse<String>> returnLoan(@PathVariable @Validated String id) {
 
-        String message = returnGameHandler.handle(id, user.getId());
+        String message = returnGameHandler.handle(id);
 
         ApiResponse<String> response = new ApiResponse<>(message);
 

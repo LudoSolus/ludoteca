@@ -17,8 +17,16 @@
 	export let placeholder: string | null = null;
 	export let error: string | null = null;
 	export let label: string | null = null;
-	export let onInput: (value: string) => void;
 	export let mask: MaskType | null = null;
+	export let isUppercase: boolean = false;
+	export let onInput: (value: string) => void;
+	export let onChange:
+		| ((
+				event: Event & {
+					currentTarget: EventTarget & HTMLInputElement;
+				}
+		  ) => void)
+		| undefined = undefined;
 
 	const maskOptions: MaskInputOptions | undefined = mask ? getMaskOptions() : undefined;
 	let showPassword: boolean = false;
@@ -44,6 +52,9 @@
 	}
 
 	function handleInput(event: any) {
+		if (isUppercase) {
+			event.target.value = event.target.value.toUpperCase();
+		}
 		value = event.target.value;
 		onInput(value!);
 	}
@@ -64,6 +75,7 @@
 			use:maska={maskOptions}
 			{placeholder}
 			on:input={handleInput}
+			on:change={onChange}
 			class={`w-full rounded-md border px-3 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
 				error ? 'border-red-500 focus:ring-red-500' : 'border-black'
 			}`}

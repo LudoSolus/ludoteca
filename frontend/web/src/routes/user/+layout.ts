@@ -8,7 +8,6 @@ import { decodeAuthJwt } from '$lib/shared/helpers/decode-jwt';
 import { EUserRole } from '$lib/shared/enums/user-role.enum';
 
 export const load: LayoutLoad = async () => {
-    
     if (!authService.isAuthenticated()) {
         throw redirect(302, '/auth/login');
     }
@@ -26,3 +25,4 @@ export const load: LayoutLoad = async () => {
 
     return { userAuthData };
 };
+

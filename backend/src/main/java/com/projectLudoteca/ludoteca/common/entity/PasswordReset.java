@@ -33,8 +33,11 @@ public class PasswordReset implements Serializable {
     @Column(nullable = false)
     private String email;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
     @CreatedDate
@@ -55,12 +58,11 @@ public class PasswordReset implements Serializable {
     private LocalDateTime deletedAt;
 
     @Column(nullable = false)
-    private Boolean removed = false;
+    private boolean removed = false;
 
     public PasswordReset() {}
 
-    public PasswordReset(User user, String email, LocalDateTime createdAt, LocalDateTime expiresAt, boolean used) {
-        this.user = user;
+    public PasswordReset(String email, LocalDateTime createdAt, LocalDateTime expiresAt, boolean used) {
         this.email = email;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
