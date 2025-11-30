@@ -1,5 +1,6 @@
 import { get, writable, type Writable } from 'svelte/store';
 import { decodeAuthJwt } from '../helpers/decode-jwt';
+import { EUserRole } from '../enums/user-role.enum';
 
 class AuthService {
 	private localStorageTokenKey: string = 'auth_token';
@@ -35,13 +36,23 @@ class AuthService {
 
 	public isAuthenticated(): boolean {
 		const token = get(this.userToken);
-		if(!token) return false;
+		if (!token) return false;
 
-		const decoded = decodeAuthJwt(token)
-		if(!decoded) return false;
-		if(decoded.exp < new Date()) return false;
+		const decoded = decodeAuthJwt(token);
+		if (!decoded) return false;
+		if (decoded.exp < new Date()) return false;
 
 		return true;
+	}
+
+	public isAdmin(): boolean {
+		const token = get(this.userToken);
+		if (!token) return false;
+
+		const decoded = decodeAuthJwt(token);
+		if (!decoded) return false;
+
+		return decoded.role == EUserRole.ADMIN;
 	}
 }
 
