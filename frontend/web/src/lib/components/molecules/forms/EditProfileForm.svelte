@@ -24,50 +24,50 @@
 	const formController: IFormController<FormField> = $state({
 		publicId: {
 			value: formValues.publicId,
-			touched: false,
+			touched: !!formValues.publicId,
 			error: null,
 			required: false
 		},
 		cpf: {
 			value: formValues.cpf,
-			touched: false,
+			touched: !!formValues.cpf,
 			error: null,
 			required: false
 		},
 		birthDate: {
 			value: formValues.birthDate,
-			touched: false,
+			touched: !!formValues.birthDate,
 			error: null,
 			required: false
 		},
 
 		name: {
 			value: formValues.name,
-			touched: false,
+			touched: !!formValues.name,
 			error: null,
 			required: true
 		},
 		phone: {
 			value: formValues.phone,
-			touched: false,
+			touched: !!formValues.phone,
 			error: null,
 			required: true
 		},
 		email: {
 			value: formValues.email,
-			touched: false,
+			touched: !!formValues.email,
 			error: null,
 			required: true
 		},
 		instituitionId: {
 			value: formValues.instituitionId,
-			touched: false,
+			touched: !!formValues.instituitionId,
 			error: null,
-			required: true
+			required: false
 		},
 		ra: {
 			value: formValues.ra,
-			touched: false,
+			touched: !!formValues.ra,
 			error: null,
 			required: false
 		}

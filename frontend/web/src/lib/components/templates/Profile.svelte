@@ -2,9 +2,11 @@
 	import type { IUpdateUserRequest } from '$lib/api/commands/users/update-user/update-user.interface';
 	import type { IEducationalInstitution } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.interface';
 	import type { IGetUserProfileDetailsResponse } from '$lib/api/queries/users/get-user-profile-details/get-user-profile-details.interface';
+	import { toast } from 'svoast';
 	import Button from '../atoms/Button.svelte';
 	import EditProfileForm from '../molecules/forms/EditProfileForm.svelte';
 	import GoBack from '../molecules/GoBack.svelte';
+	import { stringIsValid } from '$lib/shared/helpers/string-is-valid';
 
 	let { isLoading, educationalInstitutions, userData, onEdit } = $props<{
 		isLoading: boolean;
@@ -25,7 +27,24 @@
 		ra: userData.ra
 	});
 
-	function handleOnEdit() {}
+	function handleOnEdit() {
+		if (!formIsValid) {
+			toast.error('Preencha todas as informações.');
+			return;
+		}
+
+		const body: IUpdateUserRequest = {
+			name: formValues.name,
+			email: formValues.email,
+			phone: formValues.phone,
+			institutionId: stringIsValid(formValues.instituitionId)
+				? formValues.instituitionId
+				: undefined,
+			ra: stringIsValid(formValues.ra) ? formValues.ra : undefined
+		};
+
+		onEdit(body);
+	}
 </script>
 
 <main class="flex w-full flex-col items-center gap-5 px-3 py-7 sm:px-10 md:gap-10 xl:px-15">

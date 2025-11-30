@@ -3,5 +3,5 @@ export interface IUpdateUserRequest {
 	email: string;
 	phone: string;
 	ra?: string;
-	institutionId: string;
+	institutionId?: string;
 }
