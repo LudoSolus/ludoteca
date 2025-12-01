@@ -24,6 +24,7 @@ public class GetAllEventsForAdminHandler {
                         event.getName(),
                         event.getStartDate(),
                         event.getFinalDate() != null ? event.getFinalDate().toString() : "Horário de finalização não definido",
+                        event.getStatus(),
                         event.getStreet(),
                         event.getNumber(),
                         event.getNeighborhood(),
