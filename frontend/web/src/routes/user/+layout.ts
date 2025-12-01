@@ -1,8 +1,8 @@
 export const ssr = false;
 
+import type { LayoutLoad } from './$types';
 import { get } from 'svelte/store';
 import { redirect } from '@sveltejs/kit';
-import type { LayoutLoad } from './$types';
 import { authService } from '$lib/shared/stores/auth';
 import { decodeAuthJwt } from '$lib/shared/helpers/decode-jwt';
 import { EUserRole } from '$lib/shared/enums/user-role.enum';
