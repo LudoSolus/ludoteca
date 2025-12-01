@@ -36,12 +36,10 @@ class AuthService {
 
 	public login(token: string): void {
 		this.userToken.set(token);
-		// localStorage.setItem(this.localStorageTokenKey, token);
 	}
 
 	public logout(): void {
 		this.userToken.set(null);
-		// localStorage.removeItem(this.localStorageTokenKey);
 	}
 
 	decoded = derived(this.userToken, ($token) => ($token ? decodeAuthJwt($token) : null));

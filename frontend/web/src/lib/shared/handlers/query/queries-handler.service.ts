@@ -8,7 +8,7 @@ import { get } from 'svelte/store';
 
 export class QueriesHandlerService {
 	constructor(public axios: Axios) {
-		if (authService.isAuthenticated)
+		if (get(authService.isAuthenticated))
 			axios.defaults.headers.common['Authorization'] = `Bearer ${get(authService.getUserToken())}`;
 	}
 
