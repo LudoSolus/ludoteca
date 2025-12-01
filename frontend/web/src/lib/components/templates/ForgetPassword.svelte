@@ -21,7 +21,7 @@
 			bind:value={emailInput}
 			onInput={(v) => {}}
 		/>
-		<a class="redirect-text text-[12px]" href="/auth/login">Voltar para o login</a>
+		<a class="redirect-text text-[12px] w-fit" href="/auth/login">Voltar para o login</a>
 	</div>
 	<div class="w-full sm:max-w-50">
 		<Button

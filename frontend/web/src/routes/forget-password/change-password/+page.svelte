@@ -23,12 +23,11 @@
 
 		commandsHandler.handle(new ChangePasswordCommand(token, newPassword)).subscribe({
 			next: (res) => {
-				console.log(res);
 				toast.success('Senha alterada com sucesso, pode fazer o login.');
 				isLoading = false;
+				goto("/auth/login")
 			},
 			error: (err) => {
-				console.log(err);
 				toast.error(err, { closable: true });
 				isLoading = false;
 			}

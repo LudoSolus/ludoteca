@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { RegisterUserCommand } from '$lib/api/commands/register-user/register-user.command';
+	import { RegisterUserCommand } from '$lib/api/commands/users/register-user/register-user.command';
 	import type { IEducationalInstitution } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.interface';
 	import { ListEducationalInstitutionsQuery } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.query';
 	import Register from '$lib/components/templates/Register.svelte';
@@ -20,10 +20,10 @@
 	let registerUserLoading: boolean = $state(false);
 
 	onMount(() => {
-		fetchEducationalInstituitions();
+		fetchEducationalInstitutions();
 	});
 
-	function fetchEducationalInstituitions() {
+	function fetchEducationalInstitutions() {
 		queriesHandler.handle(new ListEducationalInstitutionsQuery()).subscribe({
 			next: (data) => {
 				educationalInstitutions = data.resultData;
@@ -45,7 +45,7 @@
 			data.ra.length > 0 ? data.ra : null,
 			data.birthDate as unknown as Date,
 			EUserRole.USER,
-			data.instituteId
+			data.institutionId
 		);
 		commandsHandler.handle(command).subscribe({
 			next: (data) => {

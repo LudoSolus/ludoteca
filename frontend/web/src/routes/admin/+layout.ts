@@ -1,27 +1,18 @@
 export const ssr = false;
 
-import { get } from 'svelte/store';
 import { redirect } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 import { authService } from '$lib/shared/stores/auth';
-import { decodeAuthJwt } from '$lib/shared/helpers/decode-jwt';
-import { EUserRole } from '$lib/shared/enums/user-role.enum';
+import { get } from 'svelte/store';
 
 export const load: LayoutLoad = async () => {
-	if (!authService.isAuthenticated()) {
+	if (!get(authService.isAuthenticated)) {
 		throw redirect(302, '/auth/login');
 	}
 
-	const tokenStore = authService.getUserToken();
-	const userAuthData = get(tokenStore) ? decodeAuthJwt(get(tokenStore)) : null;
-
-    if(!userAuthData){
-        throw redirect(302, '/auth/login');
-    }
-
-    if(userAuthData.role != EUserRole.ADMIN){
+    if(!get(authService.isAdmin)){
         throw redirect(303, '/user/home');
     }
 
-	return { userAuthData };
+	return { };
 };

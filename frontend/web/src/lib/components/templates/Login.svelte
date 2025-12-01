@@ -26,7 +26,7 @@
 	<h1>Bem vindo de volta</h1>
 	<div class="flex flex-col">
 		<LoginForm bind:isValid={formIsValid} bind:formValues />
-		<a class="redirect-text" href="/forget-password">Esqueci minha senha</a>
+		<a class="redirect-text w-fit" href="/forget-password">Esqueci minha senha</a>
 		<p class="redirect-text">Não tenho conta - <a href="/auth/register">cadastrar</a></p>
 	</div>
 	<Button

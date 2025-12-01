@@ -12,13 +12,24 @@
 
 	function handleInput(e: Event, index: number) {
 		const target = e.target as HTMLInputElement;
-		const val = target.value.replace(/\D/g, '');
+		let val = target.value.replace(/\D/g, '');
 
-		values[index] = val;
+		if (val.length > 1) {
+			val.split('').forEach((number) => {
+				if (number && index < values.length) {
+					values[index] = number;
+				}
+				index = index + 1;
+			});
+		} else {
+			values[index] = val[0];
+		}
 
-		if (val && index < values.length - 1) {
-			const next = document.getElementById(`otp-${index + 1}`);
-			next?.focus();
+		if (val) {
+			const otpFocus = document.getElementById(
+				`otp-${index < values.length - 1 ? index + 1 : values.length - 1}`
+			);
+			otpFocus?.focus();
 		}
 
 		if (values.every((v) => v !== '')) {
@@ -42,7 +53,7 @@
 			id={'otp-' + i}
 			class="otp-input"
 			type="text"
-			maxlength="1"
+			autocomplete="off"
 			bind:value={values[i]}
 			on:input={(e) => handleInput(e, i)}
 			on:keydown={(e) => handleKeydown(e, i)}

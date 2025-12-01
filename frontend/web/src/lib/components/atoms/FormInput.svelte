@@ -104,6 +104,11 @@
 		font-size: 14px;
 	}
 
+	input:disabled{
+		background-color: rgb(236, 236, 236);
+		color: #4c4c4c;
+	}
+
 	@media (min-width: 320px) {
 		label,
 		input {

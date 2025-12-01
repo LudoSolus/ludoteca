@@ -15,7 +15,7 @@
 		email: '',
 		cpf: '',
 		birthDate: '',
-		instituitionId: '',
+		institutionId: '',
 		password: '',
 		ra: ''
 	};

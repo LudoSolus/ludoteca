@@ -17,7 +17,7 @@ public class GetAllEducationalInstitutionsHandler {
     public List<GetAllEducationalInstitutionsView> getAllEducationalInstitutions() {
         return repository.findAll()
                 .stream()
-                .map(ei -> new GetAllEducationalInstitutionsView(ei.getId().toString(), ei.getInstitutionName()))
+                .map(ei -> new GetAllEducationalInstitutionsView(ei.getId().toString(), ei.getInstitutionName(), ei.getIsUtfpr()))
                 .toList();
     }
 
