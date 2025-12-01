@@ -7,7 +7,6 @@
 	import EditProfileForm from '../molecules/forms/EditProfileForm.svelte';
 	import GoBack from '../molecules/GoBack.svelte';
 	import { stringIsValid } from '$lib/shared/helpers/string-is-valid';
-	import { isUtfprId } from '$lib/shared/helpers/is-utfpr-id';
 
 	let { isLoading, educationalInstitutions, userData, onEdit } = $props<{
 		isLoading: boolean;
@@ -34,13 +33,17 @@
 			return;
 		}
 
+		const selectedInstitution: IEducationalInstitution | undefined = educationalInstitutions.find(
+			(ei: IEducationalInstitution) => ei.institutionId == formValues.institutionId
+		);
+
 		const body: IUpdateUserRequest = {
 			name: formValues.name,
 			email: formValues.email,
 			phone: formValues.phone,
-			institutionId: stringIsValid(formValues.institutionId) ? formValues.institutionId : undefined,
-			ra: isUtfprId(formValues.institutionId)
-				? stringIsValid(formValues.ra)
+			institutionId: selectedInstitution ? selectedInstitution.institutionId : undefined,
+			ra: selectedInstitution
+				? selectedInstitution.isUtfpr
 					? formValues.ra
 					: undefined
 				: undefined

@@ -27,6 +27,9 @@ public class EducationalInstitution implements Serializable {
 
     private String institutionName;
 
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private Boolean isUtfpr = false;
+
     @OneToMany(mappedBy = "educationalInstitution", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<User> users = new ArrayList<>();
 

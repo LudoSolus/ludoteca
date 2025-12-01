@@ -5,8 +5,8 @@
 	export let fontSize: string = '20px';
 	export let onClick: (() => void) | null = null;
 
-	function getUserAbbreviation() {
-		let users: string[] = userName.split('');
+	$: userAbbreviation = () => {
+		let users: string[] = userName.split(' ');
 		return users[0][0] + (users[1][0] ? users[1][0] : users[0][1]);
 	}
 </script>
@@ -16,7 +16,7 @@
 	style="width: {width}; height: {height}; cursor: {onClick ? 'pointer' : 'default'}"
 	on:click={onClick}
 >
-	<p style="font-size: {fontSize};">{getUserAbbreviation()}</p>
+	<p style="font-size: {fontSize};">{userAbbreviation()}</p>
 </button>
 
 <style>

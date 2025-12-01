@@ -1,4 +1,5 @@
 export interface IEducationalInstitution {
-    institutionId: string
-    institutionName: string
+	institutionId: string;
+	institutionName: string;
+	isUtfpr: boolean;
 }

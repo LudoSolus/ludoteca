@@ -8,6 +8,7 @@
 	import Profile from '$lib/components/templates/Profile.svelte';
 	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
+	import { authService } from '$lib/shared/stores/auth';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
 	import { toast } from 'svoast';
@@ -52,9 +53,8 @@
 		commandsHandler.handle(new UpdateUserCommand(userData)).subscribe({
 			next: (data) => {
 				toast.success('Usuário atualizado com sucesso!', { closable: true });
-				console.log(data);
-				// const token = data.data.resultData;
-				// authService.login(token);
+				const token = data.data.resultData;
+				authService.login(token);
 				isLoading = false;
 			},
 			error: (err) => {

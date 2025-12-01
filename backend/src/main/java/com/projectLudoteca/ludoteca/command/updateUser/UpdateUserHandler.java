@@ -21,7 +21,8 @@ public class UpdateUserHandler {
     private final JwtService jwtService;
 
     @Autowired
-    public UpdateUserHandler(UserRepository userRepository, EducationalInstitutionRepository educationalInstitutionRepository, JwtService jwtService) {
+    public UpdateUserHandler(UserRepository userRepository,
+            EducationalInstitutionRepository educationalInstitutionRepository, JwtService jwtService) {
         this.userRepository = userRepository;
         this.educationalInstitutionRepository = educationalInstitutionRepository;
         this.jwtService = jwtService;
@@ -36,35 +37,54 @@ public class UpdateUserHandler {
         User user = userRepository.findUserNativeAndRemovedFalse(auth.getId())
                 .orElseThrow(() -> new BusinessException("USR_002", "Usuário não encontrado."));
 
-        if(Objects.equals(command.email(), user.getEmail())){
-            throw new IllegalArgumentException("E-mail é igual ao mesmo já cadastrado!");
-        }
-
-        if (userRepository.existsByEmail(command.email())) {
+        if (!Objects.equals(command.email(), user.getEmail()) && userRepository.existsByEmail(command.email())) {
             throw new IllegalArgumentException("E-mail já cadastrado!");
         }
 
-        if (command.ra() != null && !command.ra().matches("\\d+")) {
-            throw new BusinessException("400", "O RA deve conter apenas números.");
-        }
+        // Verificações Instituição
 
-        // Atualiza apenas os campos que não são nulos
-        if (command.name() != null) user.setName(command.name());
-        if (command.email() != null) user.setEmail(command.email());
-        if (command.phone() != null) user.setPhone(command.phone());
-        if (command.ra() != null) user.setRa(command.ra());
+        EducationalInstitution educationalInstitution = null;
         if (command.institutionId() != null) {
-
-            EducationalInstitution institution = educationalInstitutionRepository.findById(UUID.fromString(command.institutionId()))
-                    .orElseThrow(() -> new BusinessException("EDI_001", "Instituição não encontrada."));
-
-            user.setEducationalInstitution(institution);
+            educationalInstitution = educationalInstitutionRepository.findById(UUID.fromString(command.institutionId()))
+                    .orElseThrow(() -> new BusinessException("USR_002", "Instituição não encontrada."));
         }
 
-        // Salva o usuário atualizado
+        // Setando a instituição no usuário para validar o RA
+
+        if (educationalInstitution != null) {
+            user.setEducationalInstitution(educationalInstitution);
+        }
+
+        // Varificações RA
+
+        if (user.getEducationalInstitution().getIsUtfpr()) {
+            if (command.ra() == null) {
+                throw new BusinessException("400", "O RA é obrigatório para alunos da UTFPR.");
+            }
+
+            if (!command.ra().matches("\\d+")) {
+                throw new BusinessException("400", "O RA deve conter apenas números.");
+            }
+        }
+
+        // Atualiza os campos padrões
+        if (command.name() != null)
+            user.setName(command.name());
+        if (command.email() != null)
+            user.setEmail(command.email());
+        if (command.phone() != null)
+            user.setPhone(command.phone());
+
+        if (user.getEducationalInstitution().getIsUtfpr()) {
+            user.setRa(command.ra());
+        } else {
+            user.setRa(null);
+        }
+
         userRepository.save(user);
 
-        String token = jwtService.generateToken(user.getId(), user.getName(),user.getPublicId(), user.getEmail(), user.getUserRole().name());
+        String token = jwtService.generateToken(user.getId(), user.getName(), user.getPublicId(), user.getEmail(),
+                user.getUserRole().name());
 
         return token;
     }

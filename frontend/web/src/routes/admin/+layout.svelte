@@ -5,5 +5,5 @@
 	let { children } = $props();
 </script>
 
-<Header type={authService.isAdmin() ? 'admin' : 'user'}/>
+<Header type={authService.isAdmin ? 'admin' : 'user'}/>
 {@render children?.()}

@@ -8,7 +8,7 @@
 	import ProfileMenu from '../atoms/ProfileMenu.svelte';
 	import { authService } from '$lib/shared/stores/auth';
 	import { goto } from '$app/navigation';
-	import { decodeAuthJwt } from '$lib/shared/helpers/decode-jwt';
+	import type { JwtAuthData } from '$lib/shared/helpers/decode-jwt';
 
 	interface Route {
 		name: string;
@@ -21,8 +21,14 @@
 	const currentPath = $derived(page.url.pathname);
 	let menuIsVisible: boolean = $state(false);
 	let profileMenuIsVisible: boolean = $state(false);
-	const token = authService.getUserToken();
-	let authData = $derived(decodeAuthJwt($token));
+	let decoded = $state<JwtAuthData | null | undefined>(null);
+
+	$effect(() => {
+		return authService.decoded.subscribe((v) => (decoded = v));
+	});
+
+	let userName = $derived(decoded?.name ?? "Não Autorizado");
+	let userPublicId = $derived(decoded?.publicId ?? "Não Autorizado");
 
 	const adminRoutes: Route[] = [
 		{ name: 'Dashboard', path: '/admin' },
@@ -97,7 +103,7 @@
 	{/if}
 	<div>
 		<ProfilePicture
-			userName={authData!.name}
+			userName={userName}
 			width={profilePictureSize}
 			height={profilePictureSize}
 			fontSize="18px"
@@ -123,7 +129,7 @@
 	{#if profileMenuIsVisible}
 		<div class="absolute top-15 right-3 z-12">
 			<ProfileMenu
-				userPublicId={authData!.publicId}
+				userPublicId={userPublicId}
 				onLogoutClick={handleOnLogout}
 				onProfileClick={handleOnProfileClick}
 			/>

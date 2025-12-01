@@ -3,7 +3,6 @@
 	import type { IGetUserProfileDetailsResponse } from '$lib/api/queries/users/get-user-profile-details/get-user-profile-details.interface';
 	import FormInput from '$lib/components/atoms/FormInput.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
-	import { isUtfprId } from '$lib/shared/helpers/is-utfpr-id';
 	import { Validators } from '$lib/shared/helpers/validators';
 	import type { IFormController } from '$lib/shared/interfaces/input-controller';
 	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
@@ -21,6 +20,8 @@
 	}>();
 
 	const validators = new Validators();
+
+	let selectedInstitution: IEducationalInstitution | null = $state(null);
 
 	const formController: IFormController<FormField> = $state({
 		publicId: {
@@ -96,7 +97,7 @@
 
 		let raIsValid: boolean = true;
 
-		if (isUtfprId(formController.institutionId.value)) {
+		if (selectedInstitution && selectedInstitution.isUtfpr) {
 			raIsValid = false;
 			if (formController.ra.touched) {
 				formController.ra.error = validators.ra(formController.ra.value);
@@ -115,8 +116,15 @@
 		);
 	}
 
+	function updateSelectedInstitution() {
+		selectedInstitution = educationalInstitutions.find(
+			(ei: IEducationalInstitution) => ei.institutionId == formController.institutionId.value
+		);
+	}
+
 	function onInput(formName: FormField, value: string) {
 		formController[formName].touched = true;
+		if (formName == 'institutionId') updateSelectedInstitution();
 		formValues[formName] = formController[formName].value;
 		isValid = validateForm();
 	}
@@ -185,7 +193,7 @@
 		error={formController.birthDate.error}
 		onInput={(value) => onInput('birthDate', value)}
 	/>
-	{#if isUtfprId(formController.institutionId.value)}
+	{#if selectedInstitution && selectedInstitution.isUtfpr}
 		<FormInput
 			label={'RA'}
 			placeholder={'0000000'}

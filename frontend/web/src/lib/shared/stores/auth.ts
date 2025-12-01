@@ -1,16 +1,26 @@
-import { get, writable, type Writable } from 'svelte/store';
+import { derived, get, writable, type Writable } from 'svelte/store';
 import { decodeAuthJwt } from '../helpers/decode-jwt';
 import { EUserRole } from '../enums/user-role.enum';
 
 class AuthService {
 	private localStorageTokenKey: string = 'auth_token';
 	private static instance: AuthService;
-	private userToken: Writable<string | null>;
+	private userToken: Writable<string | null> = writable<string | null>(null);
 
 	private constructor() {
-		const storedToken = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+		if (typeof window !== 'undefined') {
+			const stored = localStorage.getItem(this.localStorageTokenKey);
+			this.userToken.set(stored);
+		}
 
-		this.userToken = writable<string | null>(storedToken);
+		this.userToken.subscribe((newToken) => {
+			console.log(decodeAuthJwt(newToken))
+			if (newToken) {
+				localStorage.setItem(this.localStorageTokenKey, newToken);
+			} else {
+				localStorage.removeItem(this.localStorageTokenKey);
+			}
+		});
 	}
 
 	public static getInstance(): AuthService {
@@ -26,34 +36,25 @@ class AuthService {
 
 	public login(token: string): void {
 		this.userToken.set(token);
-		localStorage.setItem(this.localStorageTokenKey, token);
+		// localStorage.setItem(this.localStorageTokenKey, token);
 	}
 
 	public logout(): void {
 		this.userToken.set(null);
-		localStorage.removeItem(this.localStorageTokenKey);
+		// localStorage.removeItem(this.localStorageTokenKey);
 	}
 
-	public isAuthenticated(): boolean {
-		const token = get(this.userToken);
-		if (!token) return false;
+	decoded = derived(this.userToken, ($token) => ($token ? decodeAuthJwt($token) : null));
 
-		const decoded = decodeAuthJwt(token);
-		if (!decoded) return false;
-		if (decoded.exp < new Date()) return false;
+	isAuthenticated = derived(this.decoded, ($decoded) => {
+		if (!$decoded) return false;
+		return $decoded.exp > new Date();
+	});
 
-		return true;
-	}
-
-	public isAdmin(): boolean {
-		const token = get(this.userToken);
-		if (!token) return false;
-
-		const decoded = decodeAuthJwt(token);
-		if (!decoded) return false;
-
-		return decoded.role == EUserRole.ADMIN;
-	}
+	isAdmin = derived(this.decoded, ($decoded) => {
+		if (!$decoded) return false;
+		return $decoded.role === EUserRole.ADMIN;
+	});
 }
 
 export const authService = AuthService.getInstance();

@@ -5,7 +5,7 @@ import type { PageLoad } from './$types';
 import { authService } from '$lib/shared/stores/auth';
 
 export const load: PageLoad = () => {
-	if (!authService.isAuthenticated()) {
+	if (!authService.isAuthenticated) {
 		throw redirect(302, '/auth/login');
 	}
 
