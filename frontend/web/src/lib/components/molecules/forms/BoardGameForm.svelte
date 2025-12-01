@@ -6,7 +6,7 @@
 	import { ECategory } from '$lib/shared/enums/category.enum';
 	import { Validators } from '$lib/shared/helpers/validators';
 	import { device } from '$lib/shared/hooks/useDevice';
-	import { inputIsTouched, type IFormController } from '$lib/shared/interfaces/input-controller';
+	import { inputHasValue, type IFormController } from '$lib/shared/interfaces/input-controller';
 	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
 
 	type FormField = keyof ICreateBoardGameRequest;
@@ -21,49 +21,49 @@
 	const formController: IFormController<FormField> = $state({
 		barcode: {
 			value: formValues.barcode,
-			touched: inputIsTouched(formValues.barcode),
+			touched: inputHasValue(formValues.barcode),
 			error: null,
 			required: true
 		},
 		title: {
 			value: formValues.title,
-			touched: inputIsTouched(formValues.title),
+			touched: inputHasValue(formValues.title),
 			error: null,
 			required: true
 		},
 		category: {
 			value: formValues.category,
-			touched: inputIsTouched(formValues.category),
+			touched: inputHasValue(formValues.category),
 			error: null,
 			required: true
 		},
 		description: {
 			value: formValues.description,
-			touched: inputIsTouched(formValues.description),
+			touched: inputHasValue(formValues.description),
 			error: null,
 			required: true
 		},
 		minPlayers: {
 			value: formValues.minPlayers,
-			touched: inputIsTouched(formValues.minPlayers),
+			touched: inputHasValue(formValues.minPlayers),
 			error: null,
 			required: true
 		},
 		maxPlayers: {
 			value: formValues.maxPlayers,
-			touched: inputIsTouched(formValues.maxPlayers),
+			touched: inputHasValue(formValues.maxPlayers),
 			error: null,
 			required: true
 		},
 		linkInstructionManual: {
 			value: formValues.linkInstructionManual,
-			touched: inputIsTouched(formValues.linkInstructionManual),
+			touched: inputHasValue(formValues.linkInstructionManual),
 			error: null,
 			required: true
 		},
 		linkVideoTutorial: {
 			value: formValues.linkVideoTutorial,
-			touched: inputIsTouched(formValues.linkVideoTutorial),
+			touched: inputHasValue(formValues.linkVideoTutorial),
 			error: null,
 			required: true
 		}

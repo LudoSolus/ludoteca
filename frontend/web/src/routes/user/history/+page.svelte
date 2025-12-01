@@ -1,1 +1,5 @@
-<h1>Histórico</h1>
+<script lang="ts">
+  import HistoryScreen from '$lib/components/molecules/HistoryScreen.svelte';
+</script>
+
+<HistoryScreen />
