@@ -12,7 +12,7 @@
 		| 'email'
 		| 'cpf'
 		| 'birthDate'
-		| 'instituitionId'
+		| 'institutionId'
 		| 'password'
 		| 'ra';
 
@@ -59,8 +59,8 @@
 			error: null,
 			required: true
 		},
-		instituitionId: {
-			value: formValues.instituitionId,
+		institutionId: {
+			value: formValues.institutionId,
 			touched: false,
 			error: null,
 			required: true
@@ -133,7 +133,7 @@
 	}
 
 	function utfprInstituitionIsSelected(): boolean {
-		return formController.instituitionId.value === '16610773-99dd-4df0-901f-041a3936d5d6';
+		return formController.institutionId.value === '16610773-99dd-4df0-901f-041a3936d5d6';
 	}
 </script>
 
@@ -192,9 +192,9 @@
 		width="300px"
 		height="90px"
 		options={insituitionSelectInputOptions}
-		onChange={(value) => onInput('instituitionId', value)}
-		bind:value={formController.instituitionId.value}
-		error={formController.instituitionId.error}
+		onChange={(value) => onInput('institutionId', value)}
+		bind:value={formController.institutionId.value}
+		error={formController.institutionId.error}
 	/>
 	<FormInput
 		label={'Senha'}

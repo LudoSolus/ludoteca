@@ -13,6 +13,9 @@
   const goToUserDetails = (userId: string) => {    
     goto(`/admin/users/${userId}`);
   }
+  const goToUserCreate = () => {    
+    goto(`/admin/users/create`);
+  }
 
   $: filteredUsersList = users.filter((user) => {
     return user.email.toLowerCase().includes(searchInputLeftValue.toLocaleLowerCase()) && user.roleUser !== 'ADMIN';
@@ -24,7 +27,7 @@
 
 <main class="flex w-full flex-col items-center justify-center gap-10 overflow-y-auto px-4 py-2 sm:px-10">
   <div class="self-end pt-10">
-    <Button text={'Criar'} leftIcon={faPlus} onClick={() => {alert('Página de criar um Usuário!')}} />
+    <Button text={'Criar'} leftIcon={faPlus} onClick={() => {goToUserCreate()}} />
   </div>
   <div class="flex h-full items-center lg:items-start justify-center lg:justify-between flex-col lg:flex-row lg:w-full">
     

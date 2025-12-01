@@ -9,6 +9,6 @@ export type IFormController<T extends string> = {
 	[key in T]: IInputController;
 };
 
-export function inputIsTouched(value: string): boolean {
+export function inputHasValue(value: string): boolean {
 	return (!!value && value.length > 0);
 }
