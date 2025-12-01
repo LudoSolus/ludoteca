@@ -45,7 +45,7 @@
 			data.ra.length > 0 ? data.ra : null,
 			data.birthDate as unknown as Date,
 			EUserRole.USER,
-			data.instituteId
+			data.institutionId
 		);
 		commandsHandler.handle(command).subscribe({
 			next: (data) => {
