@@ -26,10 +26,6 @@ export class GetUserProfileDetailsQuery implements IQuery<IGetUserProfileDetails
 
 				result.data.resultData = {
 					...result.data.resultData,
-					ra: stringIsValid(result.data.resultData.ra) ? result.data.resultData.ra : undefined,
-					instituitionId: stringIsValid(result.data.resultData.instituitionId)
-						? result.data.resultData.instituitionId
-						: undefined,
 					birthDate: new Date(result.data.resultData.birthDate)
 				};
 				return result.data;

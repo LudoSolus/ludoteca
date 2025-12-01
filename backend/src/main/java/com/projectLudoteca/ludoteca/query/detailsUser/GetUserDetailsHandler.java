@@ -20,12 +20,12 @@ public class GetUserDetailsHandler {
                 user.getName(),
                 user.getCpf(),
                 user.getEducationalInstitution() != null
-                        ? user.getEducationalInstitution().getInstitutionName()
-                        : "N/A",
+                        ? user.getEducationalInstitution().getId().toString()
+                        : null,
                 user.getPhone(),
                 user.getRa() != null
                         ? user.getRa()
-                        : "N/A",
+                        : null,
                 user.getEmail(),
                 user.getBirthDate());
     }

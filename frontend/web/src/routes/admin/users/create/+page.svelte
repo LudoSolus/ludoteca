@@ -18,10 +18,10 @@
 	let createUserLoading: boolean = $state(false);
 
 	onMount(() => {
-		fetchEducationalInstituitions();
+		fetchEducationalInstitutions();
 	});
 
-	function fetchEducationalInstituitions() {
+	function fetchEducationalInstitutions() {
 		queriesHandler.handle(new ListEducationalInstitutionsQuery()).subscribe({
 			next: (data) => {
 				educationalInstitutions = data.resultData;

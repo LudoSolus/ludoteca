@@ -2,7 +2,7 @@ export interface IGetUserProfileDetailsResponse {
 	publicId: string;
 	name: string;
 	cpf: string;
-	instituitionId?: string;
+	institutionId?: string;
 	phone: string;
 	ra?: string;
 	email: string;

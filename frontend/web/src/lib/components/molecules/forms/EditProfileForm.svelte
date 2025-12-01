@@ -3,6 +3,7 @@
 	import type { IGetUserProfileDetailsResponse } from '$lib/api/queries/users/get-user-profile-details/get-user-profile-details.interface';
 	import FormInput from '$lib/components/atoms/FormInput.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
+	import { isUtfprId } from '$lib/shared/helpers/is-utfpr-id';
 	import { Validators } from '$lib/shared/helpers/validators';
 	import type { IFormController } from '$lib/shared/interfaces/input-controller';
 	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
@@ -59,9 +60,9 @@
 			error: null,
 			required: true
 		},
-		instituitionId: {
-			value: formValues.instituitionId,
-			touched: !!formValues.instituitionId,
+		institutionId: {
+			value: formValues.institutionId,
+			touched: !!formValues.institutionId,
 			error: null,
 			required: false
 		},
@@ -95,7 +96,7 @@
 
 		let raIsValid: boolean = true;
 
-		if (utfprInstituitionIsSelected()) {
+		if (isUtfprId(formController.institutionId.value)) {
 			raIsValid = false;
 			if (formController.ra.touched) {
 				formController.ra.error = validators.ra(formController.ra.value);
@@ -118,10 +119,6 @@
 		formController[formName].touched = true;
 		formValues[formName] = formController[formName].value;
 		isValid = validateForm();
-	}
-
-	function utfprInstituitionIsSelected(): boolean {
-		return formController.instituitionId.value === '16610773-99dd-4df0-901f-041a3936d5d6';
 	}
 </script>
 
@@ -175,9 +172,9 @@
 		placeholder={'Selecione sua instituição'}
 		height="90px"
 		options={insituitionSelectInputOptions}
-		onChange={(value) => onInput('instituitionId', value)}
-		bind:value={formController.instituitionId.value}
-		error={formController.instituitionId.error}
+		onChange={(value) => onInput('institutionId', value)}
+		bind:value={formController.institutionId.value}
+		error={formController.institutionId.error}
 	/>
 	<FormInput
 		label={'Data de Nascimento'}
@@ -188,7 +185,7 @@
 		error={formController.birthDate.error}
 		onInput={(value) => onInput('birthDate', value)}
 	/>
-	{#if utfprInstituitionIsSelected()}
+	{#if isUtfprId(formController.institutionId.value)}
 		<FormInput
 			label={'RA'}
 			placeholder={'0000000'}

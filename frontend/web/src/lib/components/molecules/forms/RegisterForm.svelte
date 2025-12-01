@@ -2,6 +2,7 @@
 	import type { IEducationalInstitution } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.interface';
 	import FormInput from '$lib/components/atoms/FormInput.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
+	import { isUtfprId } from '$lib/shared/helpers/is-utfpr-id';
 	import { Validators } from '$lib/shared/helpers/validators';
 	import type { IFormController } from '$lib/shared/interfaces/input-controller';
 	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
@@ -107,7 +108,7 @@
 
 		let raIsValid: boolean = true;
 
-		if (utfprInstituitionIsSelected()) {
+		if (isUtfprId(formController.institutionId.value)) {
 			raIsValid = false;
 			if (formController.ra.touched) {
 				formController.ra.error = validators.ra(formController.ra.value);
@@ -130,10 +131,6 @@
 		formController[formName].touched = true;
 		formValues[formName] = formController[formName].value;
 		isValid = validateForm();
-	}
-
-	function utfprInstituitionIsSelected(): boolean {
-		return formController.institutionId.value === '16610773-99dd-4df0-901f-041a3936d5d6';
 	}
 </script>
 
@@ -205,7 +202,7 @@
 		error={formController.password.error}
 		onInput={(value) => onInput('password', value)}
 	/>
-	{#if utfprInstituitionIsSelected()}
+	{#if isUtfprId(formController.institutionId.value)}
 		<FormInput
 			label={'RA'}
 			placeholder={'0000000'}
