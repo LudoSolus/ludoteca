@@ -6,6 +6,7 @@ import com.projectLudoteca.ludoteca.common.repository.PasswordResetRepository;
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class RequestPasswordResetHandler {
         this.mailSender = mailSender;
     }
 
+    @Transactional
     public void handle(RequestPasswordResetCommand command) {
         Optional<User> userOpt = userRepository.findByEmail(command.email());
 
@@ -43,6 +45,7 @@ public class RequestPasswordResetHandler {
             sendRecoveryEmail(user.getEmail(), code);
 
             PasswordReset passwordReset = new PasswordReset();
+            passwordReset.setUserId(user.getId());
             passwordReset.setUser(user);
             passwordReset.setEmail(user.getEmail());
             passwordReset.setCode(code);

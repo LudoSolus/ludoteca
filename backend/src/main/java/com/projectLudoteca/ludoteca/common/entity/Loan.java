@@ -38,9 +38,12 @@ public class Loan implements Serializable {
     @Column(name = "status", nullable = false)
     private GameStatus status;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
+
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id", nullable = false)
@@ -69,6 +72,7 @@ public class Loan implements Serializable {
     public Loan(GameStatus status, User user, Game game, Event event) {
         this.status = status;
         this.user = user;
+        this.userId = user.getId();
         this.game = game;
         this.event = event;
     }
