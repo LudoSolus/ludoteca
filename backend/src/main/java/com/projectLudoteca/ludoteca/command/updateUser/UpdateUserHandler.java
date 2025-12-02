@@ -22,7 +22,7 @@ public class UpdateUserHandler {
 
     @Autowired
     public UpdateUserHandler(UserRepository userRepository,
-            EducationalInstitutionRepository educationalInstitutionRepository, JwtService jwtService) {
+                             EducationalInstitutionRepository educationalInstitutionRepository, JwtService jwtService) {
         this.userRepository = userRepository;
         this.educationalInstitutionRepository = educationalInstitutionRepository;
         this.jwtService = jwtService;
@@ -37,11 +37,9 @@ public class UpdateUserHandler {
         User user = userRepository.findUserNativeAndRemovedFalse(auth.getId())
                 .orElseThrow(() -> new BusinessException("USR_002", "Usuário não encontrado."));
 
-        if (!Objects.equals(command.email(), user.getEmail()) && userRepository.existsByEmail(command.email())) {
+        if (!Objects.equals(command.email(), user.getEmail()) && userRepository.existsByEmailAndIdNot(command.email(), user.getId())) {
             throw new IllegalArgumentException("E-mail já cadastrado!");
         }
-
-        // Verificações Instituição
 
         EducationalInstitution educationalInstitution = null;
         if (command.institutionId() != null) {
@@ -49,37 +47,35 @@ public class UpdateUserHandler {
                     .orElseThrow(() -> new BusinessException("USR_002", "Instituição não encontrada."));
         }
 
-        // Setando a instituição no usuário para validar o RA
-
         if (educationalInstitution != null) {
             user.setEducationalInstitution(educationalInstitution);
         }
+        if (user.getEducationalInstitution() != null) {
+            if (user.getEducationalInstitution().getIsUtfpr()) {
+                if (command.ra() == null) {
+                    throw new BusinessException("400", "O RA é obrigatório para alunos da UTFPR.");
+                }
 
-        // Varificações RA
-
-        if (user.getEducationalInstitution().getIsUtfpr()) {
-            if (command.ra() == null) {
-                throw new BusinessException("400", "O RA é obrigatório para alunos da UTFPR.");
+                if (!command.ra().matches("\\d+")) {
+                    throw new BusinessException("400", "O RA deve conter apenas números.");
+                }
             }
-
-            if (!command.ra().matches("\\d+")) {
-                throw new BusinessException("400", "O RA deve conter apenas números.");
+            if (user.getEducationalInstitution().getIsUtfpr()) {
+                if (userRepository.existsByRaAndIdNot(command.ra(), user.getId())) {
+                    throw new BusinessException("400", "O RA já cadastrado!");
+                }
+                user.setRa(command.ra());
+            } else {
+                user.setRa(null);
             }
         }
 
-        // Atualiza os campos padrões
         if (command.name() != null)
             user.setName(command.name());
         if (command.email() != null)
             user.setEmail(command.email());
         if (command.phone() != null)
             user.setPhone(command.phone());
-
-        if (user.getEducationalInstitution().getIsUtfpr()) {
-            user.setRa(command.ra());
-        } else {
-            user.setRa(null);
-        }
 
         userRepository.save(user);
 

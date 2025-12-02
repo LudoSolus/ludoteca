@@ -68,8 +68,8 @@ public class UpdateGameHandler {
             throw new BusinessException("O link do vídeo tutorial é inválido.");
         }
 
-        if (command.barcode() != null && command.barcode() != game.getBarcode()) {
-            if (gameRepository.existsByBarcode(command.barcode())) {
+        if (command.barcode() != null && !command.barcode().equals(game.getBarcode())) {
+            if (gameRepository.existsByBarcodeAndIdNot(command.barcode(), game.getId())) {
                 throw new BusinessException("Já existe um jogo com esse código de barras cadastrado no sistema.");
             }
             game.setBarcode(command.barcode());

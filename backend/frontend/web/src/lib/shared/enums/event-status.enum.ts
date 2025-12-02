@@ -1,0 +1,5 @@
+export enum EEventStatus {
+	SCHEDULED = 'SCHEDULED',
+	INPROGRESS = 'INPROGRESS',
+	COMPLETED = 'COMPLETED'
+}

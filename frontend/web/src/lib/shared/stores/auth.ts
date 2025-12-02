@@ -1,6 +1,7 @@
 import { derived, get, writable, type Writable } from 'svelte/store';
 import { decodeAuthJwt } from '../helpers/decode-jwt';
 import { EUserRole } from '../enums/user-role.enum';
+import { browser } from '$app/environment';
 
 class AuthService {
 	private localStorageTokenKey: string = 'auth_token';
@@ -8,13 +9,12 @@ class AuthService {
 	private userToken: Writable<string | null> = writable<string | null>(null);
 
 	private constructor() {
-		if (typeof window !== 'undefined') {
+		if (typeof window !== 'undefined' && browser) {
 			const stored = localStorage.getItem(this.localStorageTokenKey);
 			this.userToken.set(stored);
 		}
 
 		this.userToken.subscribe((newToken) => {
-			console.log(decodeAuthJwt(newToken))
 			if (newToken) {
 				localStorage.setItem(this.localStorageTokenKey, newToken);
 			} else {

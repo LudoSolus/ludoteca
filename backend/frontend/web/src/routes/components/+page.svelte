@@ -1,0 +1,112 @@
+<script lang="ts">
+	import BoardGame from '$lib/components/molecules/BoardGame.svelte';
+	import Button from '$lib/components/atoms/Button.svelte';
+	import Input from '$lib/components/atoms/FormInput.svelte';
+	import ProfilePicture from '$lib/components/atoms/ProfilePicture.svelte';
+	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
+	import UserContainer from '$lib/components/atoms/UserContainer.svelte';
+	import { ECategory } from '$lib/shared/enums/category.enum';
+	import { faArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
+	import EscapeRoomContainer from '$lib/components/atoms/EscapeRoomContainer.svelte';
+	import RpgContainer from '$lib/components/atoms/RpgContainer.svelte';
+	import GoBack from '$lib/components/molecules/GoBack.svelte';
+	import { EUserRole } from '$lib/shared/enums/user-role.enum';
+	let eventDate: Date = new Date('2025-09-05');
+
+	type SelectInputOption = {
+		label: string;
+		value: string;
+	};
+
+	let selectedPlan = '';
+	const planOptions: SelectInputOption[] = [
+		{ label: 'Mensal', value: 'MONTHLY' },
+		{ label: 'Três Meses', value: 'Three' },
+		{ label: 'Seis Meses', value: 'SIX' },
+		{ label: 'Anual', value: 'YEARLY' }
+	];
+
+	function handleSelect(value: string) {
+		selectedPlan = value;
+		console.log('Plano selecionado:', value);
+	}
+</script>
+
+<RpgContainer title="Era Glacial de Ragnar" system="D&D" startDate={eventDate} />
+
+<div class="mt-6 flex flex-col items-center gap-4">
+	<div class="w-full px-2 sm:px-5 md:px-10">
+		<GoBack
+			title="Perfil"
+			description="Todos os personagens que participam dessa campanha"
+			onEdit={() => {}}
+			onDelete={() => {}}
+		/>
+	</div>
+	<div class="w-full px-2 sm:px-5 md:px-10">
+		<GoBack title="Perfil" description="Tela de perfil, veja suas informações" />
+	</div>
+	<EscapeRoomContainer title="Código Sombrio" />
+	<Button text={'Entrar'} onClick={() => {}} />
+	<Button text={'Entrar'} onClick={() => {}} leftIcon={faTrash} />
+	<Button text={'Entrar'} onClick={() => {}} rightIcon={faArrowRight} />
+	<Input
+		label={'Nome'}
+		placeholder={'João'}
+		width="300px"
+		onInput={(value) => {
+			console.log(value);
+		}}
+	/>
+	<Input
+		label={'Nome'}
+		placeholder={'João'}
+		width="300px"
+		onInput={(value) => {
+			console.log(value);
+		}}
+		error={'Nome inválido'}
+	/>
+	<Input
+		placeholder="Pesquisar"
+		width="500px"
+		onInput={(value) => {
+			console.log(value);
+		}}
+	/>
+	<Input
+		width="300px"
+		onInput={(value) => {
+			console.log(value);
+		}}
+		error={'Nome inválido'}
+	/>
+	<SelectInput
+		label="Plano"
+		bind:value={selectedPlan}
+		placeholder="Selecione o plano"
+		options={planOptions}
+		onChange={handleSelect}
+		width="300px"
+		error="plano inválido"
+	/>
+	<ProfilePicture userName={'João'} />
+	<ProfilePicture userName={'Felipe Scalco'} />
+	<UserContainer email={'guilherme.123@gmail.com'} ageGroup={'Adulto'} />
+	<UserContainer email={'josenildo.comisuamae.gamer@gmail.com'} ageGroup={'Criança'} isRpgMaster />
+
+	<SelectInput
+		label="Plano"
+		bind:value={selectedPlan}
+		placeholder="Selecione o plano"
+		options={planOptions}
+		onChange={handleSelect}
+		width="300px"
+	/>
+</div>
+
+<style>
+	div {
+		margin-bottom: 100px;
+	}
+</style>

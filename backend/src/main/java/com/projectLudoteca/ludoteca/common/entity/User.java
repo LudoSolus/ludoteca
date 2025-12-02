@@ -74,7 +74,7 @@ public class User implements Serializable {
     private Integer minRpg = 0;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "educational_institution_id", nullable = false)
+    @JoinColumn(name = "educational_institution_id")
     private EducationalInstitution educationalInstitution;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
