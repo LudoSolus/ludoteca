@@ -42,7 +42,7 @@
 </script>
 
 <main
-	class="flex w-full flex-col items-center gap-5 overflow-y-auto px-3 py-7 sm:px-10 md:gap-10 xl:px-15"
+	class="flex w-full flex-col items-center gap-5 px-3 py-7 sm:px-10 md:gap-10 xl:px-15"
 >
 	<GoBack title="Editar Jogo" description="Edite os dados do jogo" />
 	<BoardGameForm bind:isValid={formIsValid} {formValues} />

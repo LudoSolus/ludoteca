@@ -10,7 +10,7 @@
 	}
 </script>
 
-<main class="flex w-full flex-col overflow-y-auto px-2 pt-7 pb-20 sm:px-4 md:px-10 xl:px-15">
+<main class="flex w-full flex-col px-2 pt-7 pb-20 sm:px-4 md:px-10 xl:px-15">
 	<section class="mt-6 flex w-full flex-col gap-2 sm:mt-0 sm:gap-6">
 		<h3 class="h3">Próximos Eventos</h3>
 

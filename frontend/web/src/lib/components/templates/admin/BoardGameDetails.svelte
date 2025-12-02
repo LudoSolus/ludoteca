@@ -8,7 +8,7 @@
 	export let handleOnDelete: () => void;
 </script>
 
-<main class="flex h-full flex-col gap-10 overflow-y-auto px-1 py-7 sm:px-10 xl:px-15 items-center">
+<main class="flex h-full flex-col gap-10 px-1 py-7 sm:px-10 xl:px-15 items-center">
 	<GoBack
 		title={boardGameDetails.title}
 		description="Detalhes do jogo"

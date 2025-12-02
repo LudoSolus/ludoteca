@@ -27,7 +27,7 @@
 
 </script>
 
-<main class="flex h-full flex-col gap-10 overflow-y-auto px-5 py-7 sm:px-12 xl:px-15">
+<main class="flex h-full flex-col gap-10 px-5 py-7 sm:px-12 xl:px-15">
 	<GoBack
 		title={userDetails.name}
 		description="Detalhes do usuário"
@@ -35,7 +35,7 @@
 		onDelete={handleOnDelete}
 	/>
 	<div
-		class="flex md:flex-row flex-col items-start justify-between gap-10 px-0 pb-20 px-2 lg:px-4 md:px-10"
+		class="flex md:flex-row flex-col items-start justify-between gap-10 pb-20 px-2 lg:px-4 md:px-10"
 	>
 		<section class="flex w-full flex-1 flex-col items-start justify-start gap-4">
 			<h3 class="h3 w-full text-start">Dados do Usuário:</h3>

@@ -14,7 +14,6 @@ class AuthService {
 		}
 
 		this.userToken.subscribe((newToken) => {
-			console.log(decodeAuthJwt(newToken))
 			if (newToken) {
 				localStorage.setItem(this.localStorageTokenKey, newToken);
 			} else {

@@ -20,7 +20,7 @@
 	$: finishedEvents = events.filter((e) => e.status == EEventStatus.COMPLETED);
 </script>
 
-<main class="flex w-full flex-col overflow-y-auto px-2 pt-7 pb-20 sm:px-4 md:px-10 xl:px-15">
+<main class="flex w-full flex-col px-2 pt-7 pb-20 sm:px-4 md:px-10 xl:px-15">
 	<div class="flex w-full justify-end">
 		<Button text="Criar" leftIcon={faPlus} onClick={() => {}} />
 	</div>
