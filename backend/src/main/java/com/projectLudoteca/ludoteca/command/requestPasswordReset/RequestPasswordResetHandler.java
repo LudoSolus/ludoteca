@@ -113,6 +113,7 @@ public class RequestPasswordResetHandler {
                     "            justify-content: center;\n" +
                     "            font-size: 70px;\n" +
                     "            color: #f4d85a;\n" +
+                    "            transform: translateX(3px);\n" +
                     "        }\n" +
                     "        .content {\n" +
                     "            margin-top: 25px;\n" +
