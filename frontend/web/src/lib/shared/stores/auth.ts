@@ -15,10 +15,12 @@ class AuthService {
 		}
 
 		this.userToken.subscribe((newToken) => {
-			if (newToken) {
-				localStorage.setItem(this.localStorageTokenKey, newToken);
-			} else {
-				localStorage.removeItem(this.localStorageTokenKey);
+			if (typeof window !== 'undefined' && browser) {
+				if (newToken) {
+					localStorage.setItem(this.localStorageTokenKey, newToken);
+				} else {
+					localStorage.removeItem(this.localStorageTokenKey);
+				}
 			}
 		});
 	}
