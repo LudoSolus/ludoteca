@@ -25,7 +25,7 @@
   })
 </script>
 
-<main class="flex w-full flex-col items-center justify-center gap-10 overflow-y-auto px-4 py-2 sm:px-10">
+<main class="flex w-full flex-col items-center justify-center gap-10 px-4 py-2 sm:px-10">
   <div class="self-end pt-10">
     <Button text={'Criar'} leftIcon={faPlus} onClick={() => {goToUserCreate()}} />
   </div>
@@ -33,11 +33,11 @@
     
     <!-- USERS -->
      <section class="flex w-full max-w-150 flex-1 flex-col items-center justify-center gap-8 pt-0 lg:px-10">
-      <div class="flex w-full max-w-128 flex-col gap-4">
+      <div class="flex w-full max-w-lg flex-col gap-4">
         
         <h3 class="h3 gap-5">Usuários</h3>
         
-        <div class="flex w-full max-w-128 items-center justify-start gap-5 px-1">
+        <div class="flex w-full max-w-lg items-center justify-start gap-5 px-1">
           <SearchInput height={'100%'} bind:value={searchInputLeftValue} placeholder="Pesquisar..." />
         </div>
         
@@ -63,11 +63,11 @@
 
     <!-- ADMINS -->
     <section class="flex max-w-150 flex-1 flex-col items-center justify-center gap-8 pt-15 lg:pt-0 lg:px-10">
-      <div class="flex w-full max-w-128 flex-col gap-4">
+      <div class="flex w-full max-w-lg flex-col gap-4">
         
         <h3 class="h3 gap-5">Administradores</h3>
         
-        <div class="flex w-full max-w-128 items-center justify-start gap-5 px-1">
+        <div class="flex w-full max-w-lg items-center justify-start gap-5 px-1">
           <SearchInput height={'100%'} bind:value={searchInputRightValue} placeholder="Pesquisar..." />
         </div>
         

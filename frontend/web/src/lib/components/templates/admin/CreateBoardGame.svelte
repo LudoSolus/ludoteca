@@ -37,7 +37,7 @@
 	}
 </script>
 
-<main class="flex w-full flex-col items-center gap-5 md:gap-10 overflow-y-auto px-3 py-7 sm:px-10 xl:px-15">
+<main class="flex w-full flex-col items-center gap-5 md:gap-10 px-3 py-7 sm:px-10 xl:px-15">
 	<GoBack title="Criar Jogo" description="Adicione um jogo a coleção" />
 	<BoardGameForm bind:isValid={formIsValid} {formValues} />
 	<Button text="Criar Jogo" width="290px" height="40px" onClick={handleOnCreate} loading={isLoading} />
