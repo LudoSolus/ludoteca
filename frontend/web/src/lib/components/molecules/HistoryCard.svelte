@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { faClock, faCalendarDays, faKey, faDiceD20, faGamepad } from "@fortawesome/free-solid-svg-icons";
+  import keyIcon from "$lib/assets/key-svgrepo-com.svg";
+  import boardgameIcon from "$lib/assets/map_adventure.svg";
+  import diceIcon from "$lib/assets/dice-twenty-faces-one-svgrepo-com.svg";
+
+  import { faClock, faCalendar } from "@fortawesome/free-solid-svg-icons";
   import FA from "svelte-fa";
 
   export let title: string = "Título da atividade";
@@ -10,66 +14,46 @@
   export let sessions: number = 0;
 
   $: config = {
-    escape: { color: "#6f1272", icon: faKey },
-    rpg: { color: "#6a77c9", icon: faDiceD20 },
-    boardgame: { color: "#a7a05c", icon: faGamepad },
+    escape: { image: keyIcon, bg: "#6f1272" },
+    rpg: { image: diceIcon, bg: "#6a77c9" },
+    boardgame: { image: boardgameIcon, bg: "#a7a05c" }
   }[type];
 </script>
 
-<div class="flex flex-col sm:flex-row items-stretch w-full max-w-xl rounded-xl overflow-hidden shadow-md border border-black bg-white">
-  <div class="flex flex-col justify-center gap-3 p-4 flex-1">
-    
-    <h3
-      class="font-inknut font-medium text-black"
-      style="font-size:18px; line-height:22px; letter-spacing:0;"
-    >
+<div class="flex w-full max-w-[613px] h-[105px] rounded-[10px] overflow-hidden shadow-md border border-black bg-white">
+  <div class="flex flex-col justify-center gap-[10px] px-[14px] py-[12px] flex-1">
+    <h3 class="text-[24px] leading-[30px] font-inknut font-light text-black">
       {title}
     </h3>
 
     {#if timePlayed}
-      <div
-        class="flex items-center gap-2 font-inknut font-medium text-[#404040]"
-        style="font-size:18px; line-height:22px; letter-spacing:0;"
-      >
-        <FA icon={faClock} class="w-5 h-5 text-[#404040]" />
+      <div class="flex items-center gap-[6px] text-[18px] leading-[22px] font-inknut font-normal text-[#2B2B2B]">
+        <FA icon={faClock} class="w-[14px] h-[14px]" />
         <span>{timePlayed}</span>
       </div>
     {/if}
 
     {#if date}
-      <div
-        class="flex items-center gap-2 font-inknut font-medium text-[#404040]"
-        style="font-size:18px; line-height:22px; letter-spacing:0;"
-      >
-        <FA icon={faCalendarDays} class="w-5 h-5 text-[#404040]" />
+      <div class="flex items-center gap-[6px] text-[18px] leading-[22px] font-inknut font-normal text-[#2B2B2B]">
+        <FA icon={faCalendar} class="w-[14px] h-[14px]" />
         <span>{date}</span>
       </div>
     {/if}
 
     {#if system}
-      <div
-        class="font-inknut font-medium text-[#404040]"
-        style="font-size:18px; line-height:22px; letter-spacing:0;"
-      >
+      <div class="text-[18px] leading-[22px] font-inknut font-normal text-[#2B2B2B]">
         <span class="font-bold">Sistema:</span> {system}
       </div>
     {/if}
 
     {#if sessions > 0}
-      <div
-        class="font-inknut font-medium text-[#404040]"
-        style="font-size:18px; line-height:22px; letter-spacing:0;"
-      >
+      <div class="text-[18px] leading-[22px] font-inknut font-normal text-[#2B2B2B]">
         <span class="font-bold">Sessões:</span> {sessions}
       </div>
     {/if}
   </div>
 
-  
-  <div
-    class="flex items-center justify-center flex-shrink-0 min-w-[100px] aspect-square"
-    style="background-color: {config.color};"
-  >
-    <FA icon={config.icon} class="text-white w-16 h-16" />
+  <div class="flex items-center justify-center w-[109px] h-[105px]" style="background-color: {config.bg};">
+    <img src={config.image} alt="Ícone" class="w-[56px] h-[56px] filter invert brightness-0" />
   </div>
 </div>
