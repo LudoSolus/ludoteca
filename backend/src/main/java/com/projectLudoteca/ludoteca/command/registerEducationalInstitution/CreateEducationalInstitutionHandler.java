@@ -23,7 +23,11 @@ public class CreateEducationalInstitutionHandler {
         }
 
         EducationalInstitution educationalInstitution = new EducationalInstitution(command.institutionName());
+
+
         repository.save(educationalInstitution);
+
+
     }
 
 }
