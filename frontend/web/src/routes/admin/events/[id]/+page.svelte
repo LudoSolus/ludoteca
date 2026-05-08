@@ -15,7 +15,7 @@
 	import EventRegisterUserModal from '$lib/components/molecules/EventRegisterUserModal.svelte';
 	import LoanGameModal from '$lib/components/molecules/LoanGameModal.svelte';
 	import ReturnGameModal from '$lib/components/molecules/ReturnGameModal.svelte';
-	import AdminEventDetails from '$lib/components/templates/admin/AdminEventDetails.svelte';
+	import EventDetails from '$lib/components/templates/admin/EventDetails.svelte';
 	import { EEventStatus } from '$lib/shared/enums/event-status.enum';
 	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
@@ -180,7 +180,7 @@
 			toast.info('O evento já foi finalizado, não é possível emprestar jogos.');
 			return;
 		}
-		
+
 		const game = eventData?.listGames.find((g) => g.id == gameId);
 		if (!game) {
 			toast.error('Jogo escolhido não encontrado, reinicie a página!', { closable: true });
@@ -220,7 +220,7 @@
 </script>
 
 {#if eventData}
-	<AdminEventDetails
+	<EventDetails
 		{eventData}
 		openRegisterUser={openRegisterUserModal}
 		loanGame={handleOnClickLoanGame}
