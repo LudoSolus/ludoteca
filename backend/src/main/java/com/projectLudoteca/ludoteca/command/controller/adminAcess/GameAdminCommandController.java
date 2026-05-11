@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -33,7 +32,7 @@ public class GameAdminCommandController {
 
     @PostMapping("/register")
     @Operation(summary = "Registrar novo jogo", description = "Cria um jogo com dados válidos")
-    public ResponseEntity<ApiResponse<String>> createGame(@RequestBody @Validated CreateGameCommand command) {
+    public ResponseEntity<ApiResponse<String>> createGame(@RequestBody CreateGameCommand command) {
 
         String message = createGameHandler.handle(command);
 
