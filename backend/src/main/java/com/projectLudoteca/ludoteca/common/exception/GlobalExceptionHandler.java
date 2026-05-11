@@ -40,6 +40,19 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Trata erros de validação e integridade do Token JWT (ex: expirado, malformado)
+     */
+    @ExceptionHandler(io.jsonwebtoken.JwtException.class)
+    public ResponseEntity<ApiResponse<Void>> handleJwtException(io.jsonwebtoken.JwtException ex) {
+        ApiResponse<Void> response = new ApiResponse<>();
+        response.setErrorCode(String.valueOf(HttpStatus.UNAUTHORIZED.value()));
+        response.setErrorName("JwtException");
+        response.setErrorMessage("Falha de Autenticação. Token ausente, expirado ou corrompido.");
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    /**
      * Trata erros de validação em DTOs anotados com @Valid
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
