@@ -125,7 +125,7 @@ public class EventAdminCommandControllerTest {
         mockMvc.perform(post("/commands/admin/events/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonPayload))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -203,7 +203,7 @@ public class EventAdminCommandControllerTest {
         mockMvc.perform(put("/commands/admin/events/" + existingEventId + "/update")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonPayload))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -253,7 +253,7 @@ public class EventAdminCommandControllerTest {
 
         mockMvc.perform(put("/commands/admin/events/" + existingEventId + "/start")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -286,7 +286,7 @@ public class EventAdminCommandControllerTest {
 
         mockMvc.perform(put("/commands/admin/events/" + existingEventId + "/end")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test

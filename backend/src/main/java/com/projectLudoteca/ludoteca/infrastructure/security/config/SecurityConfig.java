@@ -1,6 +1,8 @@
 package com.projectLudoteca.ludoteca.infrastructure.security.config;
 
-import com.projectLudoteca.ludoteca.common.exception.ExceptionHandlerFilter;
+import com.projectLudoteca.ludoteca.command.requestPasswordReset.RequestPasswordResetHandler;
+import com.projectLudoteca.ludoteca.common.exception.ExceptionDelegationFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,10 +27,10 @@ public class SecurityConfig {
     private JwtAuthFilter jwtAuthFilter;
 
     @Autowired
-    private ExceptionHandlerFilter exceptionHandlerFilter;
+    private ExceptionDelegationFilter exceptionHandlerFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, RequestPasswordResetHandler requestPasswordResetHandler) throws Exception {
         http
                 // 🔒 Desativa CSRF para APIs REST
                 .csrf(csrf -> csrf.disable())
@@ -50,6 +52,21 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("/commands/admin/**", "/queries/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
+                )
+
+                // Erros 403 e 401
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("application/json;charset=UTF-8");
+                            response.getWriter().write("{\"mensagem\": \"Não autenticado. Token ausente ou inválido.\"}");
+                        })
+
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                            response.setContentType("application/json;charset=UTF-8");
+                            response.getWriter().write("{\"mensagem\": \"Acesso negado. Privilégio insuficiente.\"}");
+                        })
                 )
 
                 // 🔑 Desativa sessões — usa JWT (stateless)
