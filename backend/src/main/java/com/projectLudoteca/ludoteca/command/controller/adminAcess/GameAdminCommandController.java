@@ -1,5 +1,7 @@
 package com.projectLudoteca.ludoteca.command.controller.adminAcess;
 
+import com.projectLudoteca.ludoteca.command.deleteGame.DeleteGameCommand;
+import com.projectLudoteca.ludoteca.command.deleteGame.DeleteGameHandler;
 import com.projectLudoteca.ludoteca.command.registerGame.CreateGameCommand;
 import com.projectLudoteca.ludoteca.command.registerGame.CreateGameHandler;
 import com.projectLudoteca.ludoteca.command.updateGame.UpdateGameCommand;
@@ -20,11 +22,13 @@ public class GameAdminCommandController {
 
     private final CreateGameHandler createGameHandler;
     private final UpdateGameHandler updateGameHandler;
+    private final DeleteGameHandler deleteGameHandler;
 
     @Autowired
-    public GameAdminCommandController(CreateGameHandler createGameHandler, UpdateGameHandler updateGameHandler) {
+    public GameAdminCommandController(CreateGameHandler createGameHandler, UpdateGameHandler updateGameHandler, DeleteGameHandler deleteGameHandler) {
         this.createGameHandler = createGameHandler;
         this.updateGameHandler = updateGameHandler;
+        this.deleteGameHandler = deleteGameHandler;
     }
 
     @PostMapping("/register")
@@ -43,6 +47,17 @@ public class GameAdminCommandController {
     public ResponseEntity<ApiResponse<String>> update(@PathVariable String id, @RequestBody UpdateGameCommand command) {
 
         String message = updateGameHandler.handle(id, command);
+
+        ApiResponse<String> response = new ApiResponse<>(message);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}/delete")
+    @Operation(summary = "Remover jogo", description = "Realiza a exclusão lógica do jogo do sistema.")
+    public ResponseEntity<ApiResponse<String>> deleteGame(@PathVariable String id) {
+
+        String message = deleteGameHandler.handle(id);
 
         ApiResponse<String> response = new ApiResponse<>(message);
 
