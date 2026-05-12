@@ -11,6 +11,7 @@
 	export let onCreateEvent: (data: IRegisterEventRequest) => void;
 	export let boardGames: IBoardGame[];
 
+	let isClicked: boolean = false;
 	let formIsValid: boolean = false;
 	let formValues: Record<keyof IRegisterEventRequest, any> = {
 		name: '',
@@ -31,6 +32,8 @@
 	};
 
 	function handleOnCreate() {
+		isClicked = true;
+
 		if (!formIsValid) {
 			toast.error('Preencha todos os campos devidamente.', { closable: true });
 			return;
@@ -52,7 +55,7 @@
 
 <main class="flex w-full flex-col items-center gap-5 px-3 py-7 sm:px-10 md:gap-10 xl:px-15">
 	<GoBack title="Criar Evento" description="Crie o próximo evento" />
-	<EventForm bind:isValid={formIsValid} {formValues} {boardGames} />
+	<EventForm bind:isValid={formIsValid} {formValues} {boardGames} {isClicked} />
 	<Button
 		text="Criar Evento"
 		width="290px"

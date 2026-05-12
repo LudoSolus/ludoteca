@@ -5,7 +5,7 @@
 	import IconButton from './IconButton.svelte';
 	import { generateId } from '$lib/shared/helpers/generate-id';
 
-	type MaskType = 'phone' | 'cpf' | 'ra';
+	type MaskType = 'phone' | 'cpf' | 'ra' | 'zipCode';
 
 	export let id: string = generateId(5);
 	export let type: 'text' | 'password' | 'date' | 'email' | 'number' | 'datetime-local' = 'text';
@@ -47,6 +47,11 @@
 			case 'ra':
 				return {
 					mask: '#######',
+					eager: false
+				};
+			case 'zipCode':
+				return {
+					mask: '#####-###',
 					eager: false
 				};
 		}

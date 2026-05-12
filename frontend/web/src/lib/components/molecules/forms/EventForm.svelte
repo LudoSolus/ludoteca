@@ -14,12 +14,21 @@
 	let {
 		isValid = $bindable(),
 		formValues = $bindable(),
+		isClicked,
 		boardGames
 	} = $props<{
 		isValid: boolean;
 		formValues: Record<keyof IRegisterEventRequest, any>;
+		isClicked: boolean;
 		boardGames: IBoardGame[];
 	}>();
+
+	$effect(() => {
+		if (isClicked) {
+			touchInputs();
+			isValid = validateForm();
+		}
+	});
 
 	const validators = new Validators();
 
@@ -204,6 +213,12 @@
 		}
 		onInput('gamesIds', currentIds);
 	}
+
+	function touchInputs() {
+		Object.keys(formController).forEach((key: string) => {
+			formController[key as keyof IFormController<FormField>].touched = true;
+		});
+	}
 </script>
 
 <div
@@ -255,6 +270,7 @@
 		placeholder="00000-000"
 		height="90px"
 		bind:value={formController.zipCode.value}
+		mask="zipCode"
 		error={formController.zipCode.error}
 		onInput={(value) => onInput('zipCode', value)}
 	/>
