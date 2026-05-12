@@ -8,7 +8,8 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	<title>Ludoteca</title>
 </svelte:head>
 
-<Toasts position="top-right"/>
+<Toasts position="top-right" />
 {@render children?.()}

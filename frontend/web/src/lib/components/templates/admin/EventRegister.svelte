@@ -1,14 +1,18 @@
 <script lang="ts">
 	import type { IRegisterEventRequest } from '$lib/api/commands/events/register-event/register-event.interface';
 	import Button from '$lib/components/atoms/Button.svelte';
+	import EventForm from '$lib/components/molecules/forms/EventForm.svelte';
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
+	import { stringToBool } from '$lib/shared/helpers/string-to-bool';
 	import { toast } from 'svoast';
+	import type { IBoardGame } from '$lib/api/queries/board-games/list-board-games/list-board-games.interface';
 
 	export let isLoading: boolean;
 	export let onCreateEvent: (data: IRegisterEventRequest) => void;
+	export let boardGames: IBoardGame[];
 
 	let formIsValid: boolean = false;
-	let formValues: Record<keyof IRegisterEventRequest, string> = {
+	let formValues: Record<keyof IRegisterEventRequest, any> = {
 		name: '',
 		description: '',
 		startDate: '',
@@ -20,10 +24,10 @@
 		city: '',
 		state: '',
 		zipCode: '',
-		hasBoardGames: '',
-		hasRpg: '',
-		hasEscapeRoom: '',
-		gamesIds: ''
+		hasBoardGames: false,
+		hasRpg: false,
+		hasEscapeRoom: false,
+		gamesIds: []
 	};
 
 	function handleOnCreate() {
@@ -32,20 +36,23 @@
 			return;
 		}
 
-		// const formValuesFormated: IRegisterEventRequest = {
-		// 	...formValues
-		// 	// barcode: Number(formValues.barcode.replace(/\D+/g, '')),
-		// 	// minPlayers: Number(formValues.minPlayers.replace(/\D+/g, '')),
-		// 	// maxPlayers: Number(formValues.maxPlayers.replace(/\D+/g, ''))
-		// };
+		const formValuesFormated: IRegisterEventRequest = {
+			...formValues,
+			startDate: new Date(formValues.startDate),
+			finalDate: new Date(formValues.finalDate),
+			hasBoardGames: stringToBool(formValues.hasBoardGames.toString()),
+			hasRpg: stringToBool(formValues.hasRpg.toString()),
+			hasEscapeRoom: stringToBool(formValues.hasEscapeRoom.toString()),
+			gamesIds: formValues.gamesIds
+		};
 
-		// onCreateEvent(formValuesFormated);
+		onCreateEvent(formValuesFormated);
 	}
 </script>
 
 <main class="flex w-full flex-col items-center gap-5 px-3 py-7 sm:px-10 md:gap-10 xl:px-15">
 	<GoBack title="Criar Evento" description="Crie o próximo evento" />
-	<!-- <BoardGameForm bind:isValid={formIsValid} {formValues} /> -->
+	<EventForm bind:isValid={formIsValid} {formValues} {boardGames} />
 	<Button
 		text="Criar Evento"
 		width="290px"
