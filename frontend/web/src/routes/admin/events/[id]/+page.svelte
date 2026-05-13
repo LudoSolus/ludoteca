@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { LoanGameCommand } from '$lib/api/commands/board-games/loan-game/loan-game.command';
 	import type { ILoanGameRequest } from '$lib/api/commands/board-games/loan-game/loan-game.interface';
@@ -217,6 +218,18 @@
 	function openConfirmFinishEventModal() {
 		confirmFinishEventModalIsOpen = true;
 	}
+
+	function handleOnEdit() {
+		const eventId = $page.params.id;
+		if (!eventId) return;
+
+		goto(`/admin/events/${eventId}/edit`);
+	}
+
+	function handleOnDelete() {
+		const eventId = $page.params.id;
+		if (!eventId) return;
+	}
 </script>
 
 {#if eventData}
@@ -227,6 +240,8 @@
 		startEvent={openConfirmStartEventModal}
 		finishEvent={openConfirmFinishEventModal}
 		returnGame={openReturnGameWithoutGame}
+		{handleOnEdit}
+		{handleOnDelete}
 	/>
 {:else}
 	<p>Carregando...</p>

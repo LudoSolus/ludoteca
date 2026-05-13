@@ -6,7 +6,7 @@ export interface GetEventDetailsResponse {
 	startDate: Date;
 	finalDate: Date;
 	street: string;
-	number: number;
+	number: string;
 	supplement: string;
 	neighborhood: string;
 	city: string;

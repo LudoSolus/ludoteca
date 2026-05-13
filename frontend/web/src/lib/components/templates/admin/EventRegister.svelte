@@ -3,7 +3,6 @@
 	import Button from '$lib/components/atoms/Button.svelte';
 	import EventForm from '$lib/components/molecules/forms/EventForm.svelte';
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
-	import { stringToBool } from '$lib/shared/helpers/string-to-bool';
 	import { toast } from 'svoast';
 	import type { IBoardGame } from '$lib/api/queries/board-games/list-board-games/list-board-games.interface';
 
@@ -43,9 +42,9 @@
 			...formValues,
 			startDate: new Date(formValues.startDate),
 			finalDate: new Date(formValues.finalDate),
-			hasBoardGames: stringToBool(formValues.hasBoardGames.toString()),
-			hasRpg: stringToBool(formValues.hasRpg.toString()),
-			hasEscapeRoom: stringToBool(formValues.hasEscapeRoom.toString()),
+			hasBoardGames: formValues.hasBoardGames,
+			hasRpg: formValues.hasRpg,
+			hasEscapeRoom: formValues.hasEscapeRoom,
 			gamesIds: formValues.gamesIds
 		};
 
