@@ -23,15 +23,18 @@ public class GetAllEventsForAdminHandler {
                         event.getId(),
                         event.getName(),
                         event.getStartDate(),
-                        event.getFinalDate() != null ? event.getFinalDate().toString() : "Horário de finalização não definido",
+                        event.getFinalDate() != null ? event.getFinalDate().toString()
+                                : "Horário de finalização não definido",
                         event.getStatus(),
                         event.getStreet(),
                         event.getNumber(),
                         event.getNeighborhood(),
                         event.getCity(),
                         event.getState(),
-                        event.getZipCode()
-                ))
+                        event.getZipCode(),
+                        event.getHasBoardGames(),
+                        event.getHasRpg(),
+                        event.getHasEscapeRoom()))
                 .toList();
     }
 }
