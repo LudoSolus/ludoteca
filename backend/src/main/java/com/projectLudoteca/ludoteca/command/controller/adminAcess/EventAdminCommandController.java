@@ -1,5 +1,6 @@
 package com.projectLudoteca.ludoteca.command.controller.adminAcess;
 
+import com.projectLudoteca.ludoteca.command.deleteEvent.DeleteEventHandler;
 import com.projectLudoteca.ludoteca.command.endEvent.EndEventHandler;
 import com.projectLudoteca.ludoteca.command.registerEvent.CreateEventCommand;
 import com.projectLudoteca.ludoteca.command.registerEvent.CreateEventHandler;
@@ -24,12 +25,14 @@ public class EventAdminCommandController {
     private final UpdateEventHandler updateEventHandler;
     private final StartEventHandler startEventHandler;
     private final EndEventHandler endEventHandler;
+    private final DeleteEventHandler deleteEventHandler;
 
-    public EventAdminCommandController(CreateEventHandler createEventHandler, UpdateEventHandler updateEventHandler, StartEventHandler startEventHandler, EndEventHandler endEventHandler) {
+    public EventAdminCommandController(CreateEventHandler createEventHandler, UpdateEventHandler updateEventHandler, StartEventHandler startEventHandler, EndEventHandler endEventHandler, DeleteEventHandler deleteEventHandler) {
         this.createEventHandler = createEventHandler;
         this.updateEventHandler = updateEventHandler;
         this.startEventHandler = startEventHandler;
         this.endEventHandler = endEventHandler;
+        this.deleteEventHandler = deleteEventHandler;
     }
 
     @PostMapping("/register")
@@ -70,6 +73,17 @@ public class EventAdminCommandController {
     public ResponseEntity<ApiResponse<String>> endEvent(@PathVariable String id) {
 
         String message = endEventHandler.handle(id);
+
+        ApiResponse<String> response = new ApiResponse<>(message);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}/delete")
+    @Operation(summary = "Remover evento", description = "Realiza a exclusão lógica do evento do sistema.")
+    public ResponseEntity<ApiResponse<String>> deleteEvent(@PathVariable String id) {
+
+        String message = deleteEventHandler.handle(id);
 
         ApiResponse<String> response = new ApiResponse<>(message);
 
