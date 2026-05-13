@@ -59,7 +59,8 @@
 		isLoading = true;
 		const command = new UpdateEventCommand(eventId, data);
 		commandsHandler.handle(command).subscribe({
-			next: (data) => {
+			next: () => {
+				toast.success('Evento atualizado com sucesso!', { closable: true });
 				goto('/admin/events');
 				isLoading = false;
 			},

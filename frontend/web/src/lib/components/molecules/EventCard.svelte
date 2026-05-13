@@ -27,11 +27,11 @@
 	export let name: string;
 	export let startDate: Date;
 	export let endDate: Date;
-	export let hasBoardGame: boolean;
+	export let hasBoardGames: boolean;
 	export let hasRpg: boolean;
 	export let hasEscapeRoom: boolean;
 	export let address: EventAddressData;
-	export let onCLickButton: () => void
+	export let onCLickButton: () => void;
 </script>
 
 <div
@@ -56,7 +56,7 @@
 	<div class="flex w-full flex-col gap-4 sm:flex-row">
 		<div class="flex flex-1 flex-col gap-4">
 			<div class="space-y-2">
-				{#if hasBoardGame}
+				{#if hasBoardGames}
 					<EventActivity title="Jogos de Tabuleiro" icon={faChessBoard} />
 				{/if}
 				{#if hasRpg}
@@ -80,7 +80,7 @@
 			</div>
 		</div>
 
-		<div class="flex-1 flex shrink-0 flex-col items-end justify-between gap-3 sm:h-full">
+		<div class="flex flex-1 shrink-0 flex-col items-end justify-between gap-3 sm:h-full">
 			<img
 				src={defaultEventImg}
 				alt="Imagem do evento"

@@ -17,7 +17,7 @@
 	let formIsValid: boolean = false;
 	let formValues: Record<keyof IUpdateEventRequest, any> = {
 		name: event.name,
-		description: '',
+		description: event.description,
 		startDate: formatDateForInput(event.startDate),
 		finalDate: formatDateForInput(event.finalDate),
 		street: event.street,
@@ -27,9 +27,9 @@
 		city: event.city,
 		state: event.state,
 		zipCode: event.zipCode,
-		hasBoardGames: true,
-		hasRpg: true,
-		hasEscapeRoom: true,
+		hasBoardGames: event.hasBoardGames,
+		hasRpg: event.hasRpg,
+		hasEscapeRoom: event.hasEscapeRoom,
 		gamesIds: event.listGames.map((g) => g.id)
 	};
 

@@ -37,7 +37,8 @@
 		isLoading = true;
 		const command = new RegisterEventCommand(data);
 		commandsHandler.handle(command).subscribe({
-			next: (data) => {
+			next: () => {
+				toast.success('Evento criado com sucesso!', { closable: true });
 				goto('/admin/events');
 				isLoading = false;
 			},
