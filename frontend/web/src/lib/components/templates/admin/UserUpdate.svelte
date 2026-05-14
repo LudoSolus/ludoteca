@@ -6,44 +6,48 @@
 	import Button from '$lib/components/atoms/Button.svelte';
 	import UserForm from '$lib/components/molecules/forms/UserForm.svelte';
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
-	import type { EUserRole } from '$lib/shared/enums/user-role.enum';
 	import { toast } from 'svoast';
 
-  export let user: IGetUserDetails;
+	export let user: IGetUserDetails;
 	export let editUserLoading: boolean;
 	export let userEdit: (data: IEditUserRequest) => void;
 
 	let formIsValid: boolean = false;
-	let formValues: Record<keyof ICreateUserRequest, string > = {
+	let formValues: Record<keyof ICreateUserRequest, string> = {
 		name: user.name,
 		cpf: '',
 		email: user.email,
 		phone: user.phone,
 		ra: user.ra,
 		birthDate: new Date().toISOString().split('T')[0],
-    userRole: user.userType || 'USER',
-		institutionId: '',
+		userRole: user.userType || 'USER',
+		institutionId: ''
 	};
-  function handleOnEdit() {
+	function handleOnEdit() {
 		if (!formIsValid) {
 			toast.error('Preencha todos os campos devidamente.', { closable: true });
 			return;
 		}
 
 		const formValuesFormated: IEditUserRequest = {
-			isAdmin: formValues.userRole === 'ADMIN',
+			isAdmin: formValues.userRole === 'ADMIN'
 		};
 
 		userEdit(formValuesFormated);
 	}
-	let educationalInstitutions: IEducationalInstitution[] = []
+	let educationalInstitutions: IEducationalInstitution[] = [];
 </script>
+
 <div class="px-3 py-7 sm:px-10 xl:px-15">
 	<GoBack title={'Editar Usuário'} description={'Definir o tipo de usuário'} />
 	<section class="flex h-full flex-col items-center justify-center gap-8 px-5 py-4 xl:px-15">
-	
 		<div>
-			<UserForm type={'edit'} bind:isValid={formIsValid} bind:formValues {educationalInstitutions}/>
+			<UserForm
+				type={'edit'}
+				bind:isValid={formIsValid}
+				bind:formValues
+				{educationalInstitutions}
+			/>
 		</div>
 		<Button
 			text="Salvar"

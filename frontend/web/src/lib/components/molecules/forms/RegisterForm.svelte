@@ -3,7 +3,7 @@
 	import FormInput from '$lib/components/atoms/FormInput.svelte';
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
 	import { Validators } from '$lib/shared/helpers/validators';
-	import type { IFormController } from '$lib/shared/interfaces/input-controller';
+	import { inputHasValue, type IFormController } from '$lib/shared/interfaces/input-controller';
 	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
 
 	type FormField =
@@ -25,6 +25,20 @@
 		formValues: Record<string, string>;
 		educationalInstitutions: IEducationalInstitution[];
 	}>();
+
+	$effect(() => {
+		if (formValues) {
+			Object.keys(formController).forEach((key: string) => {
+				const formKey = key as keyof typeof formController;
+				const val = formValues[formKey];
+				if (inputHasValue(val)) {
+					formController[formKey].touched = true;
+				}
+				formController[formKey].value = val;
+			});
+			isValid = validateForm();
+		}
+	});
 
 	const validators = new Validators();
 
@@ -88,23 +102,27 @@
 		})
 	);
 
-	let selectedInstitution: IEducationalInstitution | null = $state(null);
+	let selectedInstitution: IEducationalInstitution | null = $derived(
+		educationalInstitutions.find(
+			(ei: IEducationalInstitution) => ei.institutionId == formValues.institutionId
+		)
+	);
 
 	function validateForm(): boolean {
 		if (formController.name.touched) {
-			formController.name.error = validators.completeName(formController.name.value);
+			formController.name.error = validators.completeName(formValues.name);
 		}
 		if (formController.phone.touched) {
-			formController.phone.error = validators.phoneNumber(formController.phone.value);
+			formController.phone.error = validators.phoneNumber(formValues.phone);
 		}
 		if (formController.email.touched) {
-			formController.email.error = validators.email(formController.email.value);
+			formController.email.error = validators.email(formValues.email);
 		}
 		if (formController.cpf.touched) {
-			formController.cpf.error = validators.cpf(formController.cpf.value);
+			formController.cpf.error = validators.cpf(formValues.cpf);
 		}
 		if (formController.password.touched) {
-			formController.password.error = validators.password(formController.password.value);
+			formController.password.error = validators.password(formValues.password);
 		}
 
 		let raIsValid: boolean = true;
@@ -112,7 +130,7 @@
 		if (selectedInstitution && selectedInstitution.isUtfpr) {
 			raIsValid = false;
 			if (formController.ra.touched) {
-				formController.ra.error = validators.ra(formController.ra.value);
+				formController.ra.error = validators.ra(formValues.ra);
 				raIsValid = formController.ra.error === null;
 			}
 		} else {
@@ -127,19 +145,6 @@
 			)
 		);
 	}
-
-	function updateSelectedInstitution() {
-		selectedInstitution = educationalInstitutions.find(
-			(ei: IEducationalInstitution) => ei.institutionId == formController.institutionId.value
-		);
-	}
-
-	function onInput(formName: FormField, value: string) {
-		formController[formName].touched = true;
-		if (formName == 'institutionId') updateSelectedInstitution();
-		formValues[formName] = formController[formName].value;
-		isValid = validateForm();
-	}
 </script>
 
 <div class="form-container flex w-full flex-wrap items-start gap-0 sm:gap-3 xl:gap-5">
@@ -148,9 +153,8 @@
 		placeholder={'João dos Santos'}
 		width="300px"
 		height="90px"
-		bind:value={formController.name.value}
+		bind:value={formValues.name}
 		error={formController.name.error}
-		onInput={(value) => onInput('name', value)}
 	/>
 	<FormInput
 		label={'Telefone'}
@@ -158,9 +162,8 @@
 		mask="phone"
 		width="300px"
 		height="90px"
-		bind:value={formController.phone.value}
+		bind:value={formValues.phone}
 		error={formController.phone.error}
-		onInput={(value) => onInput('phone', value)}
 	/>
 	<FormInput
 		label={'E-mail'}
@@ -168,9 +171,8 @@
 		type="email"
 		width="300px"
 		height="90px"
-		bind:value={formController.email.value}
+		bind:value={formValues.email}
 		error={formController.email.error}
-		onInput={(value) => onInput('email', value)}
 	/>
 	<FormInput
 		label={'CPF'}
@@ -178,18 +180,16 @@
 		mask="cpf"
 		width="300px"
 		height="90px"
-		bind:value={formController.cpf.value}
+		bind:value={formValues.cpf}
 		error={formController.cpf.error}
-		onInput={(value) => onInput('cpf', value)}
 	/>
 	<FormInput
 		label={'Data de Nascimento'}
 		type="date"
 		width="300px"
 		height="90px"
-		bind:value={formController.birthDate.value}
+		bind:value={formValues.birthDate}
 		error={formController.birthDate.error}
-		onInput={(value) => onInput('birthDate', value)}
 	/>
 	<SelectInput
 		label={'Instituição'}
@@ -197,8 +197,7 @@
 		width="300px"
 		height="90px"
 		options={insituitionSelectInputOptions}
-		onChange={(value) => onInput('institutionId', value)}
-		bind:value={formController.institutionId.value}
+		bind:value={formValues.institutionId}
 		error={formController.institutionId.error}
 	/>
 	<FormInput
@@ -206,9 +205,8 @@
 		type="password"
 		width="300px"
 		height="90px"
-		bind:value={formController.password.value}
+		bind:value={formValues.password}
 		error={formController.password.error}
-		onInput={(value) => onInput('password', value)}
 	/>
 	{#if selectedInstitution && selectedInstitution.isUtfpr}
 		<FormInput
@@ -217,9 +215,8 @@
 			mask="ra"
 			width="300px"
 			height="90px"
-			bind:value={formController.ra.value}
+			bind:value={formValues.ra}
 			error={formController.ra.error}
-			onInput={(value) => onInput('ra', value)}
 		/>
 	{/if}
 </div>

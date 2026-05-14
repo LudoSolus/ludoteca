@@ -1,7 +1,7 @@
 <script lang="ts">
 	import FormInput from '$lib/components/atoms/FormInput.svelte';
 	import { Validators } from '$lib/shared/helpers/validators';
-	import type { IFormController } from '$lib/shared/interfaces/input-controller';
+	import { inputHasValue, type IFormController } from '$lib/shared/interfaces/input-controller';
 
 	type FormField = 'email' | 'password';
 
@@ -9,6 +9,20 @@
 		isValid: boolean;
 		formValues: Record<string, string>;
 	}>();
+
+	$effect(() => {
+		if (formValues) {
+			Object.keys(formController).forEach((key: string) => {
+				const formKey = key as keyof typeof formController;
+				const val = formValues[formKey];
+				if (inputHasValue(val)) {
+					formController[formKey].touched = true;
+				}
+				formController[formKey].value = val;
+			});
+			isValid = validateForm();
+		}
+	});
 
 	const validators = new Validators();
 
@@ -29,21 +43,15 @@
 
 	function validateForm(): boolean {
 		if (formController.email.touched) {
-			formController.email.error = validators.email(formController.email.value);
+			formController.email.error = validators.email(formValues.email);
 		}
 		if (formController.password.touched) {
-			formController.password.error = validators.password(formController.password.value);
+			formController.password.error = validators.password(formValues.password);
 		}
 
 		return Object.values(formController).every(
 			(field) => (field.touched || !field.required) && !field.error
 		);
-	}
-
-	function onInput(formName: FormField, value: string) {
-		formController[formName].touched = true;
-		formValues[formName] = formController[formName].value;
-		isValid = validateForm();
 	}
 </script>
 
@@ -54,18 +62,16 @@
 		type="email"
 		width="450px"
 		height="90px"
-		bind:value={formController.email.value}
+		bind:value={formValues.email}
 		error={formController.email.error}
-		onInput={(value) => onInput('email', value)}
 	/>
 	<FormInput
 		label={'Senha'}
 		type="password"
 		width="450px"
 		height="90px"
-		bind:value={formController.password.value}
+		bind:value={formValues.password}
 		error={formController.password.error}
-		onInput={(value) => onInput('password', value)}
 	/>
 </div>
 

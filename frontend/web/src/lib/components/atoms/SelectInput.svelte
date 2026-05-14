@@ -14,7 +14,7 @@
 	export let placeholder: string | null = 'Selecione uma opção';
 	export let disabled: boolean = false;
 	export let options: SelectInputOption[] = [];
-	export let onChange: (value: string) => void;
+	export let onChange: ((value: string) => void) | null = null;
 
 	let isOpen = false;
 
@@ -25,7 +25,7 @@
 	function selectOption(option: SelectInputOption) {
 		value = option.value;
 		isOpen = false;
-		onChange(value);
+		if (onChange) onChange(value);
 	}
 </script>
 
@@ -38,7 +38,7 @@
 
 	<button
 		{id}
-		disabled={disabled}
+		{disabled}
 		class={`flex cursor-pointer items-center justify-between rounded-md border bg-white px-3 py-2 text-black select-none focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
 			error ? 'border-red-500 focus:ring-red-500' : 'border-black'
 		}`}
