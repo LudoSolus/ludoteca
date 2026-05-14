@@ -29,6 +29,20 @@
 		}
 	});
 
+	$effect(() => {
+		if (formValues) {
+			Object.keys(formController).forEach((key: string) => {
+				const formKey = key as keyof typeof formController;
+				const val = formValues[formKey as keyof IRegisterEventRequest];
+				if (inputHasValue(val)) {
+					formController[formKey].touched = true;
+				}
+				formController[formKey].value = val;
+			});
+			isValid = validateForm();
+		}
+	});
+
 	const validators = new Validators();
 
 	const formController: IFormController<FormField> = $state({
@@ -121,21 +135,6 @@
 			touched: true,
 			error: null,
 			required: false
-		}
-	});
-
-	$effect(() => {
-		console.log(formValues);
-		if (formValues) {
-			Object.keys(formController).forEach((key: string) => {
-				const formKey = key as keyof typeof formController;
-				const val = formValues[formKey as keyof IRegisterEventRequest];
-				if (inputHasValue(val)) {
-					formController[formKey].touched = true;
-				}
-				formController[formKey].value = val;
-			});
-			isValid = validateForm();
 		}
 	});
 
