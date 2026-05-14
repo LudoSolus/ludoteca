@@ -85,7 +85,7 @@
 			formController.category.error = validators.isFilled(formController.category.value);
 		}
 		if (formController.description.touched) {
-			formController.description.error = validators.maxLenght(
+			formController.description.error = validators.maxLength(
 				formController.description.value,
 				1000
 			);
