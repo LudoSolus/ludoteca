@@ -20,7 +20,7 @@
 	export let label: string | null = null;
 	export let mask: MaskType | null = null;
 	export let isUppercase: boolean = false;
-	export let onInput: (value: string) => void;
+	export let onInput: ((value: string) => void) | undefined = undefined;
 	export let onChange:
 		| ((
 				event: Event & {
@@ -62,7 +62,9 @@
 			event.target.value = event.target.value.toUpperCase();
 		}
 		value = event.target.value;
-		onInput(value!);
+		if (onInput) {
+			onInput(value!);
+		}
 	}
 </script>
 
