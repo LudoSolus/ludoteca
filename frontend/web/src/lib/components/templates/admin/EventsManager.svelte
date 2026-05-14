@@ -8,14 +8,16 @@
 
 	export let events: IListEvent[];
 
-	const now = new Date();
-
 	function goToEvent(eventId: string): void {
 		goto(`/admin/events/${eventId}`);
 	}
 
 	const goToEventCreate = () => {
 		goto(`/admin/events/create`);
+	};
+
+	const goToEventCreateByCopy = (eventId: string) => {
+		goto(`/admin/events/create?eventId=${eventId}`);
 	};
 
 	$: nextEvents = events.filter(
@@ -48,6 +50,7 @@
 					hasBoardGames={event.hasBoardGames}
 					hasEscapeRoom={event.hasEscapeRoom}
 					hasRpg={event.hasRpg}
+					onCopyEvent={() => goToEventCreateByCopy(event.id)}
 				/>
 			{/each}
 		</div>
@@ -72,6 +75,7 @@
 					hasBoardGames={event.hasBoardGames}
 					hasEscapeRoom={event.hasEscapeRoom}
 					hasRpg={event.hasRpg}
+					onCopyEvent={() => goToEventCreateByCopy(event.id)}
 				/>
 			{/each}
 		</div>
