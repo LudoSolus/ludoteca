@@ -3,6 +3,7 @@
 	import {
 		faArrowRight,
 		faChessBoard,
+		faCopy,
 		faDice,
 		faLocationDot
 	} from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +15,7 @@
 	import { formatCEP } from '$lib/shared/helpers/format-cep';
 	import escapeRoomKey from '$lib/assets/key-svgrepo-com.svg';
 	import { device } from '$lib/shared/hooks/useDevice';
+	import IconButton from '../atoms/IconButton.svelte';
 
 	interface EventAddressData {
 		street: string;
@@ -32,6 +34,7 @@
 	export let hasEscapeRoom: boolean;
 	export let address: EventAddressData;
 	export let onCLickButton: () => void;
+	export let onCopyEvent: null | (() => void) = null;
 </script>
 
 <div
@@ -87,12 +90,18 @@
 				class=" hidden h-35 w-35 rounded-md object-contain sm:flex"
 			/>
 
-			<Button
-				text="Detalhes"
-				rightIcon={faArrowRight}
-				width={$device == 'mobile' ? '100%' : undefined}
-				onClick={onCLickButton}
-			/>
+			<div class="flex gap-2">
+				{#if onCopyEvent != null}
+					<IconButton icon={faCopy} onClick={onCopyEvent} width="35px" height="35px" />
+				{/if}
+
+				<Button
+					text="Detalhes"
+					rightIcon={faArrowRight}
+					width={$device == 'mobile' ? '100%' : undefined}
+					onClick={onCLickButton}
+				/>
+			</div>
 		</div>
 	</div>
 </div>
