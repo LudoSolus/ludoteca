@@ -7,23 +7,27 @@ import java.util.List;
 import java.util.UUID;
 
 public record GetEventDetailsView(String name,
-                                  EventStatus status,
-                                  LocalDateTime startDate,
-                                  LocalDateTime finalDate,
-                                  String street,
-                                  String number,
-                                  String supplement,
-                                  String neighborhood,
-                                  String city,
-                                  String state,
-                                  String zipCode,
-                                  List<ListGamesView> listGames) {
-    public record ListGamesView( UUID id,
-            Integer barcode,
-            String nameGame,
-            Boolean isAvailable,
-            String category,
-            Integer minPlayers,
-            Integer maxPlayers
-    ) {}
+                String description,
+                EventStatus status,
+                LocalDateTime startDate,
+                LocalDateTime finalDate,
+                String street,
+                String number,
+                String supplement,
+                String neighborhood,
+                String city,
+                String state,
+                String zipCode,
+                Boolean hasBoardGames,
+                Boolean hasRpg,
+                Boolean hasEscapeRoom,
+                List<ListGamesView> listGames) {
+        public record ListGamesView(UUID id,
+                        Integer barcode,
+                        String nameGame,
+                        Boolean isAvailable,
+                        String category,
+                        Integer minPlayers,
+                        Integer maxPlayers) {
+        }
 }

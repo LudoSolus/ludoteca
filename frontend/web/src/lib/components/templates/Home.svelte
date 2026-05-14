@@ -29,9 +29,9 @@
 						zipCode: event.zipCode
 					}}
 					onCLickButton={() => goToEvent(event.id)}
-					hasBoardGame
-					hasEscapeRoom
-					hasRpg
+					hasBoardGames={event.hasBoardGames}
+					hasEscapeRoom={event.hasEscapeRoom}
+					hasRpg={event.hasRpg}
 				/>
 			{/each}
 		</div>
