@@ -8,7 +8,7 @@ Ele tem como objetivo gerenciar empréstimos de jogos e atividades lúdicas, int
 
 ## 🚀 Tecnologias Utilizadas
 
-* **Java 25 (LTS)**
+* **Java 25**
 * **Spring Boot 3.5.6**
 * **Maven 3.9.9**
 * **PostgreSQL**
@@ -23,7 +23,7 @@ Ele tem como objetivo gerenciar empréstimos de jogos e atividades lúdicas, int
 
 ### 1. 🧩 Instalar o Java 25
 
-Baixe o **JDK 25** (versão LTS) do site oficial da Oracle:
+Baixe o **JDK 25** do site oficial da Oracle:
 [Oracle JDK Downloads](https://www.oracle.com/java/technologies/downloads/)
 
 Durante a instalação:
@@ -37,18 +37,44 @@ Durante a instalação:
     * **Nome da variável:** `JAVA_HOME`
     * **Valor da variável:** `C:\Program Files\Java\jdk-25`
 4.  Localize a variável **`Path`**, clique em **Editar** e adicione:
-    ```
-    %JAVA_HOME%\bin
-    ```
+    `%JAVA_HOME%\bin`
 5.  Salve tudo e feche.
 
 ✅ **Verificar instalação**
-```bash
-java -version
-```
-  Saída esperada:
-```
-java version "25.0.1" 2025-10-21 LTS
-Java(TM) SE Runtime Environment (build 25.0.1+8-LTS-27)
-Java HotSpot(TM) 64-Bit Server VM (build 25.0.1+8-LTS-27, mixed mode, sharing)
-```
+Abra o terminal e digite:
+`java -version`
+
+---
+
+## 🏃 Como Executar
+
+### 1. Clonar o repositório
+
+`git clone https://github.com/seu-usuario/ludoteca-backend.git`
+`cd ludoteca-backend`
+
+### 2. Configurar Banco de Dados
+
+1.  Instale e inicie o **PostgreSQL**.
+2.  Crie um banco de dados vazio chamado `ludoteca_db`.
+3.  Abra o arquivo `src/main/resources/application.properties` (ou `.yml`) e atualize as credenciais:
+    ```properties
+    spring.datasource.url=jdbc:postgresql://localhost:5432/ludoteca_db
+    spring.datasource.username=seu_usuario
+    spring.datasource.password=sua_senha
+    ```
+
+### 3. Executar o Projeto com Maven
+
+Abra o terminal na pasta raiz do projeto (`ludoteca-backend`) e execute:
+
+`mvn clean`
+`mvn spring-boot:run`
+
+✅ Se tudo der certo, o servidor iniciará na porta configurada (geralmente `1234` ou `8080`). Você verá algo como:
+`Tomcat started on port 1234 (http)`
+
+### 4. Acessar o Swagger (Documentação da API)
+
+Abra seu navegador e acesse a documentação interativa gerada automaticamente:
+[http://localhost:1234/swagger-ui.html](http://localhost:1234/swagger-ui.html)
