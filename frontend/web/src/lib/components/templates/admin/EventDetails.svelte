@@ -9,7 +9,6 @@
 	import Button from '$lib/components/atoms/Button.svelte';
 	import BoardGamesList from '$lib/components/organisms/BoardGamesList.svelte';
 	import { EEventStatus } from '$lib/shared/enums/event-status.enum';
-	import { goto } from '$app/navigation';
 
 	export let eventData: GetEventDetailsResponse;
 	export let openRegisterUser: () => void;
@@ -19,12 +18,14 @@
 	export let returnGame: () => void;
 	export let handleOnEdit: () => void;
 	export let handleOnDelete: () => void;
+	export let isLoadingDelete: boolean;
 </script>
 
 <main class="flex h-full flex-col items-center gap-10 px-1 py-7 sm:px-10 xl:px-15">
 	<GoBack
 		title={eventData.name}
 		description="Detalhes do evento"
+		{isLoadingDelete}
 		onDelete={eventData.status == EEventStatus.SCHEDULED ? handleOnDelete : null}
 		onEdit={eventData.status == EEventStatus.SCHEDULED ? handleOnEdit : null}
 	/>
