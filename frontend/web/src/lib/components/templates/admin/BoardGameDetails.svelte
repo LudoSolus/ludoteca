@@ -6,14 +6,16 @@
 	export let boardGameDetails: IGetBoardGameDetailsWithLoanResponse;
 	export let handleOnEdit: () => void;
 	export let handleOnDelete: () => void;
+	export let isLoading: boolean;
 </script>
 
-<main class="flex h-full flex-col gap-10 px-1 py-7 sm:px-10 xl:px-15 items-center">
+<main class="flex h-full flex-col items-center gap-10 px-1 py-7 sm:px-10 xl:px-15">
 	<GoBack
 		title={boardGameDetails.title}
 		description="Detalhes do jogo"
 		onEdit={handleOnEdit}
 		onDelete={handleOnDelete}
+		isLoadingDelete={isLoading}
 	/>
 	<div
 		class="flex w-full max-w-350 flex-wrap items-start justify-between gap-10 px-0 pb-20 sm:px-2 lg:px-4 xl:px-10"

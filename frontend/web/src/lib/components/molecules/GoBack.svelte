@@ -9,6 +9,8 @@
 	export let description: string;
 	export let onEdit: (() => void) | null = null;
 	export let onDelete: (() => void) | null = null;
+	export let isLoadingEdit: boolean = false;
+	export let isLoadingDelete: boolean = false;
 
 	function goBack() {
 		window.history.back();
@@ -33,10 +35,15 @@
 			<div class="flex flex-none shrink-0 justify-end gap-6 px-5">
 				{#if $device == 'desktop'}
 					{#if onEdit}
-						<Button text="Editar" leftIcon={faEdit} onClick={onEdit} />
+						<Button loading={isLoadingEdit} text="Editar" leftIcon={faEdit} onClick={onEdit} />
 					{/if}
 					{#if onDelete}
-						<Button text="Excluir" leftIcon={faTrash} onClick={onDelete} />
+						<Button
+							loading={isLoadingDelete}
+							text="Excluir"
+							leftIcon={faTrash}
+							onClick={onDelete}
+						/>
 					{/if}
 				{:else}
 					{#if onEdit}
