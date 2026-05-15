@@ -9,6 +9,7 @@
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
+	import { toast } from 'svoast';
 
 	const queriesHandler = new QueriesHandlerService(axios);
 	const commandsHandler = new CommandsHandlerService(axios);
@@ -28,6 +29,7 @@
 		commandsHandler.handle(new DeleteBoardGameCommand(boardGameId)).subscribe({
 			next: () => {
 				goto('/admin/board-games');
+				toast.success('Jogo excluído com sucesso!');
 				isLoading = false;
 			},
 			error: () => {
