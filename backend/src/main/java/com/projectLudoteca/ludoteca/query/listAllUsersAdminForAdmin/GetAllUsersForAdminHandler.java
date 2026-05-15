@@ -18,7 +18,7 @@ public class GetAllUsersForAdminHandler {
 
     public List<GetAllUsersForAdminView> handle() {
 
-        return repository.findAll()
+        return repository.findAllByRemovedFalse()
                          .stream()
                          .map(u -> new GetAllUsersForAdminView(u.getId(), u.getEmail(), u.getName(), getAgeCategory(u.getBirthDate()), u.getUserRole().name()))
                          .toList();

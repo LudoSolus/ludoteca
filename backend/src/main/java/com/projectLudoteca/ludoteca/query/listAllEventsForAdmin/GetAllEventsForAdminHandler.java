@@ -16,7 +16,7 @@ public class GetAllEventsForAdminHandler {
     }
 
     public List<GetAllEventsForAdminView> handle() {
-        List<Event> events = eventRepository.findAll();
+        List<Event> events = eventRepository.findAllByRemovedFalse();
 
         return events.stream()
                 .map(event -> new GetAllEventsForAdminView(

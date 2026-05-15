@@ -25,7 +25,7 @@ public class LoginUserHandler {
     @Transactional
     public String handle(LoginUserCommand command) {
 
-        User user = userRepository.findByEmail(command.email())
+        User user = userRepository.findByEmailAndRemovedFalse(command.email())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         if (!passwordEncoder.matches(command.password(), user.getPassword())) {

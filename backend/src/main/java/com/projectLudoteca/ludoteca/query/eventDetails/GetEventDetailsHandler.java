@@ -29,7 +29,7 @@ public class GetEventDetailsHandler {
             throw new BusinessException("Id de evento inválido!");
         }
 
-        Event event = repository.findById(eventId)
+        Event event = repository.findByIdAndRemovedFalse(eventId)
                 .orElseThrow(() -> new NoSuchElementException("Evento não encontrado."));
 
         List<GetEventDetailsView.ListGamesView> games = event.getGamesEvent().stream()

@@ -16,7 +16,7 @@ public class GetAllGamesForAdminHandler {
 
     public List<GetAllGamesForAdminView> handle() {
 
-        return gameRepository.findAll()
+        return gameRepository.findAllByRemovedFalse()
                 .stream()
                 .map(g -> new GetAllGamesForAdminView(g.getId(), g.getBarcode(), g.getTitle(), g.getCategory().name(), g.getMinPlayers(), g.getMaxPlayers()))
                 .toList();
