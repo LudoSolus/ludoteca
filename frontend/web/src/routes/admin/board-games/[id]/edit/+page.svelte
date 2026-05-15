@@ -29,9 +29,6 @@
 		queriesHandler.handle(new GetBoardGameDetailsQuery(boardGameId)).subscribe({
 			next: (res) => {
 				boardGameDetails = res.resultData;
-			},
-			error: (err) => {
-				console.log(err);
 			}
 		});
 	}

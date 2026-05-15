@@ -36,7 +36,6 @@
 		queriesHandler.handle(query).subscribe({
 			next: (data) => {
 				eventForCopy = data.resultData;
-				console.log(eventForCopy);
 			},
 			error: (err) => {
 				toast.error('Não foi possível encontrar o evento para copiar');

@@ -17,9 +17,6 @@
 		queriesHandler.handle(new ListBoardGamesQuery()).subscribe({
 			next: (res) => {
 				boardGames = res.resultData;
-			},
-			error: (err) => {
-				console.log(err);
 			}
 		});
 	}
