@@ -39,7 +39,7 @@ public class UpdateEventHandler {
             throw new BusinessException("Id de evento inválido!");
         }
 
-        Event event = eventRepository.findById(eventId)
+        Event event = eventRepository.findByIdAndRemovedFalse(eventId)
                 .orElseThrow(() -> new RuntimeException("Evento não encontrado."));
 
         LocalDateTime now = LocalDateTime.now();

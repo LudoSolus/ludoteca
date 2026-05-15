@@ -14,4 +14,6 @@ public interface EventRepository extends JpaRepository<Event, UUID> {
 
     Optional<Event> findByIdAndRemovedFalse(UUID id);
 
+    List<Event> findAllByRemovedFalse();
+
 }

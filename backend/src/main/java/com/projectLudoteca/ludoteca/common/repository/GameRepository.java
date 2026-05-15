@@ -1,5 +1,6 @@
 package com.projectLudoteca.ludoteca.common.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,4 +15,6 @@ public interface GameRepository extends JpaRepository<Game, UUID> {
     Optional<Game> findByIdAndRemovedFalse(UUID id);
 
     Optional<Game> findByBarcodeAndRemovedFalse(Integer barcode);
+
+    List<Game> findAllByRemovedFalse();
 }
