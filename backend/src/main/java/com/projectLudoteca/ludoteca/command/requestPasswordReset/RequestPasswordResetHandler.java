@@ -30,7 +30,7 @@ public class RequestPasswordResetHandler {
 
     @Transactional
     public void handle(RequestPasswordResetCommand command) {
-        Optional<User> userOpt = userRepository.findByEmail(command.email());
+        Optional<User> userOpt = userRepository.findByEmailAndRemovedFalse(command.email());
 
         userOpt.ifPresent(user -> {
             boolean hasActiveCode = passwordResetRepository

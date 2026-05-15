@@ -32,7 +32,7 @@ public class UpdateGameHandler {
         }
 
 
-        Game game = gameRepository.findById(gameId).orElseThrow(() -> new NoSuchElementException("Jogo não encontrado para o id informado."));
+        Game game = gameRepository.findByIdAndRemovedFalse(gameId).orElseThrow(() -> new NoSuchElementException("Jogo não encontrado para o id informado."));
 
         boolean allNullOrBlank =
                 (command.barcode() == null) &&

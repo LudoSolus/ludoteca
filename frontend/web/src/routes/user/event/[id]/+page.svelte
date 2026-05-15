@@ -22,9 +22,6 @@
 		queriesHandler.handle(new GetEventDetailsQuery(eventId)).subscribe({
 			next: (res) => {
 				eventData = res.resultData;
-			},
-			error: (err) => {
-				console.log(err);
 			}
 		});
 	}

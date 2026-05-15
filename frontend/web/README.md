@@ -73,7 +73,7 @@ npm install
 
 3. **Configure as variáveis de ambiente**
 
-Crie um arquivo `.env` na raiz do projeto:
+Crie um arquivo `.env` em /frontend/web na raiz do projeto:
 
 ```env
 PUBLIC_API_URL=http://127.0.0.1:1234

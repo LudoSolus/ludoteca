@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { LoanGameCommand } from '$lib/api/commands/board-games/loan-game/loan-game.command';
 	import type { ILoanGameRequest } from '$lib/api/commands/board-games/loan-game/loan-game.interface';
 	import { ReturnGameCommand } from '$lib/api/commands/board-games/return-game/return-game.command';
+	import { DeleteEventCommand } from '$lib/api/commands/events/delete-event/delete-user.command';
 	import { FinishEventCommand } from '$lib/api/commands/events/finish-event/finish-event.command';
 	import { RegisterParticipationInEventCommand } from '$lib/api/commands/events/register-participation-in-event/register-participation-in-event.query';
 	import { StartEventCommand } from '$lib/api/commands/events/start-event/start-event.command';
@@ -15,7 +17,7 @@
 	import EventRegisterUserModal from '$lib/components/molecules/EventRegisterUserModal.svelte';
 	import LoanGameModal from '$lib/components/molecules/LoanGameModal.svelte';
 	import ReturnGameModal from '$lib/components/molecules/ReturnGameModal.svelte';
-	import AdminEventDetails from '$lib/components/templates/admin/AdminEventDetails.svelte';
+	import EventDetails from '$lib/components/templates/admin/EventDetails.svelte';
 	import { EEventStatus } from '$lib/shared/enums/event-status.enum';
 	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
@@ -44,6 +46,8 @@
 	let confirmFinishEventModalIsOpen: boolean = false;
 	let confirmFinishEventisLoading: boolean = false;
 
+	let isLoadingDelete: boolean = false;
+
 	onMount(() => {
 		fetchEvent();
 	});
@@ -57,9 +61,6 @@
 		queriesHandler.handle(new GetEventDetailsQuery(eventId)).subscribe({
 			next: (res) => {
 				eventData = res.resultData;
-			},
-			error: (err) => {
-				console.log(err);
 			}
 		});
 	}
@@ -165,6 +166,23 @@
 		});
 	}
 
+	function deleteEvent() {
+		const eventId = $page.params.id;
+		if (!eventId) return;
+		isLoadingDelete = true;
+
+		commandsHandler.handle(new DeleteEventCommand(eventId)).subscribe({
+			next: (res) => {
+				toast.success('Evento deletado com sucesso!', { closable: true });
+				isLoadingDelete = false;
+				goto('/admin/events');
+			},
+			error: (err) => {
+				isLoadingDelete = false;
+			}
+		});
+	}
+
 	// Funções para gerenciamento dos modais
 
 	function openRegisterUserModal() {
@@ -180,7 +198,7 @@
 			toast.info('O evento já foi finalizado, não é possível emprestar jogos.');
 			return;
 		}
-		
+
 		const game = eventData?.listGames.find((g) => g.id == gameId);
 		if (!game) {
 			toast.error('Jogo escolhido não encontrado, reinicie a página!', { closable: true });
@@ -217,16 +235,26 @@
 	function openConfirmFinishEventModal() {
 		confirmFinishEventModalIsOpen = true;
 	}
+
+	function handleOnEdit() {
+		const eventId = $page.params.id;
+		if (!eventId) return;
+
+		goto(`/admin/events/${eventId}/edit`);
+	}
 </script>
 
 {#if eventData}
-	<AdminEventDetails
+	<EventDetails
 		{eventData}
 		openRegisterUser={openRegisterUserModal}
 		loanGame={handleOnClickLoanGame}
 		startEvent={openConfirmStartEventModal}
 		finishEvent={openConfirmFinishEventModal}
 		returnGame={openReturnGameWithoutGame}
+		{handleOnEdit}
+		handleOnDelete={deleteEvent}
+		{isLoadingDelete}
 	/>
 {:else}
 	<p>Carregando...</p>

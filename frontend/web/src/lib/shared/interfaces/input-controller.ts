@@ -1,9 +1,10 @@
 export interface IInputController {
-	value: string;
+	value: any;
 	error: string | null;
 	touched: boolean;
 	required: boolean;
 }
+
 
 export type IFormController<T extends string> = {
 	[key in T]: IInputController;

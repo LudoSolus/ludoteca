@@ -23,13 +23,13 @@ public class GetEventDetailsHandler {
 
         UUID eventId;
 
-        try{
+        try {
             eventId = UUID.fromString(id);
         } catch (RuntimeException e) {
             throw new BusinessException("Id de evento inválido!");
         }
 
-        Event event = repository.findById(eventId)
+        Event event = repository.findByIdAndRemovedFalse(eventId)
                 .orElseThrow(() -> new NoSuchElementException("Evento não encontrado."));
 
         List<GetEventDetailsView.ListGamesView> games = event.getGamesEvent().stream()
@@ -41,12 +41,12 @@ public class GetEventDetailsHandler {
                         ge.getGame().getIsAvailable(),
                         ge.getGame().getCategory().name(),
                         ge.getGame().getMinPlayers(),
-                        ge.getGame().getMaxPlayers()
-                ))
+                        ge.getGame().getMaxPlayers()))
                 .collect(Collectors.toList());
 
         return new GetEventDetailsView(
                 event.getName(),
+                event.getDescription(),
                 event.getStatus(),
                 event.getStartDate(),
                 event.getFinalDate(),
@@ -57,8 +57,10 @@ public class GetEventDetailsHandler {
                 event.getCity(),
                 event.getState(),
                 event.getZipCode(),
-                games
-        );
+                event.getHasBoardGames(),
+                event.getHasRpg(),
+                event.getHasEscapeRoom(),
+                games);
     }
 
 }

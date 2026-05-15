@@ -4,7 +4,7 @@
 	import type { ICreateUserRequest } from '$lib/api/commands/users/create-user/create-user.interface';
 	import type { IEducationalInstitution } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.interface';
 	import { ListEducationalInstitutionsQuery } from '$lib/api/queries/list-educational-institutions/list-educational-institutions.query';
-	import CreateUser from '$lib/components/templates/admin/CreateUser.svelte';
+	import UserRegister from '$lib/components/templates/admin/UserRegister.svelte';
 	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import axios from 'axios';
@@ -38,7 +38,7 @@
 		commandsHandler.handle(command).subscribe({
 			next: (data) => {
 				toast.success('Usuário criado com sucesso!', { closable: true });
-				goto("/admin/users")
+				goto('/admin/users');
 				createUserLoading = false;
 			},
 			error: (err) => {
@@ -48,4 +48,4 @@
 	}
 </script>
 
-<CreateUser {createUser} {createUserLoading} {educationalInstitutions} />
+<UserRegister {createUser} {createUserLoading} {educationalInstitutions} />

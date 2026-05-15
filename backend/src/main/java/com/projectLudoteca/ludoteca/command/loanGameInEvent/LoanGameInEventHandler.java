@@ -36,13 +36,13 @@ public class LoanGameInEventHandler {
     @Transactional
     public String handle(LoanGameInEventCommand command) {
 
-        User user = userRepository.findByPublicId(command.userPublicId())
+        User user = userRepository.findByPublicIdAndRemovedFalse(command.userPublicId())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
 
         Game game = gameRepository.findByIdAndRemovedFalse(command.gameId())
                 .orElseThrow(() -> new RuntimeException("Jogo não encontrado ou removido."));
 
-        Event event = eventRepository.findById(command.eventId())
+        Event event = eventRepository.findByIdAndRemovedFalse(command.eventId())
                 .orElseThrow(() -> new RuntimeException("Evento não encontrado."));
 
         if (!gameEventRepository.existsById(new GameEventId(command.gameId(), command.eventId()))) {

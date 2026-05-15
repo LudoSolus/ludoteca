@@ -16,17 +16,18 @@
 	export let startEvent: () => void;
 	export let finishEvent: () => void;
 	export let returnGame: () => void;
-
-	const today = new Date();
-	$: eventStartToday = eventData.startDate == today;
+	export let handleOnEdit: () => void;
+	export let handleOnDelete: () => void;
+	export let isLoadingDelete: boolean;
 </script>
 
 <main class="flex h-full flex-col items-center gap-10 px-1 py-7 sm:px-10 xl:px-15">
 	<GoBack
 		title={eventData.name}
 		description="Detalhes do evento"
-		onDelete={eventData.status == EEventStatus.SCHEDULED ? () => {} : null}
-		onEdit={eventData.status == EEventStatus.SCHEDULED ? () => {} : null}
+		{isLoadingDelete}
+		onDelete={eventData.status == EEventStatus.SCHEDULED ? handleOnDelete : null}
+		onEdit={eventData.status == EEventStatus.SCHEDULED ? handleOnEdit : null}
 	/>
 	<div
 		class="flex w-full max-w-350 flex-wrap items-start justify-between gap-10 px-0 pb-20 sm:px-2 lg:px-4 xl:px-10"

@@ -5,7 +5,7 @@
 	import type { IEditBoardGameRequest } from '$lib/api/commands/board-games/edit-board-game/edit-board-game.interface';
 	import type { IGetBoardGameDetailsResponse } from '$lib/api/queries/board-games/get-board-game-details/get-board-game-details.interface';
 	import { GetBoardGameDetailsQuery } from '$lib/api/queries/board-games/get-board-game-details/get-board-game-details.query';
-	import EditBoardGame from '$lib/components/templates/admin/EditBoardGame.svelte';
+	import BoardGamesUpdate from '$lib/components/templates/admin/BoardGamesUpdate.svelte';
 	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import axios from 'axios';
@@ -29,9 +29,6 @@
 		queriesHandler.handle(new GetBoardGameDetailsQuery(boardGameId)).subscribe({
 			next: (res) => {
 				boardGameDetails = res.resultData;
-			},
-			error: (err) => {
-				console.log(err);
 			}
 		});
 	}
@@ -56,7 +53,7 @@
 </script>
 
 {#if boardGameDetails}
-	<EditBoardGame boardGame={boardGameDetails} {isLoading} onEditBoardGame={editBoardGame} />
+	<BoardGamesUpdate boardGame={boardGameDetails} {isLoading} onEditBoardGame={editBoardGame} />
 {:else}
 	<p>Carregando...</p>
 {/if}

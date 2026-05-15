@@ -8,11 +8,13 @@
 	export let placeholder: string | null = null;
 	export let error: string | null = null;
 	export let label: string | null = null;
-	export let onInput: (value: string) => void;
+	export let onInput: ((value: string) => void) | undefined = undefined;
 
 	function handleInput(event: any) {
 		value = event.target.value;
-		onInput(value!);
+		if (onInput) {
+			onInput(value!);
+		}
 	}
 </script>
 
@@ -34,7 +36,7 @@
 	>
 	</textarea>
 
-	<span class="mt-1 text-xs text-red-500 h-4">{error}</span>
+	<span class="mt-1 h-4 text-xs text-red-500">{error}</span>
 </div>
 
 <style>

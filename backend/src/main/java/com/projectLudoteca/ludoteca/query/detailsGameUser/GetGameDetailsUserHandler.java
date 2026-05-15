@@ -32,7 +32,7 @@ public class GetGameDetailsUserHandler {
             throw new IllegalArgumentException("O id não pode ser nulo.");
         }
 
-        return gameRepository.findById(gameId)
+        return gameRepository.findByIdAndRemovedFalse(gameId)
                 .map(game -> new GetGameDetailsUserView(
                         game.getId(),
                         game.getBarcode(),

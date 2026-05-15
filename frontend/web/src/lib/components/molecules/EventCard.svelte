@@ -3,6 +3,7 @@
 	import {
 		faArrowRight,
 		faChessBoard,
+		faCopy,
 		faDice,
 		faLocationDot
 	} from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +15,7 @@
 	import { formatCEP } from '$lib/shared/helpers/format-cep';
 	import escapeRoomKey from '$lib/assets/key-svgrepo-com.svg';
 	import { device } from '$lib/shared/hooks/useDevice';
+	import IconButton from '../atoms/IconButton.svelte';
 
 	interface EventAddressData {
 		street: string;
@@ -27,11 +29,12 @@
 	export let name: string;
 	export let startDate: Date;
 	export let endDate: Date;
-	export let hasBoardGame: boolean;
+	export let hasBoardGames: boolean;
 	export let hasRpg: boolean;
 	export let hasEscapeRoom: boolean;
 	export let address: EventAddressData;
-	export let onCLickButton: () => void
+	export let onCLickButton: () => void;
+	export let onCopyEvent: null | (() => void) = null;
 </script>
 
 <div
@@ -56,7 +59,7 @@
 	<div class="flex w-full flex-col gap-4 sm:flex-row">
 		<div class="flex flex-1 flex-col gap-4">
 			<div class="space-y-2">
-				{#if hasBoardGame}
+				{#if hasBoardGames}
 					<EventActivity title="Jogos de Tabuleiro" icon={faChessBoard} />
 				{/if}
 				{#if hasRpg}
@@ -80,19 +83,25 @@
 			</div>
 		</div>
 
-		<div class="flex-1 flex shrink-0 flex-col items-end justify-between gap-3 sm:h-full">
+		<div class="flex flex-1 shrink-0 flex-col items-end justify-between gap-3 sm:h-full">
 			<img
 				src={defaultEventImg}
 				alt="Imagem do evento"
 				class=" hidden h-35 w-35 rounded-md object-contain sm:flex"
 			/>
 
-			<Button
-				text="Detalhes"
-				rightIcon={faArrowRight}
-				width={$device == 'mobile' ? '100%' : undefined}
-				onClick={onCLickButton}
-			/>
+			<div class="flex gap-2">
+				{#if onCopyEvent != null}
+					<IconButton icon={faCopy} onClick={onCopyEvent} width="35px" height="35px" />
+				{/if}
+
+				<Button
+					text="Detalhes"
+					rightIcon={faArrowRight}
+					width={$device == 'mobile' ? '100%' : undefined}
+					onClick={onCLickButton}
+				/>
+			</div>
 		</div>
 	</div>
 </div>

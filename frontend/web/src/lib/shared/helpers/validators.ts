@@ -129,7 +129,7 @@ export class Validators {
 		}
 	}
 
-	public maxLenght(value: string, max: number): validatorReturn {
+	public maxLength(value: string, max: number): validatorReturn {
 		if (!value) {
 			return 'Campo obrigatório.';
 		}

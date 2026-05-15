@@ -17,9 +17,6 @@
 		queriesHandler.handle(new ListAllEventsQuery()).subscribe({
 			next: (res) => {
 				events = res.resultData;
-			},
-			error: (err) => {
-				console.log(err);
 			}
 		});
 	}

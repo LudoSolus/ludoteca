@@ -29,7 +29,7 @@ public class GetGameDetailsAdminHandler {
             throw new BusinessException("Id de jogo inválido!");
         }
 
-        Game game = gameRepository.findById(gameId)
+        Game game = gameRepository.findByIdAndRemovedFalse(gameId)
                 .orElseThrow(() -> new NoSuchElementException("Jogo não encontrado."));
 
         List<GetGameDetailsAdminView.LoanHistoryView> loanHistory = game.getLoans().stream()

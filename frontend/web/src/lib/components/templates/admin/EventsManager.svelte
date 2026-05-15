@@ -8,11 +8,17 @@
 
 	export let events: IListEvent[];
 
-	const now = new Date();
-
 	function goToEvent(eventId: string): void {
 		goto(`/admin/events/${eventId}`);
 	}
+
+	const goToEventCreate = () => {
+		goto(`/admin/events/create`);
+	};
+
+	const goToEventCreateByCopy = (eventId: string) => {
+		goto(`/admin/events/create?eventId=${eventId}`);
+	};
 
 	$: nextEvents = events.filter(
 		(e) => e.status == EEventStatus.SCHEDULED || e.status == EEventStatus.INPROGRESS
@@ -22,7 +28,7 @@
 
 <main class="flex w-full flex-col px-2 pt-7 pb-20 sm:px-4 md:px-10 xl:px-15">
 	<div class="flex w-full justify-end">
-		<Button text="Criar" leftIcon={faPlus} onClick={() => {}} />
+		<Button text="Criar" leftIcon={faPlus} onClick={goToEventCreate} />
 	</div>
 	<section class="mt-6 flex w-full flex-col gap-2 sm:mt-0 sm:gap-6">
 		<h3 class="h3">Próximos Eventos</h3>
@@ -41,9 +47,10 @@
 						zipCode: event.zipCode
 					}}
 					onCLickButton={() => goToEvent(event.id)}
-					hasBoardGame
-					hasEscapeRoom
-					hasRpg
+					hasBoardGames={event.hasBoardGames}
+					hasEscapeRoom={event.hasEscapeRoom}
+					hasRpg={event.hasRpg}
+					onCopyEvent={() => goToEventCreateByCopy(event.id)}
 				/>
 			{/each}
 		</div>
@@ -65,9 +72,10 @@
 						zipCode: event.zipCode
 					}}
 					onCLickButton={() => goToEvent(event.id)}
-					hasBoardGame
-					hasEscapeRoom
-					hasRpg
+					hasBoardGames={event.hasBoardGames}
+					hasEscapeRoom={event.hasEscapeRoom}
+					hasRpg={event.hasRpg}
+					onCopyEvent={() => goToEventCreateByCopy(event.id)}
 				/>
 			{/each}
 		</div>

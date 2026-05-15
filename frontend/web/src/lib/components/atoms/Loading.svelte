@@ -7,7 +7,7 @@
 </script>
 
 <div
-	class="circle"
+	class="circle absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
 	class:pause-animation={pause}
 	style="--size: {size}; --color: {color}; --duration: {duration}; --weight: {weight};"
 ></div>

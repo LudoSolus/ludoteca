@@ -16,20 +16,20 @@
 
 <button
 	style="width: {width}; height: {height};"
-	class="flex items-center justify-center gap-2 rounded-md border-2 border-black px-6 py-1 {variant}"
+	class="relative flex items-center justify-center gap-2 rounded-md border-2 border-black px-6 py-1 {variant}"
 	disabled={disabled || loading}
 	on:click={onClick}
 >
 	{#if loading}
 		<Loading size="20px" color="#FFF" weight="3px" />
-	{:else}
-		{#if leftIcon}
-			<Fa icon={leftIcon} />
-		{/if}
-		{text}
-		{#if rightIcon}
-			<Fa icon={rightIcon} />
-		{/if}
+	{/if}
+
+	{#if leftIcon}
+		<Fa icon={leftIcon} class={loading ? 'invisible' : ''} />
+	{/if}
+	<span class={loading ? 'invisible' : ''}>{text}</span>
+	{#if rightIcon}
+		<Fa icon={rightIcon} class={loading ? 'invisible' : ''} />
 	{/if}
 </button>
 
@@ -69,7 +69,7 @@
 		background-color: #beb05e;
 	}
 
-	button.secondary:disabled{
+	button.secondary:disabled {
 		background-color: #b2b2b2;
 	}
 </style>

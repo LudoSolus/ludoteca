@@ -12,4 +12,7 @@ export interface IListEvent {
 	city: string;
 	state: string;
 	zipCode: string;
+	hasBoardGames: boolean;
+	hasRpg: boolean;
+	hasEscapeRoom: boolean;
 }

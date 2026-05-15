@@ -5,10 +5,10 @@
 	import IconButton from './IconButton.svelte';
 	import { generateId } from '$lib/shared/helpers/generate-id';
 
-	type MaskType = 'phone' | 'cpf' | 'ra';
+	type MaskType = 'phone' | 'cpf' | 'ra' | 'zipCode';
 
 	export let id: string = generateId(5);
-	export let type: 'text' | 'password' | 'date' | 'email' | 'number' = 'text';
+	export let type: 'text' | 'password' | 'date' | 'email' | 'number' | 'datetime-local' = 'text';
 	export let width: string = '100%';
 	export let height: string = 'fit-content';
 	export let value: string | null = null;
@@ -20,7 +20,7 @@
 	export let label: string | null = null;
 	export let mask: MaskType | null = null;
 	export let isUppercase: boolean = false;
-	export let onInput: (value: string) => void;
+	export let onInput: ((value: string) => void) | undefined = undefined;
 	export let onChange:
 		| ((
 				event: Event & {
@@ -49,6 +49,11 @@
 					mask: '#######',
 					eager: false
 				};
+			case 'zipCode':
+				return {
+					mask: '#####-###',
+					eager: false
+				};
 		}
 	}
 
@@ -57,7 +62,9 @@
 			event.target.value = event.target.value.toUpperCase();
 		}
 		value = event.target.value;
-		onInput(value!);
+		if (onInput) {
+			onInput(value!);
+		}
 	}
 </script>
 
@@ -71,7 +78,7 @@
 			{id}
 			{min}
 			{max}
-			disabled={disabled}
+			{disabled}
 			type={type != 'password' ? type : showPassword ? 'text' : 'password'}
 			bind:value
 			use:maska={maskOptions}
@@ -80,7 +87,7 @@
 			on:change={onChange}
 			class={`w-full rounded-md border px-3 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
 				error ? 'border-red-500 focus:ring-red-500' : 'border-black'
-			} ${disabled ? 'bg-gray-100 cursor-not-allowed text-gray-500' : ''}`}
+			} ${disabled ? 'cursor-not-allowed bg-gray-100 text-gray-500' : ''}`}
 		/>
 		{#if type == 'password'}
 			<IconButton
@@ -104,7 +111,7 @@
 		font-size: 14px;
 	}
 
-	input:disabled{
+	input:disabled {
 		background-color: rgb(236, 236, 236);
 		color: #4c4c4c;
 	}
