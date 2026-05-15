@@ -39,6 +39,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // ✅ Rotas públicas (liberadas)
                         .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
                                 "/auth/**",          // login e register
                                 "/swagger-ui/**",    // documentação
                                 "/v3/api-docs/**",
