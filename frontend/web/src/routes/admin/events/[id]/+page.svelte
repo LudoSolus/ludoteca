@@ -4,6 +4,7 @@
 	import { LoanGameCommand } from '$lib/api/commands/board-games/loan-game/loan-game.command';
 	import type { ILoanGameRequest } from '$lib/api/commands/board-games/loan-game/loan-game.interface';
 	import { ReturnGameCommand } from '$lib/api/commands/board-games/return-game/return-game.command';
+	import { DeleteEventCommand } from '$lib/api/commands/events/delete-event/delete-user.command';
 	import { FinishEventCommand } from '$lib/api/commands/events/finish-event/finish-event.command';
 	import { RegisterParticipationInEventCommand } from '$lib/api/commands/events/register-participation-in-event/register-participation-in-event.query';
 	import { StartEventCommand } from '$lib/api/commands/events/start-event/start-event.command';
@@ -44,6 +45,8 @@
 
 	let confirmFinishEventModalIsOpen: boolean = false;
 	let confirmFinishEventisLoading: boolean = false;
+
+	let isLoadingDelete: boolean = false;
 
 	onMount(() => {
 		fetchEvent();
@@ -166,6 +169,23 @@
 		});
 	}
 
+	function deleteEvent() {
+		const eventId = $page.params.id;
+		if (!eventId) return;
+		isLoadingDelete = true;
+
+		commandsHandler.handle(new DeleteEventCommand(eventId)).subscribe({
+			next: (res) => {
+				toast.success('Evento deletado com sucesso!', { closable: true });
+				isLoadingDelete = false;
+				goto('/admin/events');
+			},
+			error: (err) => {
+				isLoadingDelete = false;
+			}
+		});
+	}
+
 	// Funções para gerenciamento dos modais
 
 	function openRegisterUserModal() {
@@ -225,11 +245,6 @@
 
 		goto(`/admin/events/${eventId}/edit`);
 	}
-
-	function handleOnDelete() {
-		const eventId = $page.params.id;
-		if (!eventId) return;
-	}
 </script>
 
 {#if eventData}
@@ -241,7 +256,8 @@
 		finishEvent={openConfirmFinishEventModal}
 		returnGame={openReturnGameWithoutGame}
 		{handleOnEdit}
-		{handleOnDelete}
+		handleOnDelete={deleteEvent}
+		{isLoadingDelete}
 	/>
 {:else}
 	<p>Carregando...</p>
