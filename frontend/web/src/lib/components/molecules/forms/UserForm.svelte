@@ -30,7 +30,6 @@
 	}>();
 
 	$effect(() => {
-		console.log(formValues);
 		if (formValues) {
 			Object.keys(formController).forEach((key: string) => {
 				const formKey = key as keyof typeof formController;

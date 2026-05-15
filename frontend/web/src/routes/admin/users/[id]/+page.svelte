@@ -45,9 +45,6 @@
 		queriesHandler.handle(new GetUserDetailsQuery(userId)).subscribe({
 			next: (res) => {
 				userDetails = res.resultData;
-			},
-			error: (err) => {
-				console.log(err);
 			}
 		});
 	}

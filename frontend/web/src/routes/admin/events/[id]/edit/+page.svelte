@@ -33,9 +33,6 @@
 		queriesHandler.handle(new GetEventDetailsQuery(eventId)).subscribe({
 			next: (res) => {
 				eventDetails = res.resultData;
-			},
-			error: (err) => {
-				console.log(err);
 			}
 		});
 	}
