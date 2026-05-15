@@ -5,8 +5,7 @@
 	import { Validators } from '$lib/shared/helpers/validators';
 	import { inputHasValue, type IFormController } from '$lib/shared/interfaces/input-controller';
 	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
-	import { untrack } from 'svelte';
-	import CheckboxGroup, {type ICheckboxOption} from '../CheckboxGroup.svelte';
+	import CheckboxInput from '$lib/components/atoms/CheckboxInput.svelte';
 
 	type FormField =
 		| 'name'
@@ -22,13 +21,28 @@
 		isValid = $bindable(),
 		formValues = $bindable(),
 		educationalInstitutions,
-		type,
+		type
 	} = $props<{
-		type: 'create' | 'edit',
+		type: 'create' | 'edit';
 		isValid: boolean;
 		formValues: Record<string, string>;
 		educationalInstitutions: IEducationalInstitution[];
 	}>();
+
+	$effect(() => {
+		console.log(formValues);
+		if (formValues) {
+			Object.keys(formController).forEach((key: string) => {
+				const formKey = key as keyof typeof formController;
+				const val = formValues[formKey];
+				if (inputHasValue(val)) {
+					formController[formKey].touched = true;
+				}
+				formController[formKey].value = val;
+			});
+			isValid = validateForm();
+		}
+	});
 
 	const isEditMode = $derived(type === 'edit');
 
@@ -95,18 +109,18 @@
 	);
 
 	function validateForm(): boolean {
-		if (!isEditMode){
+		if (!isEditMode) {
 			if (formController.name.touched) {
-				formController.name.error = validators.completeName(formController.name.value);
+				formController.name.error = validators.completeName(formValues.name);
 			}
 			if (formController.phone.touched) {
-				formController.phone.error = validators.phoneNumber(formController.phone.value);
+				formController.phone.error = validators.phoneNumber(formValues.phone);
 			}
 			if (formController.email.touched) {
-				formController.email.error = validators.email(formController.email.value);
+				formController.email.error = validators.email(formValues.email);
 			}
 			if (formController.cpf.touched) {
-				formController.cpf.error = validators.cpf(formController.cpf.value);
+				formController.cpf.error = validators.cpf(formValues.cpf);
 			}
 		}
 
@@ -115,7 +129,7 @@
 		if (utfprInstitutionIsSelected()) {
 			raIsValid = false;
 			if (formController.ra.touched) {
-				formController.ra.error = validators.ra(formController.ra.value);
+				formController.ra.error = validators.ra(formValues.ra);
 				raIsValid = formController.ra.error === null;
 			}
 		} else {
@@ -131,45 +145,14 @@
 		);
 	}
 
-  
-  let roleOptions: ICheckboxOption[] = $state([
-    { 
-      id: 'admin-role', 
-      label: 'Administrador do Sistema?', 
-      checked: formValues.userRole === 'ADMIN' 
-    }
-  ]);
-
-	$effect(() => {
-    const valid = validateForm();
-    
-    if (isValid !== valid) {
-       isValid = valid;
-    }
-  });
-
-  $effect(() => {
-    const isAdmin = roleOptions[0].checked;
-    const newRoleValue = isAdmin ? 'ADMIN' : 'USER';
-
-    untrack(() => {
-      if (formController.userRole.value !== newRoleValue) {
-        onInput('userRole', newRoleValue);
-      }
-    });
-  });
-
-	function onInput(formName: FormField, value: string) {
-  formController[formName].value = value; 
-  formController[formName].touched = true;
-  
-  formValues[formName] = value;
-  
-  isValid = validateForm();
-}
+	function onChangeUserRole(checked: boolean) {
+		const isAdmin = checked;
+		const newRoleValue = isAdmin ? 'ADMIN' : 'USER';
+		formValues.userRole = newRoleValue;
+	}
 
 	function utfprInstitutionIsSelected(): boolean {
-		return formController.institutionId.value === '16610773-99dd-4df0-901f-041a3936d5d6';
+		return formValues.institutionId === '16610773-99dd-4df0-901f-041a3936d5d6';
 	}
 </script>
 
@@ -180,9 +163,8 @@
 		disabled={isEditMode}
 		width="300px"
 		height="90px"
-		bind:value={formController.name.value}
+		bind:value={formValues.name}
 		error={formController.name.error}
-		onInput={(value) => onInput('name', value)}
 	/>
 	<FormInput
 		label={'Telefone'}
@@ -191,9 +173,8 @@
 		mask="phone"
 		width="300px"
 		height="90px"
-		bind:value={formController.phone.value}
+		bind:value={formValues.phone}
 		error={formController.phone.error}
-		onInput={(value) => onInput('phone', value)}
 	/>
 	<FormInput
 		label={'E-mail'}
@@ -202,44 +183,40 @@
 		type="email"
 		width="300px"
 		height="90px"
-		bind:value={formController.email.value}
+		bind:value={formValues.email}
 		error={formController.email.error}
-		onInput={(value) => onInput('email', value)}
 	/>
 
 	{#if !isEditMode}
-	<FormInput
-		label={'CPF'}
-		placeholder={'000.000.000-00'}
-		disabled={isEditMode}
-		mask="cpf"
-		width="300px"
-		height="90px"
-		bind:value={formController.cpf.value}
-		error={formController.cpf.error}
-		onInput={(value) => onInput('cpf', value)}
-	/>
-	<FormInput
-		label={'Data de Nascimento'}
-		type="date"
-		disabled={isEditMode}
-		width="300px"
-		height="90px"
-		bind:value={formController.birthDate.value}
-		error={formController.birthDate.error}
-		onInput={(value) => onInput('birthDate', value)}
-	/>
-	<SelectInput
-		label={'Instituição'}
-		placeholder={'Selecione sua instituição'}
-		disabled={isEditMode}
-		width="300px"
-		height="90px"
-		options={instutionSelectInputOptions}
-		onChange={(value) => onInput('institutionId', value)}
-		bind:value={formController.institutionId.value}
-		error={formController.institutionId.error}
-	/>
+		<FormInput
+			label={'CPF'}
+			placeholder={'000.000.000-00'}
+			disabled={isEditMode}
+			mask="cpf"
+			width="300px"
+			height="90px"
+			bind:value={formValues.cpf}
+			error={formController.cpf.error}
+		/>
+		<FormInput
+			label={'Data de Nascimento'}
+			type="date"
+			disabled={isEditMode}
+			width="300px"
+			height="90px"
+			bind:value={formValues.birthDate}
+			error={formController.birthDate.error}
+		/>
+		<SelectInput
+			label={'Instituição'}
+			placeholder={'Selecione sua instituição'}
+			disabled={isEditMode}
+			width="300px"
+			height="90px"
+			options={instutionSelectInputOptions}
+			bind:value={formValues.institutionId}
+			error={formController.institutionId.error}
+		/>
 	{/if}
 
 	{#if utfprInstitutionIsSelected()}
@@ -250,18 +227,18 @@
 			disabled={isEditMode}
 			width="300px"
 			height="90px"
-			bind:value={formController.ra.value}
+			bind:value={formValues.ra}
 			error={formController.ra.error}
-			onInput={(value) => onInput('ra', value)}
 		/>
 	{/if}
-  <CheckboxGroup
-    bind:options={roleOptions} 
-    width="300px"
-    height="90px"
-    justify={'center'}
-    orientation="vertical"
-  />
+
+	<div class="flex w-full items-center">
+		<CheckboxInput
+			label="Administrador do Sistema?"
+			checked={formValues.userRole === 'ADMIN'}
+			onChange={(checked) => onChangeUserRole(checked)}
+		/>
+	</div>
 </div>
 
 <style>

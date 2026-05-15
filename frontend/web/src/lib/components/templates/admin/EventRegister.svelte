@@ -5,30 +5,53 @@
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
 	import { toast } from 'svoast';
 	import type { IBoardGame } from '$lib/api/queries/board-games/list-board-games/list-board-games.interface';
+	import type { GetEventDetailsResponse } from '$lib/api/queries/events/get-event-details/get-event-details.interface';
+	import { formatDateForInput } from '$lib/shared/helpers/format-date-for-input';
 
 	export let isLoading: boolean;
 	export let onCreateEvent: (data: IRegisterEventRequest) => void;
 	export let boardGames: IBoardGame[];
+	export let eventForCopy: GetEventDetailsResponse | null = null;
 
 	let isClicked: boolean = false;
 	let formIsValid: boolean = false;
 	let formValues: Record<keyof IRegisterEventRequest, any> = {
-		name: '',
-		description: '',
-		startDate: '',
-		finalDate: '',
-		street: '',
-		number: '',
-		supplement: '',
-		neighborhood: '',
-		city: '',
-		state: '',
-		zipCode: '',
-		hasBoardGames: false,
-		hasRpg: false,
-		hasEscapeRoom: false,
-		gamesIds: []
+		name: eventForCopy ? `Cópia - ${eventForCopy.name}` : '',
+		description: eventForCopy?.description ?? '',
+		startDate: eventForCopy?.startDate ? formatDateForInput(eventForCopy.startDate) : '',
+		finalDate: eventForCopy?.finalDate ? formatDateForInput(eventForCopy.finalDate) : '',
+		street: eventForCopy?.street ?? '',
+		number: eventForCopy?.number ?? '',
+		supplement: eventForCopy?.supplement ?? '',
+		neighborhood: eventForCopy?.neighborhood ?? '',
+		city: eventForCopy?.city ?? '',
+		state: eventForCopy?.state ?? '',
+		zipCode: eventForCopy?.zipCode ?? '',
+		hasBoardGames: eventForCopy?.hasBoardGames ?? false,
+		hasRpg: eventForCopy?.hasRpg ?? false,
+		hasEscapeRoom: eventForCopy?.hasEscapeRoom ?? false,
+		gamesIds: eventForCopy?.listGames.map((game) => game.id) ?? []
 	};
+
+	$: if (eventForCopy) {
+		formValues = {
+			name: `Cópia - ${eventForCopy.name}`,
+			description: eventForCopy.description ?? '',
+			startDate: eventForCopy.startDate ? formatDateForInput(eventForCopy.startDate) : '',
+			finalDate: eventForCopy.finalDate ? formatDateForInput(eventForCopy.finalDate) : '',
+			street: eventForCopy.street ?? '',
+			number: eventForCopy.number ?? '',
+			supplement: eventForCopy.supplement ?? '',
+			neighborhood: eventForCopy.neighborhood ?? '',
+			city: eventForCopy.city ?? '',
+			state: eventForCopy.state ?? '',
+			zipCode: eventForCopy.zipCode ?? '',
+			hasBoardGames: eventForCopy.hasBoardGames ?? false,
+			hasRpg: eventForCopy.hasRpg ?? false,
+			hasEscapeRoom: eventForCopy.hasEscapeRoom ?? false,
+			gamesIds: eventForCopy.listGames?.map((game) => game.id) ?? []
+		};
+	}
 
 	function handleOnCreate() {
 		isClicked = true;
@@ -54,7 +77,7 @@
 
 <main class="flex w-full flex-col items-center gap-5 px-3 py-7 sm:px-10 md:gap-10 xl:px-15">
 	<GoBack title="Criar Evento" description="Crie o próximo evento" />
-	<EventForm bind:isValid={formIsValid} {formValues} {boardGames} {isClicked} />
+	<EventForm bind:isValid={formIsValid} bind:formValues {boardGames} {isClicked} />
 	<Button
 		text="Criar Evento"
 		width="290px"
