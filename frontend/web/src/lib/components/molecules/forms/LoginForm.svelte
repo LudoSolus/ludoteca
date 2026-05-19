@@ -2,6 +2,7 @@
 	import FormInput from '$lib/components/atoms/FormInput.svelte';
 	import { Validators } from '$lib/shared/helpers/validators';
 	import { inputHasValue, type IFormController } from '$lib/shared/interfaces/input-controller';
+	import { untrack } from 'svelte';
 
 	type FormField = 'email' | 'password';
 
@@ -11,17 +12,20 @@
 	}>();
 
 	$effect(() => {
-		if (formValues) {
+		const snapshot = formValues ? { ...formValues } : null;
+
+		untrack(() => {
+			if (!snapshot) return;
 			Object.keys(formController).forEach((key: string) => {
 				const formKey = key as keyof typeof formController;
-				const val = formValues[formKey];
+				const val = snapshot[formKey];
 				if (inputHasValue(val)) {
 					formController[formKey].touched = true;
 				}
 				formController[formKey].value = val;
 			});
 			isValid = validateForm();
-		}
+		});
 	});
 
 	const validators = new Validators();

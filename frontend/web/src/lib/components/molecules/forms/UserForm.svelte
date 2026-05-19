@@ -4,6 +4,7 @@
 	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
 	import { Validators } from '$lib/shared/helpers/validators';
 	import { inputHasValue, type IFormController } from '$lib/shared/interfaces/input-controller';
+	import { untrack } from 'svelte';
 	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
 	import CheckboxInput from '$lib/components/atoms/CheckboxInput.svelte';
 
@@ -30,17 +31,20 @@
 	}>();
 
 	$effect(() => {
-		if (formValues) {
+		const snapshot = formValues ? { ...formValues } : null;
+
+		untrack(() => {
+			if (!snapshot) return;
 			Object.keys(formController).forEach((key: string) => {
 				const formKey = key as keyof typeof formController;
-				const val = formValues[formKey];
+				const val = snapshot[formKey];
 				if (inputHasValue(val)) {
 					formController[formKey].touched = true;
 				}
 				formController[formKey].value = val;
 			});
 			isValid = validateForm();
-		}
+		});
 	});
 
 	const isEditMode = $derived(type === 'edit');
