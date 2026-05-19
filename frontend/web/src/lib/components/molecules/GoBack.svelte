@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { faArrowLeft, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-	import Fa from 'svelte-fa';
 	import Button from '../atoms/Button.svelte';
 	import { device } from '$lib/shared/hooks/useDevice';
 	import IconButton from '../atoms/IconButton.svelte';
@@ -20,14 +19,10 @@
 <div class="flex w-full flex-col gap-4 py-2">
 	<div class="relative flex w-full items-end justify-between">
 		<div class="flex min-w-0 flex-1 items-center gap-3">
-			<button on:click={goBack} class="flex cursor-pointer items-center gap-2">
-				<Fa icon={faArrowLeft} />
-				<p class="hidden font-medium sm:flex">Voltar</p>
-			</button>
-			<div class="hidden min-h-11 border-l-2 border-black sm:flex"></div>
+			<IconButton onClick={goBack} icon={faArrowLeft} width="40px" height="40px" variant="naked" />
 			<div class="flex min-w-0 flex-1 flex-col gap-2">
-				<p class="truncate text-lg font-semibold">{title}</p>
-				<p class="truncate text-xs">{description}</p>
+				<p class="inknut truncate text-lg font-semibold">{title}</p>
+				<p class="inknut truncate text-xs">{description}</p>
 			</div>
 		</div>
 

@@ -41,10 +41,10 @@
 	class="event-card flex w-75 min-w-75 flex-col items-start justify-between gap-6 p-4 sm:w-120 sm:min-w-120 sm:p-6"
 >
 	<div class="flex w-full items-start justify-between gap-2">
-		<h4 class="h-14 max-h-14 overflow-hidden text-lg font-bold sm:text-xl">
+		<h4 class="inknut h-14 max-h-14 overflow-hidden text-lg font-bold sm:text-xl">
 			{name}
 		</h4>
-		<div class="inter flex items-center gap-1 font-medium sm:gap-3">
+		<div class="flex items-center gap-1 font-medium sm:gap-3">
 			<div class="felx flex-col items-center">
 				<p class="text-center">{formatDate(startDate)}</p>
 				<p class="text-center">{formatTime(startDate)}</p>
@@ -77,7 +77,7 @@
 						<p>{address.street}, n° {address.number}</p>
 						<p>Bairro: {address.neighborhood}</p>
 						<p>{address.city}, {address.state}</p>
-						<p class="inter">{formatCEP(address.zipCode)}</p>
+						<p>{formatCEP(address.zipCode)}</p>
 					</div>
 				</div>
 			</div>

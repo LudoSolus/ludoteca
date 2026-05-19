@@ -47,7 +47,7 @@
 	}
 </script>
 
-<div class="inter flex flex-wrap justify-center gap-2 sm:gap-3">
+<div class="flex flex-wrap justify-center gap-2 sm:gap-3">
 	{#each values as value, i}
 		<input
 			id={'otp-' + i}

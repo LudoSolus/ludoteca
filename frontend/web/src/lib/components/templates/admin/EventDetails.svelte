@@ -35,6 +35,9 @@
 		<div class="flex flex-1 flex-col gap-14">
 			<div class="flex flex-col gap-8">
 				<h3 class="h3">Detalhes</h3>
+				<p class="lg:min-h-20">
+					{eventData.description}
+				</p>
 				<div class="flex gap-4">
 					<Fa icon={faLocationDot} size="2x" />
 					<div>

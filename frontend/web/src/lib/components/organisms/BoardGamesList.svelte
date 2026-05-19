@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { EUserRole } from '$lib/shared/enums/user-role.enum';
-	import { faBarcode } from '@fortawesome/free-solid-svg-icons';
-	import IconButton from '../atoms/IconButton.svelte';
 	import SearchInput from '../atoms/SearchInput.svelte';
 	import BoardGame from '../molecules/BoardGame.svelte';
 	import type { IBoardGameForList } from '$lib/shared/interfaces/board-games';
@@ -26,13 +24,6 @@
 	<h3 class="h3 w-full text-start">Jogos</h3>
 	<div class="flex flex-col gap-8">
 		<div class="flex w-full items-center justify-start gap-3">
-			<IconButton
-				icon={faBarcode}
-				onClick={handleOnScanBarCode}
-				width="60px"
-				height="40px"
-				fontSize="26px"
-			/>
 			<SearchInput bind:value={searchInputValue} placeholder="Pesquisar..." />
 		</div>
 		<div class="flex max-h-76 w-fit flex-col gap-2 overflow-y-auto px-1 py-2 md:px-4">

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { IconDefinition } from '@fortawesome/free-brands-svg-icons';
-	import Fa, { type IconSize } from 'svelte-fa';
+	import Fa from 'svelte-fa';
 
 	export let onClick: () => void;
 	export let icon: IconDefinition;

@@ -98,12 +98,12 @@
           classes="relative inline-block w-full"
           type={ETooltipBehavior.Click | ETooltipBehavior.FocusIn | ETooltipBehavior.FocusOut}
         >
-          <p bind:clientWidth={clientTitleWidth} bind:this={titleRef} class="truncate text-start text-sm pl-2">
+          <p bind:clientWidth={clientTitleWidth} bind:this={titleRef} class="inknut truncate text-start text-sm pl-2">
             {title}
           </p>
         </Tooltip>
       {:else}
-        <p bind:clientWidth={clientTitleWidth} bind:this={titleRef} class="truncate text-start text-sm pl-2">
+        <p bind:clientWidth={clientTitleWidth} bind:this={titleRef} class="inknut truncate text-start text-sm pl-2">
           {title}
         </p>
       {/if}
