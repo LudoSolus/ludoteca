@@ -7,16 +7,16 @@
 	export let onLogoutClick: () => void;
 </script>
 
-<div class="relative mt-1 w-40 rounded-lg border border-gray-300 bg-white p-2 text-black shadow-lg">
+<div class="box relative mt-1 w-40 rounded-lg border border-gray-300 bg-white p-2 text-black shadow-lg">
 	<div class="id-text mb-2 flex items-center justify-start gap-2 px-2">
 		<span class="font-bold w-4">#</span>
 		<span>{userPublicId}</span>
 	</div>
 
-	<hr class="mb-2 border-gray-300" />
+	<hr class="mb-2" />
 
 	<button
-		class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition hover:bg-yellow-100"
+		class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition hover:bg-yellow-100 active:bg-yellow-100"
 		on:click={onProfileClick}
 	>
 		<Fa icon={faUser} class="h-4 w-4" />
@@ -24,7 +24,7 @@
 	</button>
 
 	<button
-		class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition hover:bg-yellow-100"
+		class="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition hover:bg-yellow-100 active:bg-yellow-100"
 		on:click={onLogoutClick}
 	>
 		<Fa icon={faRightFromBracket} class="h-4 w-4" />
@@ -37,5 +37,15 @@
 		font-family: 'Inter', sans-serif;
 		text-transform: uppercase;
 		font-weight: 600;
+	}
+
+	.box {
+		background: linear-gradient(135deg, var(--primary-color) 0%, rgba(254, 236, 126, 0.95) 100%);
+		border: 2px solid rgba(212, 175, 55, 0.5);
+		border-radius: 12px;
+		z-index: 12;
+		box-shadow:
+			0 8px 24px rgba(0, 0, 0, 0.15),
+			0 0 20px rgba(212, 175, 55, 0.15);
 	}
 </style>
