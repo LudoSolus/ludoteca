@@ -60,3 +60,9 @@
 	<EventForm bind:isValid={formIsValid} {formValues} {isClicked} {boardGames} />
 	<Button text="Salvar" width="290px" height="40px" onClick={handleOnEdit} loading={isLoading} />
 </main>
+
+<!-- <style>
+	main{
+		overflow-y: auto;
+	}
+</style> -->

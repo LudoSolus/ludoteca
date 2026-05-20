@@ -13,11 +13,11 @@
 	}
 </script>
 
-<main class="flex w-full flex-col items-center justify-center px-4 py-12 sm:px-10 xl:px-15 gap-5">
+<main class="flex w-full flex-col items-center justify-start px-4 py-12 sm:px-10 xl:px-15 gap-5">
 	<div class="flex w-full justify-end">
 		<Button text="Criar" leftIcon={faPlus} onClick={() => goto('/admin/board-games/create')} />
 	</div>
-	<div class="flex w-full max-w-350 items-center justify-center gap-20 lg:justify-between">
+	<div class="flex w-full max-w-350 h-full items-center justify-center gap-20 lg:justify-between">
 		<section class="flex max-w-150 flex-1 flex-col items-center justify-center gap-8">
 			<BoardGamesList gamesList={boardGames} onClickGame={goToBoardGameDetails} />
 		</section>

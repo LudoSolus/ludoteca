@@ -87,7 +87,7 @@
 	}
 </script>
 
-<header class="header-box flex h-15 w-full items-center justify-between px-7 py-2">
+<header class="header-box flex w-full items-center justify-between px-7 py-2">
 	<div class="logo-section flex items-center gap-3">
 		{#if $device == 'mobile'}
 			<IconButton
@@ -154,6 +154,7 @@
 
 <style>
 	.header-box {
+		height: var(--header-height);
 		position: relative;
 		background: linear-gradient(
 			90deg,

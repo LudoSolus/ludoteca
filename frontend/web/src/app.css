@@ -38,6 +38,8 @@
 	--hover-color: #91850047;
 	--active-color: #9185007b;
 
+	--header-height: 60px;
+
 	--svoast-bg: #fff;
 	--svoast-text: #1b1803;
 	--svoast-radius: 4px;
@@ -46,7 +48,6 @@
 }
 
 html {
-	height: 100vh;
 	height: 100dvh;
 	font-family: 'Inter', sans-serif;
 	color: #000;
@@ -65,15 +66,17 @@ body {
 	background: var(--background-color);
 }
 
-section {
+main {
+	height: calc(100% - var(--header-height));
+	overflow: auto;
 	scrollbar-width: thin;
 }
 
-section::-webkit-scrollbar {
+main::-webkit-scrollbar {
 	width: 12px;
 }
 
-section::-webkit-scrollbar-thumb {
+main::-webkit-scrollbar-thumb {
 	border-radius: 20px;
 }
 

@@ -20,7 +20,7 @@
 	];
 </script>
 
-<section class="history-screen relative min-h-screen">
+<main class="relative">
 	<h1 class="font-inknut absolute top-32 left-10 z-10 text-5xl text-black">Tempo Jogado</h1>
 
 	<aside
@@ -50,14 +50,4 @@
 			{/each}
 		</div>
 	</aside>
-</section>
-
-<style>
-	section {
-		overflow-y: scroll;
-	}
-
-	.history-screen {
-		background: #fffcee;
-	}
-</style>
+</main>

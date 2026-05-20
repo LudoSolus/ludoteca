@@ -8,7 +8,7 @@
 	let emailInput = '';
 </script>
 
-<div class="flex w-full flex-col items-center gap-6 sm:gap-10">
+<main class="flex w-full flex-col items-center gap-6 sm:gap-10">
 	<h1 class="text-center">Recuperar Acesso</h1>
 	<p>
 		Para recuperar a sua senha, informe o seu endereço de e-mail que nós enviaremos um link para
@@ -34,4 +34,4 @@
 			}}
 		/>
 	</div>
-</div>
+</main>
