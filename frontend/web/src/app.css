@@ -28,7 +28,10 @@
 }
 
 :root {
-	--primary-color: #feec7e;
+	--primary-color: #fbd322;
+	--secondary-color: #FCDE5A;
+	--tertiary-color: #E0B704;
+	--background-color: #fffdf2;
 	--card-background-color: rgba(254, 236, 126, 0.4);
 	--modal-background-color: #FFF6C4;
 	--link-color: #3c65fd;
@@ -52,21 +55,25 @@ html {
 	box-sizing: border-box;
 	transition: all 0.2s ease-in-out;
 	overflow: hidden;
+	scrollbar-width: thin;
 }
 
 body {
 	height: 100%;
-	overflow-y: auto;
+	overflow-y: hidden;
 	overflow-x: hidden;
-	scrollbar-width: thin;
-	background: rgba(254, 236, 126, 0.1);
+	background: var(--background-color);
 }
 
-body::-webkit-scrollbar {
+section {
+	scrollbar-width: thin;
+}
+
+section::-webkit-scrollbar {
 	width: 12px;
 }
 
-body::-webkit-scrollbar-thumb {
+section::-webkit-scrollbar-thumb {
 	border-radius: 20px;
 }
 

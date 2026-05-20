@@ -3,13 +3,13 @@
 	import ProfilePicture from '../atoms/ProfilePicture.svelte';
 	import { page } from '$app/state';
 	import { device } from '$lib/shared/hooks/useDevice';
-	import { faBars, faChessBoard, faTimes } from '@fortawesome/free-solid-svg-icons';
+	import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 	import IconButton from '../atoms/IconButton.svelte';
 	import ProfileMenu from '../atoms/ProfileMenu.svelte';
 	import { authService } from '$lib/shared/stores/auth';
 	import { goto } from '$app/navigation';
 	import type { JwtAuthData } from '$lib/shared/helpers/decode-jwt';
-	import Fa from 'svelte-fa';
+	import defaultImg from '$lib/assets/default.png';
 
 	interface Route {
 		name: string;
@@ -98,10 +98,9 @@
 				variant="naked"
 			/>
 		{:else}
-			<div class="logo-icon">
-				<Fa icon={faChessBoard} size="1x" style="color: var(--accent-red);" />
+			<div class="flex items-center justify-center max-w-10 max-h-10">
+				<img src={defaultImg} alt="Imagem padrão" />
 			</div>
-			<div class="divider"></div>
 		{/if}
 	</div>
 	{#if $device == 'desktop'}
@@ -190,17 +189,5 @@
 
 	.logo-section {
 		flex: 0 0 auto;
-	}
-
-	.logo-icon {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 40px;
-		height: 40px;
-		border-radius: 8px;
-		background: linear-gradient(135deg, rgba(196, 30, 58, 0.15) 0%, rgba(212, 175, 55, 0.1) 100%);
-		border: 2px solid rgba(196, 30, 58, 0.3);
-		transition: all 0.3s ease;
 	}
 </style>
