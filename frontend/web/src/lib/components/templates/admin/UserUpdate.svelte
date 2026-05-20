@@ -23,6 +23,7 @@
 		userRole: user.userType || 'USER',
 		institutionId: ''
 	};
+
 	function handleOnEdit() {
 		if (!formIsValid) {
 			toast.error('Preencha todos os campos devidamente.', { closable: true });
@@ -35,6 +36,7 @@
 
 		userEdit(formValuesFormated);
 	}
+
 	let educationalInstitutions: IEducationalInstitution[] = [];
 </script>
 

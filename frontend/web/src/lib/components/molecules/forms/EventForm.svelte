@@ -7,6 +7,7 @@
 	import { device } from '$lib/shared/hooks/useDevice';
 	import { inputHasValue, type IFormController } from '$lib/shared/interfaces/input-controller';
 	import type { IBoardGame } from '$lib/api/queries/board-games/list-board-games/list-board-games.interface';
+	import { untrack } from 'svelte';
 
 	type FormField = keyof IRegisterEventRequest;
 
@@ -30,17 +31,20 @@
 	});
 
 	$effect(() => {
-		if (formValues) {
+		const snapshot = formValues ? { ...formValues } : null;
+
+		untrack(() => {
+			if (!snapshot) return;
 			Object.keys(formController).forEach((key: string) => {
 				const formKey = key as keyof typeof formController;
-				const val = formValues[formKey as keyof IRegisterEventRequest];
+				const val = snapshot[formKey as keyof IRegisterEventRequest];
 				if (inputHasValue(val)) {
 					formController[formKey].touched = true;
 				}
 				formController[formKey].value = val;
 			});
 			isValid = validateForm();
-		}
+		});
 	});
 
 	const validators = new Validators();
