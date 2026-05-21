@@ -25,9 +25,11 @@
 	export let onCopyEvent: null | (() => void) = null;
 </script>
 
-<div class="event-card flex h-62 w-120 flex-col items-start gap-3 pt-3">
-	<section class="flex w-full items-center justify-between px-4">
-		<div class="flex gap-6">
+<div
+	class="event-card flex h-62 w-75 items-start gap-2 pl-2 md:w-120 md:flex-col md:gap-3 md:pt-3 md:pl-0"
+>
+	<section class="flex items-center justify-between md:w-full md:px-4">
+		<div class="flex flex-col gap-8 px-2 py-4 md:flex-row md:gap-6 md:p-0">
 			{#if hasBoardGames}
 				<Icon icon={faChessBoard} size={28} />
 			{/if}
@@ -39,20 +41,25 @@
 			{/if}
 		</div>
 		<div>
-			<p class="text-[18px]">{formatLongDate(startDate)}</p>
+			<p class="hidden text-[18px] md:flex">{formatLongDate(startDate, 'long')}</p>
 		</div>
 	</section>
-	<section class="event-details-section flex h-full w-full flex-col justify-between px-4 pt-3 pb-8">
-		<h4 class="inknut text-2xl">{name}</h4>
-		<div class="flex items-end justify-between">
-			<div class="flex items-center gap-3">
+	<section
+		class="event-details-section flex h-full flex-col justify-between rounded-2xl rounded-bl-none p-4 md:w-full md:rounded-bl-2xl md:pt-3 md:pb-8"
+	>
+		<div class="flex w-full flex-col gap-4">
+			<p class="w-full text-end text-[18px] md:hidden">{formatLongDate(startDate, 'short')}</p>
+			<h4 class="inknut text-xl md:text-2xl">{name}</h4>
+		</div>
+		<div class="flex items-end justify-between gap-2">
+			<div class="hidden items-center gap-3 md:flex">
 				<Icon icon={faLocationDot} size={28} />
 				<div>
 					<p>{address.street}, n° {address.number}</p>
 					<p>{address.city}, {address.state}</p>
 				</div>
 			</div>
-			<div class="flex gap-3">
+			<div class="flex h-9 w-full gap-3 md:w-47">
 				{#if onCopyEvent}
 					<IconButton
 						icon={faCopy}
@@ -66,7 +73,7 @@
 					text="Detalhes"
 					onClick={onCLickButton}
 					variant="black"
-					width="140px"
+					width="100%"
 					height="36px"
 				/>
 			</div>
@@ -82,7 +89,6 @@
 	}
 
 	.event-details-section {
-		border-radius: 16px;
 		background: var(--card-background-color);
 	}
 </style>

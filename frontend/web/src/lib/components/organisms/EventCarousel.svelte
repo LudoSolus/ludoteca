@@ -204,7 +204,6 @@
 	.carousel-item {
 		scroll-snap-align: start;
 		flex: 0 0 auto;
-		width: 300px;
 	}
 
 	.empty-state {
@@ -215,12 +214,6 @@
 		border-radius: 12px;
 		color: var(--muted-color, #666);
 		background: var(--background-color, rgba(0, 0, 0, 0.02));
-	}
-
-	@media (min-width: 640px) {
-		.carousel-item {
-			width: 480px;
-		}
 	}
 
 	@media (max-width: 639px) {
