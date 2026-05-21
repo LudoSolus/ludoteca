@@ -4,7 +4,7 @@
 
 	export let onClick: () => void;
 	export let icon: IconDefinition;
-	export let variant: 'primary' | 'naked' = 'primary';
+	export let variant: 'primary' | 'naked' | 'outline' = 'primary';
 	export let width: string = '100%';
 	export let height: string = '100%';
 	export let color: string = '#000';
@@ -12,7 +12,7 @@
 </script>
 
 <button
-	class="flex items-center justify-center rounded-md border-2 border-black {variant} text-[20px]"
+	class="flex items-center justify-center rounded-xl border-2 border-black {variant} text-[20px]"
 	style="width: {width}; min-width: {width}; height: {height}; font-size: {fontSize}"
 	on:click={onClick}
 >
@@ -34,6 +34,10 @@
 		background-color: transparent;
 		border: none;
 		border-radius: 50px;
+	}
+
+	button.outline {
+		background-color: transparent;
 	}
 
 	button:hover {

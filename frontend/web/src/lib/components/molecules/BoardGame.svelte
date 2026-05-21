@@ -81,7 +81,7 @@
     class="flex items-center justify-center w-16 min-h-full rounded-[3px] box-size:border-box"
     style="background-color: {isActivate ? '#2C9959' : '#992C2C'};"
   >
-    <Icon icon={faChessBoard} color="#fff" size={2} />
+    <Icon icon={faChessBoard} color="#fff" size={34} />
   </div>
 
   <div class={'grid items-center grid-cols-3 w-full'}>
@@ -117,7 +117,7 @@
           type={ETooltipBehavior.Click | ETooltipBehavior.FocusIn | ETooltipBehavior.FocusOut}
         >
           <div class="flex items-center">
-            <Icon icon={categoryIconMap[category]} color="#000" size={1} classes="shrink-0" />
+            <Icon icon={categoryIconMap[category]} color="#000" size={17} classes="shrink-0" />
             <p
               bind:clientWidth={clientCategoryWidth}
               bind:this={categoryRef}
@@ -130,7 +130,7 @@
       {:else}
         <div class="relative inline-block w-full">
           <div class="flex items-center">
-            <Icon icon={categoryIconMap[category]} color="#000" size={1} classes="shrink-0" />
+            <Icon icon={categoryIconMap[category]} color="#000" size={17} classes="shrink-0" />
             <p
               bind:clientWidth={clientCategoryWidth}
               bind:this={categoryRef}
@@ -145,7 +145,7 @@
 
     <div class={endClasses}>
       <div class="flex items-center w-20 pl-2">
-        <Icon icon={faUserGroup} color="#000" size={1} />
+        <Icon icon={faUserGroup} color="#000" size={17} />
         <p class="text-center text-sm pl-2">
           {participantsText}
         </p>
@@ -164,7 +164,7 @@
           "
           on:click|stopPropagation={onAdminClick}
         >
-          <Icon icon={faRightLeft} color="#000" size={1} />
+          <Icon icon={faRightLeft} color="#000" size={17} />
         </button>
       {/if}
     </div>

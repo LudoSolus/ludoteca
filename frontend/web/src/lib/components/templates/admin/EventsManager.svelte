@@ -31,9 +31,19 @@
 		<Button text="Criar" leftIcon={faPlus} onClick={goToEventCreate} />
 	</div>
 	<section class="mt-6 flex w-full sm:mt-0">
-		<EventCarousel title="Próximos Eventos" events={nextEvents} />
+		<EventCarousel
+			title="Próximos Eventos"
+			events={nextEvents}
+			onClickEvent={goToEvent}
+			onCopyEvent={goToEventCreateByCopy}
+		/>
 	</section>
 	<section class="mt-5 flex w-full">
-		<EventCarousel title="Eventos Finalizados" events={finishedEvents} />
+		<EventCarousel
+			title="Eventos Finalizados"
+			events={finishedEvents}
+			onClickEvent={goToEvent}
+			onCopyEvent={goToEventCreateByCopy}
+		/>
 	</section>
 </main>

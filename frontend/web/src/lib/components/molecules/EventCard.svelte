@@ -1,20 +1,9 @@
 <script lang="ts">
-	import Fa from 'svelte-fa';
-	import {
-		faArrowRight,
-		faChessBoard,
-		faCopy,
-		faDice,
-		faLocationDot
-	} from '@fortawesome/free-solid-svg-icons';
+	import { faChessBoard, faCopy, faDice, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 	import Button from '$lib/components/atoms/Button.svelte';
-	import { formatDate } from '$lib/shared/helpers/format-date';
-	import { formatTime } from '$lib/shared/helpers/format-time';
-	import defaultEventImg from '$lib/assets/event-boardgame.png';
-	import EventActivity from '../atoms/EventActivity.svelte';
-	import { formatCEP } from '$lib/shared/helpers/format-cep';
 	import escapeRoomKey from '$lib/assets/key-svgrepo-com.svg';
-	import { device } from '$lib/shared/hooks/useDevice';
+	import Icon from '../atoms/icons/Icon.svelte';
+	import { formatLongDate } from '$lib/shared/helpers/format-long-date';
 	import IconButton from '../atoms/IconButton.svelte';
 
 	interface EventAddressData {
@@ -28,7 +17,6 @@
 
 	export let name: string;
 	export let startDate: Date;
-	export let endDate: Date;
 	export let hasBoardGames: boolean;
 	export let hasRpg: boolean;
 	export let hasEscapeRoom: boolean;
@@ -37,80 +25,64 @@
 	export let onCopyEvent: null | (() => void) = null;
 </script>
 
-<div
-	class="event-card flex w-75 min-w-75 flex-col items-start justify-between gap-6 p-4 sm:w-120 sm:min-w-120 sm:p-6"
->
-	<div class="flex w-full items-start justify-between gap-2">
-		<h4 class="inknut h-14 max-h-14 overflow-hidden text-lg font-bold sm:text-xl">
-			{name}
-		</h4>
-		<div class="flex items-center gap-1 font-medium sm:gap-3">
-			<div class="felx flex-col items-center">
-				<p class="text-center">{formatDate(startDate)}</p>
-				<p class="text-center">{formatTime(startDate)}</p>
-			</div>
-			<p>-</p>
-			<div class="felx flex-col items-center">
-				<p class="text-center">{formatDate(endDate)}</p>
-				<p class="text-center">{formatTime(endDate)}</p>
-			</div>
+<div class="event-card flex h-62 w-120 flex-col items-start gap-3 pt-3">
+	<section class="flex w-full items-center justify-between px-4">
+		<div class="flex gap-6">
+			{#if hasBoardGames}
+				<Icon icon={faChessBoard} size={28} />
+			{/if}
+			{#if hasRpg}
+				<Icon icon={faDice} size={28} />
+			{/if}
+			{#if hasEscapeRoom}
+				<Icon icon={escapeRoomKey} size={28} />
+			{/if}
 		</div>
-	</div>
-	<div class="flex w-full flex-col gap-4 sm:flex-row">
-		<div class="flex flex-1 flex-col gap-4">
-			<div class="space-y-2">
-				{#if hasBoardGames}
-					<EventActivity title="Jogos de Tabuleiro" icon={faChessBoard} />
-				{/if}
-				{#if hasRpg}
-					<EventActivity title="RPG's" icon={faDice} />
-				{/if}
-				{#if hasEscapeRoom}
-					<EventActivity title="Escape Room" icon={escapeRoomKey} />
-				{/if}
-			</div>
-
-			<div class="font-medium">
-				<div class="flex gap-3">
-					<Fa icon={faLocationDot} class="mt-2 text-2xl" />
-					<div class="text-sm">
-						<p>{address.street}, n° {address.number}</p>
-						<p>Bairro: {address.neighborhood}</p>
-						<p>{address.city}, {address.state}</p>
-						<p>{formatCEP(address.zipCode)}</p>
-					</div>
+		<div>
+			<p class="text-[18px]">{formatLongDate(startDate)}</p>
+		</div>
+	</section>
+	<section class="event-details-section flex h-full w-full flex-col justify-between px-4 pt-3 pb-8">
+		<h4 class="inknut text-2xl">{name}</h4>
+		<div class="flex items-end justify-between">
+			<div class="flex items-center gap-3">
+				<Icon icon={faLocationDot} size={28} />
+				<div>
+					<p>{address.street}, n° {address.number}</p>
+					<p>{address.city}, {address.state}</p>
 				</div>
 			</div>
-		</div>
-
-		<div class="flex flex-1 shrink-0 flex-col items-end justify-between gap-3 sm:h-full">
-			<img
-				src={defaultEventImg}
-				alt="Imagem do evento"
-				class=" hidden h-35 w-35 rounded-md object-contain sm:flex"
-			/>
-
-			<div class="flex gap-2">
-				{#if onCopyEvent != null}
-					<IconButton icon={faCopy} onClick={onCopyEvent} width="35px" height="35px" />
+			<div class="flex gap-3">
+				{#if onCopyEvent}
+					<IconButton
+						icon={faCopy}
+						onClick={onCopyEvent}
+						variant="outline"
+						width="36px"
+						height="36px"
+					/>
 				{/if}
-
 				<Button
 					text="Detalhes"
-					rightIcon={faArrowRight}
-					width={$device == 'mobile' ? '100%' : undefined}
 					onClick={onCLickButton}
+					variant="black"
+					width="140px"
+					height="36px"
 				/>
 			</div>
 		</div>
-	</div>
+	</section>
 </div>
 
 <style>
 	.event-card {
-		border-radius: 10px;
-		border: 1px solid black;
+		border-radius: 16px;
+		background: var(--primary-color);
+		box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+	}
+
+	.event-details-section {
+		border-radius: 16px;
 		background: var(--card-background-color);
-		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	}
 </style>
