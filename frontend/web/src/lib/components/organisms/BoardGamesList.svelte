@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { EUserRole } from '$lib/shared/enums/user-role.enum';
-	import { faBarcode } from '@fortawesome/free-solid-svg-icons';
-	import IconButton from '../atoms/IconButton.svelte';
 	import SearchInput from '../atoms/SearchInput.svelte';
 	import BoardGame from '../molecules/BoardGame.svelte';
 	import type { IBoardGameForList } from '$lib/shared/interfaces/board-games';
@@ -22,20 +20,13 @@
 	});
 </script>
 
-<div class="flex w-full max-w-150 flex-col items-center justify-center gap-8">
+<div class="flex h-full w-full max-w-150 flex-col items-center justify-start gap-8">
 	<h3 class="h3 w-full text-start">Jogos</h3>
-	<div class="flex flex-col gap-8">
-		<div class="flex w-full items-center justify-start gap-3">
-			<IconButton
-				icon={faBarcode}
-				onClick={handleOnScanBarCode}
-				width="60px"
-				height="40px"
-				fontSize="26px"
-			/>
+	<div class="box-list flex flex-col gap-8 px-1">
+		<div class="flex w-full items-center justify-start">
 			<SearchInput bind:value={searchInputValue} placeholder="Pesquisar..." />
 		</div>
-		<div class="flex max-h-76 w-fit flex-col gap-2 overflow-y-auto px-1 py-2 md:px-4">
+		<div class="board-games-list flex w-fit flex-col gap-2 overflow-y-auto px-1 md:px-4">
 			{#if filteredGamesList.length > 0}
 				{#each filteredGamesList as game}
 					<BoardGame
@@ -50,8 +41,20 @@
 					/>
 				{/each}
 			{:else}
-				<p>Nenhum jogo encontrado.</p>
+				<p class="w-[94vw] min-[590px]:w-136">Nenhum jogo encontrado.</p>
 			{/if}
 		</div>
 	</div>
 </div>
+
+<style>
+	.box-list {
+		height: calc(100% - 77px);
+	}
+
+	.board-games-list {
+		height: fit-content;
+		max-height: calc(100% - 69px);
+		scrollbar-width: thin;
+	}
+</style>

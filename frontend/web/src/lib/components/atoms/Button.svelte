@@ -11,12 +11,12 @@
 	export let loading: boolean = false;
 	export let width: string = 'fit-content';
 	export let height: string = 'fit-content';
-	export let variant: 'primary' | 'secondary' = 'primary';
+	export let variant: 'primary' | 'secondary' | 'black' = 'primary';
 </script>
 
 <button
 	style="width: {width}; height: {height};"
-	class="relative flex items-center justify-center gap-2 rounded-md border-2 border-black px-6 py-1 {variant}"
+	class="relative flex items-center justify-center gap-2 rounded-xl px-6 py-1 {variant}"
 	disabled={disabled || loading}
 	on:click={onClick}
 >
@@ -43,10 +43,17 @@
 
 	button.primary {
 		background-color: var(--primary-color);
+		border: black 2px solid;
 	}
 
 	button.secondary {
 		background-color: white;
+		border: black 2px solid;
+	}
+
+	button.black {
+		background-color: #000;
+		color: #fff;
 	}
 
 	button:hover {
@@ -54,9 +61,18 @@
 		transition: all 0.2s ease-in-out;
 	}
 
+	button.black:hover {
+		background-color: #232323;
+	}
+
 	button:active {
 		background-color: var(--active-color);
 		transition: all 0.2s ease-in-out;
+	}
+
+	button.black:active {
+		color: #3f3f3f;
+		box-shadow: none;
 	}
 
 	button:disabled {
@@ -71,5 +87,9 @@
 
 	button.secondary:disabled {
 		background-color: #b2b2b2;
+	}
+
+	button.black:disabled {
+		color: #eaeaea;
 	}
 </style>

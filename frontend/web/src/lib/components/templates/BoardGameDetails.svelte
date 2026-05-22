@@ -7,6 +7,7 @@
 	export let handleOnEdit: () => void;
 	export let handleOnDelete: () => void;
 	export let isLoading: boolean;
+	export let type: 'admin' | 'user';
 </script>
 
 <main class="flex h-full flex-col items-center gap-10 px-1 py-7 sm:px-10 xl:px-15">

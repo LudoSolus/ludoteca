@@ -40,7 +40,7 @@
 	let educationalInstitutions: IEducationalInstitution[] = [];
 </script>
 
-<div class="px-3 py-7 sm:px-10 xl:px-15">
+<main class="px-3 py-7 sm:px-10 xl:px-15">
 	<GoBack title={'Editar Usuário'} description={'Definir o tipo de usuário'} />
 	<section class="flex h-full flex-col items-center justify-center gap-8 px-5 py-4 xl:px-15">
 		<div>
@@ -60,4 +60,4 @@
 			height="40px"
 		/>
 	</section>
-</div>
+</main>

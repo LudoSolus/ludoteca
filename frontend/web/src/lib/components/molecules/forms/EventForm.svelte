@@ -327,7 +327,7 @@
 	</div>
 
 	<div class="flex w-full flex-col gap-3 py-4 sm:col-span-2">
-		<h3 class="text-sm font-semibold text-gray-700">Atrações do Evento</h3>
+		<h4 class="font-semibold text-xl">Atrações do Evento</h4>
 		<div class="flex flex-wrap gap-4">
 			<CheckboxInput label="Jogos de Tabuleiro" bind:checked={formValues.hasBoardGames} />
 			<CheckboxInput label="RPG" bind:checked={formValues.hasRpg} />
@@ -338,7 +338,7 @@
 	{#if formValues.hasBoardGames}
 		<div class="flex w-full flex-col gap-3 py-4 sm:col-span-2">
 			<div class="flex items-center justify-between">
-				<h3 class="text-sm font-semibold text-gray-700">Selecionar Jogos de Tabuleiro</h3>
+				<h4 class="font-semibold text-xl">Selecionar Jogos de Tabuleiro</h4>
 				<span class="text-xs text-gray-500">
 					{formValues.gamesIds.length} selecionados
 				</span>

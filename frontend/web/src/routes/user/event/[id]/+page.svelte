@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { GetEventDetailsResponse } from '$lib/api/queries/events/get-event-details/get-event-details.interface';
 	import { GetEventDetailsQuery } from '$lib/api/queries/events/get-event-details/get-event-details.query';
+	import EventDetails from '$lib/components/templates/EventDetails.svelte';
 	import UserEventDetails from '$lib/components/templates/UserEventDetails.svelte';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import axios from 'axios';
@@ -25,10 +27,14 @@
 			}
 		});
 	}
+
+	function goTOGameDetails(gameId: string) {
+		goto(`/user/board-game/${gameId}`);
+	}
 </script>
 
 {#if eventData}
-	<UserEventDetails {eventData} />
+	<EventDetails {eventData} type="user" goToGameDetails={goTOGameDetails} />
 {:else}
 	<p>Carregando...</p>
 {/if}

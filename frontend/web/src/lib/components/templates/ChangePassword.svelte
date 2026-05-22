@@ -61,7 +61,7 @@
 	}
 </script>
 
-<div class="flex w-full flex-col items-center gap-6 sm:gap-10">
+<main class="flex w-full flex-col items-center gap-6 sm:gap-10">
 	<h1 class="text-center text-3xl">Criar Nova Senha</h1>
 	<p>Insira sua nova senha, se lembre que ela deve ter 8 caracteres incluindo letras e números.</p>
 	<div class="flex w-full flex-col gap-2">
@@ -92,4 +92,4 @@
 			loading={isLoading}
 		/>
 	</div>
-</div>
+</main>

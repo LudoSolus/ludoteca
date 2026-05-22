@@ -35,13 +35,13 @@
 <style>
 	label,
 	input {
-		font-size: 8px;
+		font-size: 16px;
 	}
 
 	@media (min-width: 320px) {
 		label,
 		input {
-			font-size: 10px;
+			font-size: 16px;
 		}
 	}
 </style>

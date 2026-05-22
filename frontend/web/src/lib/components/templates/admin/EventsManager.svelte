@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import type { IListEvent } from '$lib/api/queries/events/list-all-events/list-all-events.interface';
 	import Button from '$lib/components/atoms/Button.svelte';
-	import EventCard from '$lib/components/molecules/EventCard.svelte';
+	import EventCarousel from '$lib/components/organisms/EventCarousel.svelte';
 	import { EEventStatus } from '$lib/shared/enums/event-status.enum';
 	import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -26,58 +26,24 @@
 	$: finishedEvents = events.filter((e) => e.status == EEventStatus.COMPLETED);
 </script>
 
-<main class="flex w-full flex-col px-2 pt-7 pb-20 sm:px-4 md:px-10 xl:px-15">
+<main class="flex w-full flex-col px-2 pt-7 pb-20 sm:px-4 md:px-10">
 	<div class="flex w-full justify-end">
 		<Button text="Criar" leftIcon={faPlus} onClick={goToEventCreate} />
 	</div>
-	<section class="mt-6 flex w-full flex-col gap-2 sm:mt-0 sm:gap-6">
-		<h3 class="h3">Próximos Eventos</h3>
-		<div class="flex w-full gap-8 overflow-x-scroll py-3">
-			{#each nextEvents as event}
-				<EventCard
-					name={event.name}
-					startDate={event.startDate}
-					endDate={event.finalDate}
-					address={{
-						street: event.street,
-						number: event.number,
-						neighborhood: event.neighborhood,
-						city: event.city,
-						state: event.state,
-						zipCode: event.zipCode
-					}}
-					onCLickButton={() => goToEvent(event.id)}
-					hasBoardGames={event.hasBoardGames}
-					hasEscapeRoom={event.hasEscapeRoom}
-					hasRpg={event.hasRpg}
-					onCopyEvent={() => goToEventCreateByCopy(event.id)}
-				/>
-			{/each}
-		</div>
+	<section class="mt-6 flex w-full sm:mt-0">
+		<EventCarousel
+			title="Próximos Eventos"
+			events={nextEvents}
+			onClickEvent={goToEvent}
+			onCopyEvent={goToEventCreateByCopy}
+		/>
 	</section>
-	<section class="mt-5 flex w-full flex-col gap-2 sm:gap-6">
-		<h3 class="h3">Eventos Finalizados</h3>
-		<div class="flex w-full gap-8 overflow-x-scroll py-3">
-			{#each finishedEvents as event}
-				<EventCard
-					name={event.name}
-					startDate={event.startDate}
-					endDate={event.finalDate}
-					address={{
-						street: event.street,
-						number: event.number,
-						neighborhood: event.neighborhood,
-						city: event.city,
-						state: event.state,
-						zipCode: event.zipCode
-					}}
-					onCLickButton={() => goToEvent(event.id)}
-					hasBoardGames={event.hasBoardGames}
-					hasEscapeRoom={event.hasEscapeRoom}
-					hasRpg={event.hasRpg}
-					onCopyEvent={() => goToEventCreateByCopy(event.id)}
-				/>
-			{/each}
-		</div>
+	<section class="mt-5 flex w-full">
+		<EventCarousel
+			title="Eventos Finalizados"
+			events={finishedEvents}
+			onClickEvent={goToEvent}
+			onCopyEvent={goToEventCreateByCopy}
+		/>
 	</section>
 </main>

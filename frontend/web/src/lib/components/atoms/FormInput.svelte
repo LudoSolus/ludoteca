@@ -108,7 +108,7 @@
 <style>
 	label,
 	input {
-		font-size: 14px;
+		font-size: 16px;
 	}
 
 	input:disabled {

@@ -23,13 +23,13 @@
 	.profile-box {
 		border-radius: 100px;
 		border: 2px solid #000e3d;
-		background-color: #7e90fe;
+		background-color: var(--secondary-color);
 	}
 
 	.profile-box p {
 		font-family: 'Inter', sans-serif;
 		text-transform: uppercase;
-		color: white;
+		color: black;
 		font-weight: 600;
 	}
 </style>
