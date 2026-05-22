@@ -40,7 +40,7 @@
 	}
 
 	.box {
-		background: linear-gradient(135deg, var(--primary-color) 0%, rgba(254, 236, 126, 0.95) 100%);
+		background: var(--card-background-color);
 		border: 2px solid rgba(212, 175, 55, 0.5);
 		border-radius: 12px;
 		z-index: 12;

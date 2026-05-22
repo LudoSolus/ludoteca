@@ -98,7 +98,7 @@
 				variant="naked"
 			/>
 		{:else}
-			<div class="flex items-center justify-center max-w-10 max-h-10">
+			<div class="flex max-h-10 max-w-10 items-center justify-center">
 				<img src={defaultImg} alt="Imagem padrão" />
 			</div>
 		{/if}
@@ -121,9 +121,7 @@
 	</div>
 
 	{#if $device == 'mobile' && menuIsVisible}
-		<div
-			class="header-menu absolute top-16 flex flex-col items-center justify-start gap-2 rounded-lg p-2 shadow-lg"
-		>
+		<div class="header-menu absolute top-16 flex flex-col items-center justify-start gap-2 p-2">
 			{#each type == 'admin' ? Array.prototype.concat(publicRoutes, adminRoutes) : publicRoutes as route (route.path)}
 				<HeaderRoute
 					name={route.name}
@@ -169,7 +167,7 @@
 		border-bottom: 2px solid rgba(212, 175, 55, 0.3);
 	}
 	.header-menu {
-		background: linear-gradient(135deg, var(--primary-color) 0%, rgba(254, 236, 126, 0.95) 100%);
+		background: var(--card-background-color);
 		border: 2px solid rgba(212, 175, 55, 0.5);
 		border-radius: 12px;
 		z-index: 12;
