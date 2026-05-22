@@ -18,6 +18,7 @@
 	export let returnGame: () => void;
 	export let handleOnEdit: () => void;
 	export let handleOnDelete: () => void;
+	export let goToGameDetails: (gameId: string) => void;
 	export let isLoadingDelete: boolean;
 </script>
 
@@ -30,9 +31,9 @@
 		onEdit={eventData.status == EEventStatus.SCHEDULED ? handleOnEdit : null}
 	/>
 	<div
-		class="flex w-full max-w-350 flex-wrap items-start justify-between gap-10 px-0 pb-20 sm:px-2 lg:px-4 xl:px-10"
+		class="body-section flex w-full max-w-350 flex-wrap items-start justify-between gap-10 px-0 pb-6 sm:px-2 lg:px-4 xl:px-10"
 	>
-		<div class="flex flex-1 flex-col gap-14">
+		<div class="flex h-full flex-1 flex-col gap-14">
 			<div class="flex flex-col gap-8">
 				<h3 class="h3">Detalhes</h3>
 				<p class="lg:min-h-20">
@@ -73,7 +74,7 @@
 				{/if}
 			</div>
 		</div>
-		<div class="flex flex-1 items-center justify-center">
+		<div class="flex h-full w-full flex-1 items-center justify-center">
 			<BoardGamesList
 				gamesList={eventData.listGames.map((game) => ({
 					id: game.id,
@@ -84,9 +85,15 @@
 					maxParticipants: game.maxPlayers,
 					isAvailable: game.isAvailable
 				}))}
-				onClickGame={(gameId) => {}}
+				onClickGame={goToGameDetails}
 				onClickLoanGame={eventData.status == EEventStatus.INPROGRESS ? loanGame : null}
 			/>
 		</div>
 	</div>
 </main>
+
+<style>
+	.body-section {
+		height: calc(100% - 125px);
+	}
+</style>
