@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Fa, { type IconSize } from 'svelte-fa';
+	import Fa from 'svelte-fa';
 	import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 	import type { SvelteComponent } from 'svelte';
 
@@ -34,5 +34,5 @@
 		height={`${size}px`}
 	/>
 {:else}
-	<Fa {icon} {color} class={`text-[${size}px] ${classes}`} />
+	<Fa {icon} {color} style={`font-size: ${size}px;`} class={classes}/>
 {/if}
