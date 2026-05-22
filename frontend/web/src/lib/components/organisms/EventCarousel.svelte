@@ -82,7 +82,7 @@
 </script>
 
 <section class="flex w-full flex-col gap-4">
-	<h3 class="h3 carousel-title">{title}</h3>
+	<h3 class="h3">{title}</h3>
 
 	<div class="flex w-full items-center gap-2">
 		<div class="hidden w-12 flex-none items-center justify-end max-sm:w-9 sm:flex">
