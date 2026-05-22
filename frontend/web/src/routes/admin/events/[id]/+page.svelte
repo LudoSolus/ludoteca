@@ -17,7 +17,7 @@
 	import EventRegisterUserModal from '$lib/components/molecules/EventRegisterUserModal.svelte';
 	import LoanGameModal from '$lib/components/molecules/LoanGameModal.svelte';
 	import ReturnGameModal from '$lib/components/molecules/ReturnGameModal.svelte';
-	import EventDetails from '$lib/components/templates/admin/EventDetails.svelte';
+	import EventDetails from '$lib/components/templates/EventDetails.svelte';
 	import { EEventStatus } from '$lib/shared/enums/event-status.enum';
 	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
@@ -242,6 +242,10 @@
 
 		goto(`/admin/events/${eventId}/edit`);
 	}
+
+	function goToGameDetails(gameId: string) {
+		goto(`/admin/board-games/${gameId}`);
+	}
 </script>
 
 {#if eventData}
@@ -254,7 +258,9 @@
 		returnGame={openReturnGameWithoutGame}
 		{handleOnEdit}
 		handleOnDelete={deleteEvent}
+		goToGameDetails={goToGameDetails}
 		{isLoadingDelete}
+		type="admin"
 	/>
 {:else}
 	<p>Carregando...</p>

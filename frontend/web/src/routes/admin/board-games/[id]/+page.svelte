@@ -4,7 +4,7 @@
 	import { DeleteBoardGameCommand } from '$lib/api/commands/board-games/delete-board-game/delete-board-game.command';
 	import type { IGetBoardGameDetailsWithLoanResponse } from '$lib/api/queries/board-games/get-board-game-details-with-loan/get-board-game-details-with-loan.interface';
 	import { GetBoardGameDetailsWithLoanQuery } from '$lib/api/queries/board-games/get-board-game-details-with-loan/get-board-game-details-with-loan.query';
-	import BoardGameDetails from '$lib/components/templates/admin/BoardGameDetails.svelte';
+	import BoardGameDetails from '$lib/components/templates/BoardGameDetails.svelte';
 	import { CommandsHandlerService } from '$lib/shared/handlers/command/commands-handler.service';
 	import { QueriesHandlerService } from '$lib/shared/handlers/query/queries-handler.service';
 	import axios from 'axios';
@@ -63,6 +63,7 @@
 		handleOnEdit={() => {
 			goto(`/admin/board-games/${$page.params.id}/edit`);
 		}}
+		type="admin"
 	/>
 {:else}
 	<p>Carregando...</p>

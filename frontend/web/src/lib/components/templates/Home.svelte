@@ -9,7 +9,7 @@
 	export let playedGames: IBoardGame[];
 
 	function handleClickEvent(id: string): void {
-		goto(`/events/${id}`);
+		goto(`/user/event/${id}`);
 	}
 </script>
 

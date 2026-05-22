@@ -11,15 +11,20 @@
 	import { EEventStatus } from '$lib/shared/enums/event-status.enum';
 
 	export let eventData: GetEventDetailsResponse;
-	export let openRegisterUser: () => void;
-	export let loanGame: (gameId: string) => void;
-	export let startEvent: () => void;
-	export let finishEvent: () => void;
-	export let returnGame: () => void;
-	export let handleOnEdit: () => void;
-	export let handleOnDelete: () => void;
+	export let openRegisterUser: (() => void) | null = null;
+	export let loanGame: ((gameId: string) => void) | null = null;
+	export let startEvent: (() => void) | null = null;
+	export let finishEvent: (() => void) | null = null;
+	export let returnGame: (() => void) | null = null;
+	export let handleOnEdit: (() => void) | null = null;
+	export let handleOnDelete: (() => void) | null = null;
 	export let goToGameDetails: (gameId: string) => void;
-	export let isLoadingDelete: boolean;
+	export let isLoadingDelete: boolean = false;
+	export let type: 'admin' | 'user';
+
+	function notImplementedFunction() {
+		console.error('Function not implemented');
+	}
 </script>
 
 <main class="flex h-full flex-col items-center gap-10 px-1 py-7 sm:px-10 xl:px-15">
@@ -27,8 +32,8 @@
 		title={eventData.name}
 		description="Detalhes do evento"
 		{isLoadingDelete}
-		onDelete={eventData.status == EEventStatus.SCHEDULED ? handleOnDelete : null}
-		onEdit={eventData.status == EEventStatus.SCHEDULED ? handleOnEdit : null}
+		onDelete={eventData.status == EEventStatus.SCHEDULED && type == 'admin' ? handleOnDelete : null}
+		onEdit={eventData.status == EEventStatus.SCHEDULED && type == 'admin' ? handleOnEdit : null}
 	/>
 	<div
 		class="body-section flex w-full max-w-350 flex-wrap items-start justify-between gap-10 px-0 pb-6 sm:px-2 lg:px-4 xl:px-10"
@@ -64,15 +69,21 @@
 					</div>
 				</div>
 			</div>
-			<div class="flex w-full flex-col items-center gap-4">
-				{#if eventData.status == EEventStatus.SCHEDULED}
-					<Button text="Iniciar Evento" onClick={startEvent} />
-				{:else if eventData.status == EEventStatus.INPROGRESS}
-					<Button text="Finalizar Evento" onClick={finishEvent} />
-					<Button text="Registrar Usuário" leftIcon={faUser} onClick={openRegisterUser} />
-					<Button text="Devolver jogo" onClick={returnGame} />
-				{/if}
-			</div>
+			{#if type == 'admin'}
+				<div class="flex w-full flex-col items-center gap-4">
+					{#if eventData.status == EEventStatus.SCHEDULED}
+						<Button text="Iniciar Evento" onClick={startEvent ?? notImplementedFunction} />
+					{:else if eventData.status == EEventStatus.INPROGRESS}
+						<Button text="Finalizar Evento" onClick={finishEvent ?? notImplementedFunction} />
+						<Button
+							text="Registrar Usuário"
+							leftIcon={faUser}
+							onClick={openRegisterUser ?? notImplementedFunction}
+						/>
+						<Button text="Devolver jogo" onClick={returnGame ?? notImplementedFunction} />
+					{/if}
+				</div>
+			{/if}
 		</div>
 		<div class="flex h-full w-full flex-1 items-center justify-center">
 			<BoardGamesList
@@ -86,7 +97,9 @@
 					isAvailable: game.isAvailable
 				}))}
 				onClickGame={goToGameDetails}
-				onClickLoanGame={eventData.status == EEventStatus.INPROGRESS ? loanGame : null}
+				onClickLoanGame={eventData.status == EEventStatus.INPROGRESS && type == 'admin'
+					? loanGame
+					: null}
 			/>
 		</div>
 	</div>
