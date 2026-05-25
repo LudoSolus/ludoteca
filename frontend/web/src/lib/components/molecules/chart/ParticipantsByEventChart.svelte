@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Chart from 'chart.js/auto';
-	import type { IMostPlayedGamesData } from '$lib/api/queries/dashboard/most-played-games/most-played-games.interface';
+	import type { IParticipantsByEventData } from '$lib/api/queries/dashboard/participants-by-event/participants-by-event.interface';
 
-	export let data: IMostPlayedGamesData[] = [];
+	export let data: IParticipantsByEventData[] = [];
 	let canvas: HTMLCanvasElement;
 	let chart: Chart;
 
@@ -14,13 +14,13 @@
 		chart = new Chart(ctx, {
 			type: 'bar',
 			data: {
-				labels: data.map(d => d.gameTitle),
+				labels: data.map((d) => d.eventName),
 				datasets: [
 					{
-						label: 'Quantidade de Empréstimos/Jogadas',
-						data: data.map((d) => d.loanCount),
-						backgroundColor: 'rgba(147, 51, 234, 0.6)',
-						borderColor: 'rgba(147, 51, 234, 1)',
+						label: 'Participantes',
+						data: data.map((d) => d.participantCount),
+						backgroundColor: 'rgba(59, 130, 246, 0.6)',
+						borderColor: 'rgba(59, 130, 246, 1)',
 						borderWidth: 1,
 						borderRadius: 4
 					}
@@ -33,9 +33,18 @@
 					legend: {
 						display: false
 					},
+					datalabels: {
+						color: '#000',
+						font: {
+							weight: 'bold',
+							size: 12,
+							family: "'Inter', sans-serif"
+						}
+					},
 					title: {
 						display: true,
-						text: 'Jogos Mais Jogados',
+						text: 'Participantes por Evento',
+						color: '#000',
 						font: {
 							size: 16,
 							family: "'Inter', sans-serif"
@@ -43,10 +52,16 @@
 					}
 				},
 				scales: {
+					x: {
+						ticks: {
+							color: '#000'
+						}
+					},
 					y: {
 						beginAtZero: true,
 						ticks: {
-							stepSize: 1
+							stepSize: 1,
+							color: '#000'
 						}
 					}
 				}
@@ -57,15 +72,15 @@
 			if (chart) chart.destroy();
 		};
 	});
-	
+
 	// Reactivity for data updates
 	$: if (chart && data && data.length > 0) {
-		chart.data.labels = data.map(d => d.gameTitle);
-		chart.data.datasets[0].data = data.map(d => d.loanCount);
+		chart.data.labels = data.map((d) => d.eventName);
+		chart.data.datasets[0].data = data.map((d) => d.participantCount);
 		chart.update();
 	}
 </script>
 
-<div class="h-80 w-full rounded-lg border border-gray-200 bg-transparent p-4">
+<div class="h-140 w-full rounded-lg border border-gray-200 bg-transparent p-4">
 	<canvas bind:this={canvas}></canvas>
 </div>
