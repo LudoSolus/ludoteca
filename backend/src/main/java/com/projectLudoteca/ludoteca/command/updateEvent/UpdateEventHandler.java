@@ -97,6 +97,7 @@ public class UpdateEventHandler {
         if (command.zipCode() != null) event.setZipCode(command.zipCode());
 
         if (command.startDate().isBefore(LocalDateTime.now())) {
+            ;;
             throw new BusinessException("A data de início do evento não pode ser anterior à data atual.");
         }
 
