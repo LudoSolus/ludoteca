@@ -16,6 +16,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -40,6 +41,20 @@ public class EventAdminCommandControllerTest {
     private JwtService jwtService;
 
     private UUID existingEventId;
+
+    private String getEventStartDate() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime nextYear = now.plusYears(1);
+        return nextYear.withHour(14).withMinute(0).withSecond(0).withNano(0)
+            .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    }
+
+    private String getEventFinalDate() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime nextYear = now.plusYears(1).plusDays(2);
+        return nextYear.withHour(18).withMinute(0).withSecond(0).withNano(0)
+            .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    }
 
     @BeforeEach
     void setUp() {
@@ -78,8 +93,8 @@ public class EventAdminCommandControllerTest {
         {
           "name": "Novo Evento Criado 2026",
           "description": "Alguma descrição",
-          "startDate": "2026-06-10T14:00:00",
-          "finalDate": "2026-06-12T18:00:00",
+          "startDate": "%s",
+          "finalDate": "%s",
           "street": "Rua Y",
           "number": "456",
           "supplement": "",
@@ -92,7 +107,7 @@ public class EventAdminCommandControllerTest {
           "hasEscapeRoom": false,
           "gamesIds": ["c3b0c531-90fa-4091-a602-bb049e794301"]
         }
-        """;
+        """.formatted(getEventStartDate(), getEventFinalDate());
 
         mockMvc.perform(post("/commands/admin/events/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -108,8 +123,8 @@ public class EventAdminCommandControllerTest {
         {
           "name": "Novo Evento Criado 2026",
           "description": "Alguma descrição",
-          "startDate": "2026-06-10T14:00:00",
-          "finalDate": "2026-06-12T18:00:00",
+          "startDate": "%s",
+          "finalDate": "%s",
           "street": "Rua Y",
           "number": "456",
           "supplement": "",
@@ -122,7 +137,7 @@ public class EventAdminCommandControllerTest {
           "hasEscapeRoom": false,
           "gamesIds": ["c3b0c531-90fa-4091-a602-bb049e794301"]
         }
-        """;
+        """.formatted(getEventStartDate(), getEventFinalDate());
 
         mockMvc.perform(post("/commands/admin/events/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -138,8 +153,8 @@ public class EventAdminCommandControllerTest {
         {
           "name": "Novo Evento Criado 2026",
           "description": "Alguma descrição",
-          "startDate": "2026-06-10T14:00:00",
-          "finalDate": "2026-06-12T18:00:00",
+          "startDate": "%s",
+          "finalDate": "%s",
           "street": "Rua Y",
           "number": "456",
           "supplement": "",
@@ -152,7 +167,7 @@ public class EventAdminCommandControllerTest {
           "hasEscapeRoom": false,
           "gamesIds": ["c3b0c531-90fa-4091-a602-bb049e794301"]
         }
-        """;
+        """.formatted(getEventStartDate(), getEventFinalDate());
 
         mockMvc.perform(post("/commands/admin/events/register")
                         .contentType(MediaType.APPLICATION_JSON)
