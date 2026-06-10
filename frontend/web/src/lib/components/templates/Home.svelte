@@ -22,7 +22,7 @@
 		<h3>Jogos Jogados</h3>
 
 		<div class="games-list flex w-fit flex-col gap-2 p-2">
-			{#each playedGames as game (game.id)}
+			{#each playedGames as game}
 				<BoardGame
 					title={game.name}
 					category={game.category}

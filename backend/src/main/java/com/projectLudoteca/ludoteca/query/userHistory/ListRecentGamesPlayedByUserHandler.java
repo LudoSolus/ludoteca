@@ -28,8 +28,11 @@ public class ListRecentGamesPlayedByUserHandler {
                 .limit(20)
                 .map(loan -> new RecentGamePlayedView(
                         loan.getGame().getId(),
+                        loan.getGame().getBarcode(),
                         loan.getGame().getTitle(),
-                        loan.getDateLoan()))
+                        loan.getGame().getCategory().name(),
+                        loan.getGame().getMinPlayers(),
+                        loan.getGame().getMaxPlayers()))
                 .toList();
     }
 }
