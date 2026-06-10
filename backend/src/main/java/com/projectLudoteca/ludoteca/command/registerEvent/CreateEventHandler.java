@@ -10,6 +10,7 @@ import com.projectLudoteca.ludoteca.common.repository.GameEventRepository;
 import com.projectLudoteca.ludoteca.common.repository.GameRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -36,6 +37,10 @@ public class CreateEventHandler {
                 || command.state() == null
                 || command.zipCode() == null) {
             throw new BusinessException("Campos obrigatórios não podem ser nulos.");
+        }
+
+        if (command.startDate().isBefore(LocalDateTime.now())) {
+            throw new BusinessException("A data de início do evento não pode ser anterior à data atual.");
         }
 
         if (command.finalDate().isBefore(command.startDate())) {
