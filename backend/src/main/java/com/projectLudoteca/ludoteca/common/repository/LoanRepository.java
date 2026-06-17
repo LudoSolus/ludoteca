@@ -15,11 +15,6 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
 
     boolean existsByGameIdAndDateReturnIsNullAndRemovedFalse(UUID gameId);
 
-    @Query("SELECT l FROM Loan l " +
-           "WHERE l.user.id = :userId AND l.removed = false " +
-           "ORDER BY l.dateLoan DESC")
-    List<Loan> findRecentGamesByUserId(UUID userId);
-
     @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END FROM Loan l " +
            "WHERE l.user.id = :userId AND l.status = com.projectLudoteca.ludoteca.common.enums.GameStatus.BORROWED " +
            "AND l.removed = false")

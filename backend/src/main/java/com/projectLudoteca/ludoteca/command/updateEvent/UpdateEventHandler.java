@@ -83,11 +83,7 @@ public class UpdateEventHandler {
             event.setDescription(command.description());
 
         if (command.startDate() != null)
-            if (event.getStartDate().isBefore(LocalDateTime.now())) {
-                throw new BusinessException("A data de início do evento não pode ser anterior à data atual.");
-            } else {
-                event.setStartDate(command.startDate());
-            }
+            event.setStartDate(command.startDate());
 
         if (command.finalDate() != null)
             event.setFinalDate(command.finalDate());
