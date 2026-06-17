@@ -7,6 +7,7 @@ import com.projectLudoteca.ludoteca.query.reports.topGames.TopGameView;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -46,5 +47,14 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
            "GROUP BY g.id, g.title " +
            "ORDER BY COUNT(l) DESC")
     List<TopGameView> findTopGamesReport();
+
+    @Query("SELECT l FROM Loan l " +
+           "JOIN FETCH l.user u " +
+           "JOIN FETCH l.game g " +
+           "WHERE l.status = com.projectLudoteca.ludoteca.common.enums.GameStatus.BORROWED " +
+           "AND l.removed = false " +
+           "AND l.dateLoan < :limitDate " +
+           "ORDER BY l.dateLoan ASC")
+    List<Loan> findDefaulters(LocalDateTime limitDate);
 }
 
