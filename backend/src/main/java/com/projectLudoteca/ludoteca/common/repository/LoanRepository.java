@@ -2,6 +2,7 @@ package com.projectLudoteca.ludoteca.common.repository;
 
 import com.projectLudoteca.ludoteca.common.entity.Loan;
 import com.projectLudoteca.ludoteca.query.dashboard.MostPlayedGamesData;
+import com.projectLudoteca.ludoteca.query.reports.topGames.TopGameView;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
