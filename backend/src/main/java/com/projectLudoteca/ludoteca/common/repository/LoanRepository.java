@@ -51,3 +51,4 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
     List<Loan> findDefaulters(LocalDateTime limitDate);
 }
 
+       
