@@ -60,7 +60,7 @@
 	<div class="flex w-full flex-col gap-4">
 		<h4 class="inknut text-base font-bold text-black">Relatórios Detalhados</h4>
 
-		<div class="flex gap-3">
+		<div class="grid grid-cols-2 gap-3 min-[380px]:grid-cols-3 sm:flex sm:flex-wrap">
 			{#each reportOptions as option}
 				<ReportLinkCard href="/admin/reports/{option.id}" title={option.title} icon={option.icon} />
 			{/each}
