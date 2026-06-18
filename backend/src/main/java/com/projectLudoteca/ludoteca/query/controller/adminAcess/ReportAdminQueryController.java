@@ -2,9 +2,9 @@ package com.projectLudoteca.ludoteca.query.controller.adminAcess;
 
 import com.projectLudoteca.ludoteca.common.response.ApiResponse;
 import com.projectLudoteca.ludoteca.query.reports.defaulters.GetDefaultersReportHandler;
-import com.projectLudoteca.ludoteca.query.reports.defaulters.GetDefaultersReportHandler;
-import com.projectLudoteca.ludoteca.query.reports.defaulters.GetDefaultersReportHandler;
 import com.projectLudoteca.ludoteca.query.reports.defaulters.DefaulterUserView;
+import com.projectLudoteca.ludoteca.query.reports.seasonality.GetLoansSeasonalityHandler;
+import com.projectLudoteca.ludoteca.query.reports.seasonality.LoansSeasonalityView;
 import com.projectLudoteca.ludoteca.query.reports.topGames.GetTopGamesReportHandler;
 import com.projectLudoteca.ludoteca.query.reports.topGames.TopGameView;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,12 +23,15 @@ public class ReportAdminQueryController {
 
     private final GetTopGamesReportHandler topGamesHandler;
     private final GetDefaultersReportHandler defaultersHandler;
+    private final GetLoansSeasonalityHandler seasonalityHandler;
 
     public ReportAdminQueryController(
             GetTopGamesReportHandler topGamesHandler,
-            GetDefaultersReportHandler defaultersHandler) {
+            GetDefaultersReportHandler defaultersHandler,
+            GetLoansSeasonalityHandler seasonalityHandler) {
         this.topGamesHandler = topGamesHandler;
         this.defaultersHandler = defaultersHandler;
+        this.seasonalityHandler = seasonalityHandler;
     }
 
     @GetMapping("/top-games")
@@ -47,6 +50,15 @@ public class ReportAdminQueryController {
     public ResponseEntity<ApiResponse<List<DefaulterUserView>>> getDefaulters() {
         
         List<DefaulterUserView> reportData = defaultersHandler.handle();
+        
+        return ResponseEntity.ok(new ApiResponse<>(reportData));
+    }
+
+    @GetMapping("/seasonality")
+    @Operation(summary = "Sazonalidade e Picos de Empréstimo", description = "Retorna o volume total de empréstimos agrupados por mês e ano, ordenados do mais recente para o mais antigo.")
+    public ResponseEntity<ApiResponse<List<LoansSeasonalityView>>> getSeasonality() {
+        
+        List<LoansSeasonalityView> reportData = seasonalityHandler.handle();
         
         return ResponseEntity.ok(new ApiResponse<>(reportData));
     }
