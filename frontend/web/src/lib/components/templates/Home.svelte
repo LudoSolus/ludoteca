@@ -4,9 +4,10 @@
 	import type { IListNextEventsResponse } from '$lib/api/queries/events/list-next-events/list-next-events.interface';
 	import EventCarousel from '$lib/components/organisms/EventCarousel.svelte';
 	import BoardGame from '../molecules/BoardGame.svelte';
+	import BoardGameSkeleton from '../molecules/BoardGameSkeleton.svelte';
 
 	export let events: IListNextEventsResponse[] | undefined = undefined;
-	export let playedGames: IBoardGame[];
+	export let playedGames: IBoardGame[] | undefined = undefined;
 
 	function handleClickEvent(id: string): void {
 		goto(`/user/event/${id}`);
@@ -22,16 +23,24 @@
 		<h3>Jogos Jogados</h3>
 
 		<div class="games-list flex w-fit flex-col gap-2 p-2">
-			{#each playedGames as game}
-				<BoardGame
-					title={game.name}
-					category={game.category}
-					minParticipants={game.minParticipants}
-					maxParticipants={game.maxParticipants}
-					isActivate={true}
-					onClick={() => goto(`/board-games/${game.id}`)}
-				/>
-			{/each}
+			{#if playedGames === undefined}
+				{#each Array(4) as _}
+					<BoardGameSkeleton />
+				{/each}
+			{:else if playedGames.length === 0}
+				<p class="w-[94vw] min-[590px]:w-136 text-center py-4 text-gray-500">Nenhum jogo jogado encontrado.</p>
+			{:else}
+				{#each playedGames as game}
+					<BoardGame
+						title={game.name}
+						category={game.category}
+						minParticipants={game.minParticipants}
+						maxParticipants={game.maxParticipants}
+						isActivate={true}
+						onClick={() => goto(`/board-games/${game.id}`)}
+					/>
+				{/each}
+			{/if}
 		</div>
 	</section>
 </main>

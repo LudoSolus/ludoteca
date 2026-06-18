@@ -1,18 +1,22 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
-	import { faChevronLeft, faChevronRight, faCalendarMinus } from '@fortawesome/free-solid-svg-icons';
+	import {
+		faChevronLeft,
+		faChevronRight,
+		faCalendarMinus
+	} from '@fortawesome/free-solid-svg-icons';
 	import EventCard from '$lib/components/molecules/EventCard.svelte';
 	import EventCardSkeleton from '$lib/components/molecules/EventCardSkeleton.svelte';
 	import type { IListNextEventsResponse } from '$lib/api/queries/events/list-next-events/list-next-events.interface';
-	
+
 	export let title = 'Eventos';
 	export let events: IListNextEventsResponse[] | undefined = undefined;
 	export let onClickEvent: (id: string) => void;
 	export let onCopyEvent: ((id: string) => void) | null = null;
 	export let loading: boolean | undefined = undefined;
 
-	$: isLoading = loading ?? (events === undefined);
+	$: isLoading = loading ?? events === undefined;
 
 	let carouselTrack: HTMLDivElement | null = null;
 	let scrollLeft = 0;
@@ -116,12 +120,14 @@
 				<div
 					class="flex w-full flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed border-black bg-[var(--card-background-color)] p-8 text-center shadow-[0px_4px_10px_rgba(0,0,0,0.25)]"
 				>
-					<div class="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--primary-color)] text-black border-2 border-black">
+					<div
+						class="flex h-16 w-16 items-center justify-center rounded-full border-2 border-black bg-[var(--primary-color)] text-black"
+					>
 						<Fa icon={faCalendarMinus} size="2x" />
 					</div>
 					<div class="flex flex-col gap-1">
 						<h4 class="inknut text-lg font-bold">Nenhum evento agendado</h4>
-						<p class="text-sm text-gray-700">Fique de olho! Novos eventos serão publicados em breve.</p>
+						<p class="text-sm text-gray-700">Fique de olho! Novos eventos acontecerão em breve.</p>
 					</div>
 				</div>
 			{:else}
