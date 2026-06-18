@@ -39,8 +39,8 @@
 		: [];
 </script>
 
-<main class="flex w-full flex-col items-center justify-center gap-10 px-4 py-2 sm:px-10">
-	<div class="self-end pt-10">
+<main class="flex w-full flex-col px-2 pt-7 pb-20 sm:px-4 md:px-10">
+	<div class="flex w-full justify-end">
 		<Button
 			text={'Criar'}
 			leftIcon={faPlus}
@@ -50,25 +50,23 @@
 		/>
 	</div>
 	<div
-		class="flex h-full flex-col items-center justify-center lg:w-full lg:flex-row lg:items-start lg:justify-between"
+		class="section-height mt-6 flex w-full max-w-350 flex-col items-start justify-center gap-10 lg:flex-row lg:justify-between lg:gap-20 sm:mt-0"
 	>
 		<!-- USERS -->
 		<section
-			class="flex w-full max-w-150 flex-1 flex-col items-center justify-center gap-8 pt-0 lg:px-10"
+			class="flex w-full max-w-150 flex-1 flex-col items-center justify-start gap-8"
 		>
-			<div class="flex w-full max-w-lg flex-col gap-4">
-				<h3 class="h3 gap-5">Usuários</h3>
-
-				<div class="flex w-full max-w-lg items-center justify-start gap-5 px-1">
+			<h3 class="h3 w-full text-start">Usuários</h3>
+			<div class="box-list flex flex-col gap-8 px-1">
+				<div class="flex w-full items-center justify-start">
 					<SearchInput
-						height={'100%'}
 						bind:value={searchInputLeftValue}
 						placeholder="Pesquisar..."
 					/>
 				</div>
 
 				<div
-					class="scrollbar-clean flex max-h-72 min-h-72 w-full flex-1 flex-col items-center gap-2 overflow-y-auto px-1 py-2"
+					class="user-list scrollbar-clean flex w-full flex-col items-center gap-2 overflow-y-auto px-1 py-2 md:px-4"
 				>
 					{#if isLoading}
 						{#each Array(4) as _}
@@ -105,21 +103,19 @@
 
 		<!-- ADMINS -->
 		<section
-			class="flex max-w-150 flex-1 flex-col items-center justify-center gap-8 pt-15 lg:px-10 lg:pt-0"
+			class="flex w-full max-w-150 flex-1 flex-col items-center justify-start gap-8"
 		>
-			<div class="flex w-full max-w-lg flex-col gap-4">
-				<h3 class="h3 gap-5">Administradores</h3>
-
-				<div class="flex w-full max-w-lg items-center justify-start gap-5 px-1">
+			<h3 class="h3 w-full text-start">Administradores</h3>
+			<div class="box-list flex flex-col gap-8 px-1">
+				<div class="flex w-full items-center justify-start">
 					<SearchInput
-						height={'100%'}
 						bind:value={searchInputRightValue}
 						placeholder="Pesquisar..."
 					/>
 				</div>
 
 				<div
-					class="scrollbar-clean flex max-h-72 min-h-72 w-full flex-1 flex-col items-center gap-2 overflow-y-auto px-1 py-2"
+					class="user-list scrollbar-clean flex w-full flex-col items-center gap-2 overflow-y-auto px-1 py-2 md:px-4"
 				>
 					{#if isLoading}
 						{#each Array(4) as _}
@@ -156,3 +152,21 @@
 		</section>
 	</div>
 </main>
+
+<style>
+	.section-height {
+		height: calc(100% - 54px);
+		min-height: fit-content;
+	}
+
+	.box-list {
+		height: calc(100% - 77px);
+		width: 100%;
+	}
+
+	.user-list {
+		height: fit-content;
+		max-height: 400px;
+		scrollbar-width: thin;
+	}
+</style>
