@@ -52,8 +52,5 @@
 	}
 </script>
 
-{#if boardGameDetails}
-	<BoardGamesUpdate boardGame={boardGameDetails} {isLoading} onEditBoardGame={editBoardGame} />
-{:else}
-	<p>Carregando...</p>
-{/if}
+<BoardGamesUpdate boardGame={boardGameDetails} {isLoading} onEditBoardGame={editBoardGame} />
+
