@@ -55,16 +55,12 @@
 	}
 </script>
 
-{#if boardGameDetails}
-	<BoardGameDetails
-		{boardGameDetails}
-		handleOnDelete={deleteBoardGame}
-		{isLoading}
-		handleOnEdit={() => {
-			goto(`/admin/board-games/${$page.params.id}/edit`);
-		}}
-		type="admin"
-	/>
-{:else}
-	<p>Carregando...</p>
-{/if}
+<BoardGameDetails
+	{boardGameDetails}
+	handleOnDelete={deleteBoardGame}
+	{isLoading}
+	handleOnEdit={() => {
+		goto(`/admin/board-games/${$page.params.id}/edit`);
+	}}
+	type="admin"
+/>
