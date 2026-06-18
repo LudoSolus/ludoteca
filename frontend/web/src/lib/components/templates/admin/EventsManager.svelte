@@ -6,7 +6,7 @@
 	import { EEventStatus } from '$lib/shared/enums/event-status.enum';
 	import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-	export let events: IListEvent[];
+	export let events: IListEvent[] | undefined = undefined;
 
 	function goToEvent(eventId: string): void {
 		goto(`/admin/events/${eventId}`);
@@ -20,10 +20,12 @@
 		goto(`/admin/events/create?eventId=${eventId}`);
 	};
 
-	$: nextEvents = events.filter(
-		(e) => e.status == EEventStatus.SCHEDULED || e.status == EEventStatus.INPROGRESS
-	);
-	$: finishedEvents = events.filter((e) => e.status == EEventStatus.COMPLETED);
+	$: nextEvents = events
+		? events.filter(
+				(e) => e.status == EEventStatus.SCHEDULED || e.status == EEventStatus.INPROGRESS
+			)
+		: undefined;
+	$: finishedEvents = events ? events.filter((e) => e.status == EEventStatus.COMPLETED) : undefined;
 </script>
 
 <main class="flex w-full flex-col px-2 pt-7 pb-20 sm:px-4 md:px-10">

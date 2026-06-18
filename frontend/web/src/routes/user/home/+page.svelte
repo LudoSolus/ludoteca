@@ -10,7 +10,7 @@
 	import { onMount } from 'svelte';
 
 	const queriesHandler = new QueriesHandlerService(axios);
-	let events: IListNextEventsResponse[] = [];
+	let events: IListNextEventsResponse[] | undefined = undefined;
 	let playedGames: IBoardGame[] = [];
 
 	onMount(() => {

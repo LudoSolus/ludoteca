@@ -5,7 +5,7 @@
 	import EventCarousel from '$lib/components/organisms/EventCarousel.svelte';
 	import BoardGame from '../molecules/BoardGame.svelte';
 
-	export let events: IListNextEventsResponse[];
+	export let events: IListNextEventsResponse[] | undefined = undefined;
 	export let playedGames: IBoardGame[];
 
 	function handleClickEvent(id: string): void {
