@@ -57,4 +57,13 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
                      "AND l.dateLoan < :limitDate " +
                      "ORDER BY l.dateLoan ASC")
        List<Loan> findDefaulters(LocalDateTime limitDate);
+
+       @Query(value = "SELECT EXTRACT(MONTH FROM date_loan) as month, " +
+                     "EXTRACT(YEAR FROM date_loan) as year, " +
+                     "COUNT(id) as total_loans " +
+                     "FROM loan " +
+                     "WHERE removed = false " +
+                     "GROUP BY year, month " +
+                     "ORDER BY year DESC, month DESC", nativeQuery = true)
+       List<Object[]> findLoansSeasonality();
 }
