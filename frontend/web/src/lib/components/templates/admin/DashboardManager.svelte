@@ -4,15 +4,61 @@
 	import ParticipantsByEventChart from '$lib/components/molecules/chart/ParticipantsByEventChart.svelte';
 	import type { IMostPlayedGamesData } from '$lib/api/queries/dashboard/most-played-games/most-played-games.interface';
 	import type { IParticipantsByEventData } from '$lib/api/queries/dashboard/participants-by-event/participants-by-event.interface';
+	import ReportLinkCard from '$lib/components/molecules/ReportLinkCard.svelte';
+	import {
+		faUsers,
+		faDice,
+		faCalendar,
+		faChartLine,
+		faUserGroup
+	} from '@fortawesome/free-solid-svg-icons';
 
 	export let totalUsers: number | null;
 	export let mostPlayedGamesData: IMostPlayedGamesData[] | null;
 	export let participantsByEventData: IParticipantsByEventData[] | null;
+
+	const reportOptions = [
+		{
+			id: 'users' as const,
+			title: 'Usuários',
+			icon: faUsers
+		},
+		{
+			id: 'games' as const,
+			title: 'Acervo',
+			icon: faDice
+		},
+		{
+			id: 'events' as const,
+			title: 'Eventos',
+			icon: faCalendar
+		},
+		{
+			id: 'most_played' as const,
+			title: 'Mais Jogados',
+			icon: faChartLine
+		},
+		{
+			id: 'event_participants' as const,
+			title: 'Presenças',
+			icon: faUserGroup
+		}
+	];
 </script>
 
 <main class="flex w-full flex-col gap-8 px-4 py-8 sm:px-10 xl:px-15">
 	<div class="flex w-full items-center justify-between">
 		<h3>Dashboard</h3>
+	</div>
+
+	<div class="flex w-full flex-col gap-4">
+		<h4 class="inknut text-base font-bold text-black">Relatórios Detalhados</h4>
+
+		<div class="flex gap-3">
+			{#each reportOptions as option}
+				<ReportLinkCard href="/admin/reports/{option.id}" title={option.title} icon={option.icon} />
+			{/each}
+		</div>
 	</div>
 
 	<div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
