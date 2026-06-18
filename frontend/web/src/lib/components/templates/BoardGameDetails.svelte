@@ -4,8 +4,8 @@
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
 
 	export let boardGameDetails: IGetBoardGameDetailsWithLoanResponse;
-	export let handleOnEdit: () => void;
-	export let handleOnDelete: () => void;
+	export let handleOnEdit: (() => void) | null = null;
+	export let handleOnDelete: (() => void) | null = null;
 	export let isLoading: boolean;
 	export let type: 'admin' | 'user';
 </script>
@@ -14,8 +14,8 @@
 	<GoBack
 		title={boardGameDetails.title}
 		description="Detalhes do jogo"
-		onEdit={handleOnEdit}
-		onDelete={handleOnDelete}
+		onEdit={type === 'admin' ? handleOnEdit : null}
+		onDelete={type === 'admin' ? handleOnDelete : null}
 		isLoadingDelete={isLoading}
 	/>
 	<div
@@ -50,19 +50,21 @@
 				</div>
 			</div>
 		</section>
-		<section class="flex flex-1 flex-col items-center justify-center gap-8">
-			<h3 class="h3 w-full text-start">Empréstimos</h3>
-			<div
-				class="flex max-h-90 w-full flex-col items-center gap-2 overflow-y-auto px-1 py-2 md:px-4"
-			>
-				{#if boardGameDetails.loanHistory.length > 0}
-					{#each boardGameDetails.loanHistory as loan}
-						<LoanHistoryContainer userEmail={loan.userEmail} loanDate={loan.loanDate} />
-					{/each}
-				{:else}
-					<p class="w-full">Nenhum empréstimo realizado.</p>
-				{/if}
-			</div>
-		</section>
+		{#if type === 'admin'}
+			<section class="flex flex-1 flex-col items-center justify-center gap-8">
+				<h3 class="h3 w-full text-start">Empréstimos</h3>
+				<div
+					class="flex max-h-90 w-full flex-col items-center gap-2 overflow-y-auto px-1 py-2 md:px-4"
+				>
+					{#if boardGameDetails.loanHistory.length > 0}
+						{#each boardGameDetails.loanHistory as loan}
+							<LoanHistoryContainer userEmail={loan.userEmail} loanDate={loan.loanDate} />
+						{/each}
+					{:else}
+						<p class="w-full">Nenhum empréstimo realizado.</p>
+					{/if}
+				</div>
+			</section>
+		{/if}
 	</div>
 </main>

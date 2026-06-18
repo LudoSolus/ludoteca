@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { IGetUserDetails } from '$lib/api/queries/users/get-user-details/get-user-details.interface';
-	import type { IChartItem } from '$lib/components/atoms/PieChart.svelte';
-	import PieChart from '$lib/components/atoms/PieChart.svelte';
+	import type { IChartItem } from '$lib/components/molecules/chart/PieChart.svelte';
+	import PieChart from '$lib/components/molecules/chart/PieChart.svelte';
 	import Tooltip from '$lib/components/atoms/Tooltip.svelte';
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
 	import { ETooltipBehavior } from '$lib/shared/enums/tooltip-behavior.enum';
