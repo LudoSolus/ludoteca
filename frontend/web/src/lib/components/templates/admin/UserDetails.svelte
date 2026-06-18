@@ -5,6 +5,7 @@
 	import Tooltip from '$lib/components/atoms/Tooltip.svelte';
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
 	import { ETooltipBehavior } from '$lib/shared/enums/tooltip-behavior.enum';
+	import { formatPhone } from '$lib/shared/helpers/format-phone';
 
 	export let userDetails: IGetUserDetails | null = null;
 	export let handleOnEdit: () => void;
@@ -114,7 +115,7 @@
 					</div>
 					<div class="flex w-full flex-wrap gap-2">
 						<p class="font-bold">Telefone:</p>
-						<p>{userDetails.phone}</p>
+						<p>{formatPhone(userDetails.phone)}</p>
 					</div>
 					<div class="flex w-full flex-wrap gap-2">
 						<p class="font-bold">Classificação Etária:</p>
