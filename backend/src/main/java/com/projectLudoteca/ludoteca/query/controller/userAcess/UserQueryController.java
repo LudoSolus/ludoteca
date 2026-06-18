@@ -7,8 +7,6 @@ import com.projectLudoteca.ludoteca.query.detailsUser.GetUserDetailsView;
 import com.projectLudoteca.ludoteca.query.detailsUserAdmin.GetUserDetailsAdminView;
 import com.projectLudoteca.ludoteca.query.listAllUsersAdminForAdmin.GetAllUsersForAdminHandler;
 import com.projectLudoteca.ludoteca.query.listAllUsersAdminForAdmin.GetAllUsersForAdminView;
-import com.projectLudoteca.ludoteca.query.userHistory.ListRecentGamesPlayedByUserHandler;
-import com.projectLudoteca.ludoteca.query.userHistory.RecentGamePlayedView;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,12 +22,10 @@ import java.util.List;
 public class UserQueryController {
 
     private final GetUserDetailsHandler userDetailsHandler;
-    private final ListRecentGamesPlayedByUserHandler recentGamesHandler;
 
     public UserQueryController(GetUserDetailsHandler userDetailsHandler,
             ListRecentGamesPlayedByUserHandler recentGamesHandler) {
         this.userDetailsHandler = userDetailsHandler;
-        this.recentGamesHandler = recentGamesHandler;
     }
 
     @GetMapping("/profile-user")
