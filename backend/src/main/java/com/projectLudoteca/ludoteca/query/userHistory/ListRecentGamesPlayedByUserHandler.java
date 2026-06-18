@@ -22,10 +22,7 @@ public class ListRecentGamesPlayedByUserHandler {
         
         List<Loan> recentLoans = loanRepository.findRecentGamesByUserId(user.getId());
         
-        System.out.println("DEBUG: Total Loans encontrados = " + recentLoans.size());
-        
         return recentLoans.stream()
-                .limit(20)
                 .map(loan -> new RecentGamePlayedView(
                         loan.getGame().getId(),
                         loan.getGame().getBarcode(),
