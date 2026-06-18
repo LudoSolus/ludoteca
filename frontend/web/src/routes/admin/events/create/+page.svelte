@@ -38,7 +38,7 @@
 				eventForCopy = data.resultData;
 			},
 			error: (err) => {
-				toast.error('Não foi possível encontrar o evento para copiar');
+				console.error(err);
 			}
 		});
 	}
@@ -50,7 +50,7 @@
 				boardGames = data.resultData;
 			},
 			error: (err) => {
-				toast.error(err.message, { closable: true });
+				console.error(err);
 			}
 		});
 	}
@@ -65,7 +65,6 @@
 				isLoading = false;
 			},
 			error: (err) => {
-				toast.error(err.message, { closable: true });
 				isLoading = false;
 			}
 		});

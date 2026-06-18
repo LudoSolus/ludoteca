@@ -25,7 +25,6 @@
 				loginUserLoading = false;
 			},
 			error: (err) => {
-                toast.error(err.message, { closable: true });
 				loginUserLoading = false;
 			}
 		});
