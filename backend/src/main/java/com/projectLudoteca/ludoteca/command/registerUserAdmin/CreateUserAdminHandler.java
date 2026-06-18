@@ -7,7 +7,6 @@ import com.projectLudoteca.ludoteca.common.exception.BusinessException;
 import com.projectLudoteca.ludoteca.common.repository.EducationalInstitutionRepository;
 import com.projectLudoteca.ludoteca.common.repository.UserRepository;
 import com.projectLudoteca.ludoteca.common.util.PasswordGenerator;
-import com.projectLudoteca.ludoteca.infrastructure.security.config.JwtService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
@@ -26,115 +25,47 @@ public class CreateUserAdminHandler {
     private final UserRepository repository;
     private final EducationalInstitutionRepository educationalInstitutionRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
     private final PasswordGenerator passwordGenerator;
     private final JavaMailSender mailSender;
 
     @Autowired
-    public CreateUserAdminHandler(UserRepository repository, EducationalInstitutionRepository educationalInstitutionRepository, PasswordEncoder passwordEncoder, JwtService jwtService, PasswordGenerator passwordGenerator, JavaMailSender mailSender) {
+    public CreateUserAdminHandler(UserRepository repository, EducationalInstitutionRepository educationalInstitutionRepository, PasswordEncoder passwordEncoder, PasswordGenerator passwordGenerator, JavaMailSender mailSender) {
         this.repository = repository;
         this.educationalInstitutionRepository = educationalInstitutionRepository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
         this.passwordGenerator = passwordGenerator;
         this.mailSender = mailSender;
     }
 
     @Transactional
     public String handle(CreateUserAdminCommand command) {
-        if (command.name() == null || command.name().trim().isEmpty()) {
-            throw new IllegalArgumentException("O nome é obrigatório.");
-        }
-        if (command.cpf() == null || command.cpf().trim().isEmpty()) {
-            throw new IllegalArgumentException("O CPF é obrigatório.");
-        }
-        if (command.email() == null || command.email().trim().isEmpty()) {
-            throw new IllegalArgumentException("O e-mail é obrigatório.");
-        }
-        if (command.phone() == null || command.phone().trim().isEmpty()) {
-            throw new IllegalArgumentException("O telefone é obrigatório.");
-        }
-        if( command.birthDate() == null ) {
-            throw new IllegalArgumentException("A data de nascimento é obrigatória.");
-        }
-
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-        if (!Pattern.matches(emailRegex, command.email())) {
-            throw new IllegalArgumentException("Formato de e-mail inválido.");
-        }
-
-        String phoneRegex = "\\d{10,11}";
-        if (!Pattern.matches(phoneRegex, command.phone())) {
-            throw new IllegalArgumentException("Telefone inválido. Deve conter 10 ou 11 números.");
-        }
-
-        if (command.ra() != null && !command.ra().matches("\\d+")) {
-            throw new BusinessException("400", "O RA deve conter apenas números.");
-        }
+        validateInputs(command);
 
         if (repository.existsByEmail(command.email())) {
-            throw new IllegalArgumentException("E-mail já cadastrado!");
+            throw new BusinessException("400", "E-mail já cadastrado!");
         }
         if (repository.existsByCpf(command.cpf())) {
-            throw new IllegalArgumentException("CPF já cadastrado!");
+            throw new BusinessException("400", "CPF já cadastrado!");
         }
-
-        UserRole role;
-        EducationalInstitution institution = null;
 
         boolean raPresente = command.ra() != null && !command.ra().trim().isEmpty();
         boolean institutionIdPresente = command.institutionId() != null && !command.institutionId().isBlank();
 
         if (raPresente && !institutionIdPresente) {
-            throw new IllegalArgumentException("A Instituição Educacional é obrigatória quando o Registro Acadêmico (RA) é fornecido.");
+            throw new BusinessException("400", "A Instituição Educacional é obrigatória quando o RA é fornecido.");
         }
-
         if (institutionIdPresente && !raPresente) {
-            throw new IllegalArgumentException("O Registro Acadêmico (RA) é obrigatório quando a Instituição Educacional é fornecida.");
+            throw new BusinessException("400", "O RA é obrigatório quando a Instituição Educacional é fornecida.");
+        }
+        if (raPresente && repository.existsByRa(command.ra())) {
+            throw new BusinessException("400", "RA já cadastrado!");
         }
 
-        if (command.userRole() == UserRole.ADMIN) {
-            role = UserRole.ADMIN;
-
-            if (raPresente && repository.existsByRa(command.ra())) {
-                throw new IllegalArgumentException("RA já cadastrado!");
-            }
-
-            if (raPresente) {
-                UUID institutionUuid;
-                try {
-                    institutionUuid = UUID.fromString(command.institutionId());
-                } catch (IllegalArgumentException e) {
-                    throw new IllegalArgumentException("Formato do ID da instituição inválido.");
-                }
-
-                institution = educationalInstitutionRepository.findById(institutionUuid)
-                        .orElseThrow(() -> new BusinessException("404", "Instituição Educacional não encontrada."));
-            }
-        } else if (raPresente) {
-            role = UserRole.STUDENT;
-
-            if (repository.existsByRa(command.ra())) {
-                throw new IllegalArgumentException("RA já cadastrado!");
-            }
-
-            UUID institutionUuid;
-            try {
-                institutionUuid = UUID.fromString(command.institutionId());
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Formato do ID da instituição inválido.");
-            }
-
-            institution = educationalInstitutionRepository.findById(institutionUuid)
-                    .orElseThrow(() -> new BusinessException("404", "Instituição Educacional não encontrada."));
-        } else {
-            role = UserRole.USER;
-        }
+        UserRole role = command.userRole() != null ? command.userRole() : (raPresente ? UserRole.STUDENT : UserRole.USER);
+        EducationalInstitution institution = raPresente ? fetchEducationalInstitution(command.institutionId(), true) : null;
 
         String password = passwordGenerator.generate();
-
         sendRecoveryEmail(command.email(), password);
-
         String encodedPassword = passwordEncoder.encode(password);
 
         User user = new User();
@@ -150,36 +81,39 @@ public class CreateUserAdminHandler {
 
         repository.save(user);
 
-        String token = jwtService.generateToken(user.getId(), user.getName(),user.getPublicId(), user.getEmail(), user.getUserRole().name());
+        return "Usuário criado com sucesso. Senha enviada por e-mail.";
+    }
 
-        return token;
+    private void validateInputs(CreateUserAdminCommand command) {
+        if (command.name() == null || command.name().trim().isEmpty()) throw new BusinessException("400", "O nome é obrigatório.");
+        if (command.cpf() == null || command.cpf().trim().isEmpty()) throw new BusinessException("400", "O CPF é obrigatório.");
+        if (command.email() == null || command.email().trim().isEmpty()) throw new BusinessException("400", "O e-mail é obrigatório.");
+        if (command.phone() == null || command.phone().trim().isEmpty()) throw new BusinessException("400", "O telefone é obrigatório.");
+        if (command.birthDate() == null) throw new BusinessException("400", "A data de nascimento é obrigatória.");
+
+        if (!Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", command.email())) throw new BusinessException("400", "Formato de e-mail inválido.");
+        if (!Pattern.matches("\\d{10,11}", command.phone())) throw new BusinessException("400", "Telefone inválido. Deve conter 10 ou 11 números.");
+        if (command.ra() != null && !command.ra().matches("\\d+")) throw new BusinessException("400", "O RA deve conter apenas números.");
     }
 
     private EducationalInstitution fetchEducationalInstitution(String institutionId, boolean required) {
         if (required && (institutionId == null || institutionId.isBlank())) {
-            throw new IllegalArgumentException("O ID da Instituição Educacional é obrigatório.");
+            throw new BusinessException("400", "O ID da Instituição Educacional é obrigatório.");
         }
+        if (institutionId == null || institutionId.isBlank()) return null;
 
-        if (institutionId == null || institutionId.isBlank()) {
-            return null;
-        }
-
-        UUID institutionUuid;
         try {
-            institutionUuid = UUID.fromString(institutionId);
+            return educationalInstitutionRepository.findById(UUID.fromString(institutionId))
+                    .orElseThrow(() -> new BusinessException("404", "Instituição Educacional não encontrada."));
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Formato do ID da instituição inválido.");
+            throw new BusinessException("400", "Formato do ID da instituição inválido.");
         }
-
-        return educationalInstitutionRepository.findById(institutionUuid)
-                .orElseThrow(() -> new BusinessException("404", "Instituição Educacional não encontrada."));
     }
 
     private void sendRecoveryEmail(String to, String password) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
             helper.setTo(to);
             helper.setSubject("Sua Senha - Ludoteca");
             helper.setText("<!DOCTYPE html>\n" +
@@ -283,10 +217,9 @@ public class CreateUserAdminHandler {
                     "</div>\n" +
                     "</body>\n" +
                     "</html>\n", true);
-
             mailSender.send(message);
         } catch (MessagingException e) {
-            throw new RuntimeException("Erro ao enviar e-mail de recuperação.");
+            throw new BusinessException("500", "Erro ao enviar e-mail de recuperação.");
         }
     }
 }
