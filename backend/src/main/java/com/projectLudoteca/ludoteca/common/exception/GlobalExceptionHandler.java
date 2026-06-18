@@ -85,16 +85,27 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Trata exceções de negócio personalizadas.
+     * Trata exceções de negócio personalizadas, mapeando o código dinamicamente para o HTTP Status.
      */
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiResponse<Void>> handleBusinessException(BusinessException ex) {
+        String codeString = ex.getErrorCode();
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        if (codeString != null) {
+            try {
+                status = HttpStatus.valueOf(Integer.parseInt(codeString));
+            } catch (IllegalArgumentException e) {
+                // Padrão
+            }
+        }
+
         ApiResponse<Void> response = new ApiResponse<>();
-        response.setErrorCode(ex.getErrorCode());
+        response.setErrorCode(codeString != null ? codeString : String.valueOf(status.value()));
         response.setErrorName("BusinessException");
         response.setErrorMessage(ex.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        return ResponseEntity.status(status).body(response);
     }
 
 
