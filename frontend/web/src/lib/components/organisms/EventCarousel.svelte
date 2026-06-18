@@ -118,7 +118,7 @@
 				{/each}
 			{:else if !events || events.length === 0}
 				<div
-					class="flex w-full flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed border-black bg-[var(--card-background-color)] p-8 text-center shadow-[0px_4px_10px_rgba(0,0,0,0.25)]"
+					class="flex w-full flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed border-black p-8 text-center shadow-[0px_4px_10px_rgba(0,0,0,0.25)]"
 				>
 					<div
 						class="flex h-16 w-16 items-center justify-center rounded-full border-2 border-black bg-[var(--primary-color)] text-black"

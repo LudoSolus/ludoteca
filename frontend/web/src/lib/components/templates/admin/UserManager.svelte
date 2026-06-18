@@ -86,7 +86,7 @@
 						{/each}
 					{:else}
 						<div
-							class="flex w-full flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-black bg-(--card-background-color) p-5 text-center shadow-[0px_4px_10px_rgba(0,0,0,0.25)]"
+							class="flex w-full flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-black p-5 text-center shadow-[0px_4px_10px_rgba(0,0,0,0.25)]"
 						>
 							<div
 								class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-black bg-(--primary-color) text-black"
@@ -138,7 +138,7 @@
 						{/each}
 					{:else}
 						<div
-							class="flex w-full flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-black bg-(--card-background-color) p-5 text-center shadow-[0px_4px_10px_rgba(0,0,0,0.25)]"
+							class="flex w-full flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-black p-5 text-center shadow-[0px_4px_10px_rgba(0,0,0,0.25)]"
 						>
 							<div
 								class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-black bg-(--primary-color) text-black"
@@ -147,7 +147,7 @@
 							</div>
 							<div class="flex flex-col gap-1">
 								<h4 class="inknut text-sm font-bold">Nenhum administrador</h4>
-								<p class="text-xs text-gray-700">Não há administradores cadastrados.</p>
+								<p class="text-xs text-gray-700">Nenhum administrador foi encontrado.</p>
 							</div>
 						</div>
 					{/if}
