@@ -41,10 +41,10 @@ public class ReturnGameHandler {
         }
 
         Game game = gameRepository.findByIdAndRemovedFalse(gameId)
-                .orElseThrow(() -> new RuntimeException("Jogo não encontrado ou removido."));
+                .orElseThrow(() -> new BusinessException("Jogo não encontrado ou removido."));
 
         Loan activeLoan = loanRepository.findByGameIdAndDateReturnIsNullAndRemovedFalse(gameId)
-                .orElseThrow(() -> new RuntimeException("Este jogo não está emprestado no momento."));
+                .orElseThrow(() -> new BusinessException("Este jogo não está emprestado no momento."));
 
         UUID userId = activeLoan.getUserId();
 
