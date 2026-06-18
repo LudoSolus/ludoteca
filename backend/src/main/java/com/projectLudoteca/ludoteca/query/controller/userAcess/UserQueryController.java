@@ -27,7 +27,7 @@ public class UserQueryController {
     private final ListRecentGamesPlayedByUserHandler recentGamesHandler;
 
     public UserQueryController(GetUserDetailsHandler userDetailsHandler,
-                               ListRecentGamesPlayedByUserHandler recentGamesHandler) {
+            ListRecentGamesPlayedByUserHandler recentGamesHandler) {
         this.userDetailsHandler = userDetailsHandler;
         this.recentGamesHandler = recentGamesHandler;
     }
@@ -43,8 +43,10 @@ public class UserQueryController {
     }
 
     @GetMapping("/history/recent-games")
-    @Operation(summary = "Últimos 20 jogos jogados", description = "Retorna os últimos 20 jogos emprestados pelo usuário autenticado, ordenados do mais recente para o mais antigo.", tags = {"User - Histórico"})
-    public ResponseEntity<ApiResponse<List<RecentGamePlayedView>>> getRecentGamesPlayedByUser(@AuthenticationPrincipal User user) {
+    @Operation(summary = "Últimos 20 jogos jogados", description = "Retorna os últimos 20 jogos emprestados pelo usuário autenticado, ordenados do mais recente para o mais antigo.", tags = {
+            "User - Histórico" })
+    public ResponseEntity<ApiResponse<List<RecentGamePlayedView>>> getRecentGamesPlayedByUser(
+            @AuthenticationPrincipal User user) {
         List<RecentGamePlayedView> recentGames = recentGamesHandler.handle(user);
 
         ApiResponse<List<RecentGamePlayedView>> response = new ApiResponse<>(recentGames);
