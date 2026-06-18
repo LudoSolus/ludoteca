@@ -6,6 +6,7 @@ import com.projectLudoteca.ludoteca.common.entity.Loan;
 import com.projectLudoteca.ludoteca.common.entity.User;
 import com.projectLudoteca.ludoteca.common.entity.id.GameEventId;
 import com.projectLudoteca.ludoteca.common.enums.GameStatus;
+import com.projectLudoteca.ludoteca.common.exception.BusinessException;
 import com.projectLudoteca.ludoteca.common.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -37,23 +38,23 @@ public class LoanGameInEventHandler {
     public String handle(LoanGameInEventCommand command) {
 
         User user = userRepository.findByPublicIdAndRemovedFalse(command.userPublicId())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
+                .orElseThrow(() -> new BusinessException("Usuário não encontrado."));
 
         Game game = gameRepository.findByIdAndRemovedFalse(command.gameId())
-                .orElseThrow(() -> new RuntimeException("Jogo não encontrado ou removido."));
+                .orElseThrow(() -> new BusinessException("Jogo não encontrado ou removido."));
 
         Event event = eventRepository.findByIdAndRemovedFalse(command.eventId())
-                .orElseThrow(() -> new RuntimeException("Evento não encontrado."));
+                .orElseThrow(() -> new BusinessException("Evento não encontrado."));
 
         if (!gameEventRepository.existsById(new GameEventId(command.gameId(), command.eventId()))) {
-            throw new RuntimeException("Este jogo não faz parte deste evento.");
+            throw new BusinessException("Este jogo não faz parte deste evento.");
         }
 
         boolean hasActiveLoan = loanRepository
                 .existsByGameIdAndDateReturnIsNullAndRemovedFalse(command.gameId());
 
         if (hasActiveLoan) {
-            throw new RuntimeException("Este jogo já está emprestado.");
+            throw new BusinessException("Este jogo já está emprestado.");
         }
 
         Loan loan = new Loan(
