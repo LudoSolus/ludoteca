@@ -10,7 +10,8 @@
 		faDice,
 		faCalendar,
 		faChartLine,
-		faUserGroup
+		faUserGroup,
+		faClock
 	} from '@fortawesome/free-solid-svg-icons';
 
 	export let totalUsers: number | null;
@@ -42,6 +43,11 @@
 			id: 'event_participants' as const,
 			title: 'Presenças',
 			icon: faUserGroup
+		},
+		{
+			id: 'defaulters' as const,
+			title: 'Atrasos',
+			icon: faClock
 		}
 	];
 </script>
