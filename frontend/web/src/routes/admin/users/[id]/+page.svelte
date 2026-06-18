@@ -50,15 +50,12 @@
 	}
 </script>
 
-{#if userDetails}
-	<UserDetails
-		{userDetails}
-		handleOnDelete={handleDeleteUser}
-		{isLoadingDelete}
-		handleOnEdit={() => {
-			goto(`/admin/users/${$page.params.id}/edit`);
-		}}
-	/>
-{:else}
-	<p>Carregando...</p>
-{/if}
+<UserDetails
+	{userDetails}
+	handleOnDelete={handleDeleteUser}
+	{isLoadingDelete}
+	handleOnEdit={() => {
+		goto(`/admin/users/${$page.params.id}/edit`);
+	}}
+/>
+

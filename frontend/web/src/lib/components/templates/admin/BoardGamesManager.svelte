@@ -6,7 +6,7 @@
 	import Button from '$lib/components/atoms/Button.svelte';
 	import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-	export let boardGames: IBoardGame[];
+	export let boardGames: IBoardGame[] | undefined = undefined;
 
 	function goToBoardGameDetails(boardGameId: string) {
 		goto(`/admin/board-games/${boardGameId}`);

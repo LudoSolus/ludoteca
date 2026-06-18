@@ -33,12 +33,8 @@
 	}
 </script>
 
-{#if boardGameDetails}
-	<BoardGameDetails
-		{boardGameDetails}
-		{isLoading}
-		type="user"
-	/>
-{:else}
-	<p>Carregando...</p>
-{/if}
+<BoardGameDetails
+	{boardGameDetails}
+	{isLoading}
+	type="user"
+/>

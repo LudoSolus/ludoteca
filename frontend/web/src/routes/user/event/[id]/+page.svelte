@@ -32,8 +32,4 @@
 	}
 </script>
 
-{#if eventData}
-	<EventDetails {eventData} type="user" goToGameDetails={goTOGameDetails} />
-{:else}
-	<p>Carregando...</p>
-{/if}
+<EventDetails {eventData} type="user" goToGameDetails={goTOGameDetails} />

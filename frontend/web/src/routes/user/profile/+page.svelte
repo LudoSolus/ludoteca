@@ -64,8 +64,4 @@
 	}
 </script>
 
-{#if userData}
-	<Profile {isLoading} {educationalInstitutions} {userData} onEdit={updateUser} />
-{:else}
-	<p>Carregando...</p>
-{/if}
+<Profile {isLoading} {educationalInstitutions} {userData} onEdit={updateUser} />

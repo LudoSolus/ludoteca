@@ -54,8 +54,5 @@
 	}
 </script>
 
-{#if userDetails}
-	<UserUpdate user={userDetails} {userEdit} {editUserLoading} />
-{:else}
-	<p>Carregando...</p>
-{/if}
+<UserUpdate user={userDetails} {userEdit} {editUserLoading} />
+

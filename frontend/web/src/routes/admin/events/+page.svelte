@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte';
 
 	const queriesHandler = new QueriesHandlerService(axios);
-	let events: IListEvent[] = [];
+	let events: IListEvent[] | undefined = undefined;
 
 	onMount(() => {
 		fetchEvents();

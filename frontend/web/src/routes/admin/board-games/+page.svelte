@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte';
 
 	const queriesHandler = new QueriesHandlerService(axios);
-	let boardGames: IBoardGame[] = [];
+	let boardGames: IBoardGame[] | undefined = undefined;
 
 	onMount(() => {
 		fetchBoardGames();

@@ -1,14 +1,22 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
-	import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+	import {
+		faChevronLeft,
+		faChevronRight,
+		faCalendarMinus
+	} from '@fortawesome/free-solid-svg-icons';
 	import EventCard from '$lib/components/molecules/EventCard.svelte';
+	import EventCardSkeleton from '$lib/components/molecules/EventCardSkeleton.svelte';
 	import type { IListNextEventsResponse } from '$lib/api/queries/events/list-next-events/list-next-events.interface';
-	
+
 	export let title = 'Eventos';
-	export let events: IListNextEventsResponse[] = [];
+	export let events: IListNextEventsResponse[] | undefined = undefined;
 	export let onClickEvent: (id: string) => void;
 	export let onCopyEvent: ((id: string) => void) | null = null;
+	export let loading: boolean | undefined = undefined;
+
+	$: isLoading = loading ?? events === undefined;
 
 	let carouselTrack: HTMLDivElement | null = null;
 	let scrollLeft = 0;
@@ -102,11 +110,25 @@
 			bind:this={carouselTrack}
 			on:scroll={updateScrollState}
 		>
-			{#if events.length === 0}
+			{#if isLoading}
+				{#each Array(3) as _}
+					<div class="shrink-0 snap-start">
+						<EventCardSkeleton />
+					</div>
+				{/each}
+			{:else if !events || events.length === 0}
 				<div
-					class="w-full rounded-xl border border-dashed border-(--border-color,#000) bg-(--background-color,rgba(0,0,0,0.02)) px-4 py-8 text-center text-(--muted-color,#666)"
+					class="flex w-full flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed border-black p-8 text-center shadow-[0px_4px_10px_rgba(0,0,0,0.25)]"
 				>
-					Nenhum evento encontrado.
+					<div
+						class="flex h-16 w-16 items-center justify-center rounded-full border-2 border-black bg-[var(--primary-color)] text-black"
+					>
+						<Fa icon={faCalendarMinus} size="2x" />
+					</div>
+					<div class="flex flex-col gap-1">
+						<h4 class="inknut text-lg font-bold">Nenhum evento agendado</h4>
+						<p class="text-sm text-gray-700">Fique de olho! Novos eventos acontecerão em breve.</p>
+					</div>
 				</div>
 			{:else}
 				{#each events as event}

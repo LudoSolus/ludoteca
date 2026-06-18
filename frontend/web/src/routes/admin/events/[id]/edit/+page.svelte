@@ -69,8 +69,5 @@
 	}
 </script>
 
-{#if eventDetails}
-	<EventUpdate event={eventDetails} {isLoading} onEditEvent={editEvent} {boardGames} />
-{:else}
-	<p>Carregando...</p>
-{/if}
+<EventUpdate event={eventDetails} {isLoading} onEditEvent={editEvent} {boardGames} />
+

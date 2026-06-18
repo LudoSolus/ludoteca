@@ -11,21 +11,34 @@
 	let { isLoading, educationalInstitutions, userData, onEdit } = $props<{
 		isLoading: boolean;
 		educationalInstitutions: IEducationalInstitution[];
-		userData: IGetUserProfileDetailsResponse;
+		userData: IGetUserProfileDetailsResponse | null;
 		onEdit: (userData: IUpdateUserRequest) => void;
 	}>();
 
 	let formIsValid: boolean = $state(false);
-	let formValues: Record<string, string> = $derived({
-		publicId: userData.publicId,
-		name: userData.name,
-		phone: userData.phone,
-		email: userData.email,
-		cpf: userData.cpf,
-		birthDate: userData.birthDate.toISOString().split('T')[0],
-		institutionId: userData.institutionId,
-		ra: userData.ra
-	});
+	let formValues: Record<string, string> = $derived(
+		userData
+			? {
+					publicId: userData.publicId,
+					name: userData.name,
+					phone: userData.phone,
+					email: userData.email,
+					cpf: userData.cpf,
+					birthDate: userData.birthDate ? userData.birthDate.toISOString().split('T')[0] : '',
+					institutionId: userData.institutionId,
+					ra: userData.ra
+				}
+			: {
+					publicId: '',
+					name: '',
+					phone: '',
+					email: '',
+					cpf: '',
+					birthDate: '',
+					institutionId: '',
+					ra: ''
+				}
+	);
 
 	function handleOnEdit() {
 		if (!formIsValid) {
@@ -55,6 +68,35 @@
 
 <main class="flex w-full flex-col items-center gap-5 px-3 py-7 sm:px-10 md:gap-10 xl:px-15">
 	<GoBack title="Perfil" description="Seus dados" />
-	<EditProfileForm bind:isValid={formIsValid} bind:formValues {educationalInstitutions} />
-	<Button text="Salvar" width="290px" height="40px" onClick={handleOnEdit} loading={isLoading} />
+	{#if userData === null}
+		<div
+			class="grid w-full max-w-230 grid-cols-1 place-items-center gap-0 sm:grid-cols-2 sm:gap-3 xl:gap-5"
+		>
+			{#each Array(7) as _}
+				<div class="flex w-full flex-col gap-2" style="height: 90px;">
+					<div class="skeleton-pulse h-4 w-28 rounded bg-gray-300"></div>
+					<div class="skeleton-pulse h-10 w-full rounded border border-gray-200 bg-gray-100"></div>
+				</div>
+			{/each}
+		</div>
+		<div class="skeleton-pulse mt-5 h-10 w-[290px] rounded bg-gray-300"></div>
+	{:else}
+		<EditProfileForm bind:isValid={formIsValid} bind:formValues {educationalInstitutions} />
+		<Button text="Salvar" width="290px" height="40px" onClick={handleOnEdit} loading={isLoading} />
+	{/if}
 </main>
+
+<style>
+	.skeleton-pulse {
+		animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	}
+
+	@keyframes pulse {
+		0%, 100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.4;
+		}
+	}
+</style>
