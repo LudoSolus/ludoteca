@@ -8,14 +8,21 @@
 	import { formatDateForInput } from '$lib/shared/helpers/format-date-for-input';
 	import { toast } from 'svoast';
 
-	export let event: GetEventDetailsResponse | null = null;
-	export let isLoading: boolean;
-	export let boardGames: IBoardGame[];
-	export let onEditEvent: (data: IUpdateEventRequest) => void;
+	let {
+		event = null,
+		isLoading,
+		boardGames,
+		onEditEvent
+	} = $props<{
+		event: GetEventDetailsResponse | null;
+		isLoading: boolean;
+		boardGames: IBoardGame[];
+		onEditEvent: (data: IUpdateEventRequest) => void;
+	}>();
 
-	let isClicked: boolean = false;
-	let formIsValid: boolean = false;
-	let formValues: Record<keyof IUpdateEventRequest, any> = {
+	let isClicked = $state(false);
+	let formIsValid = $state(false);
+	let formValues = $state<Record<keyof IUpdateEventRequest, any>>({
 		name: '',
 		description: '',
 		startDate: '',
@@ -31,27 +38,29 @@
 		hasRpg: false,
 		hasEscapeRoom: false,
 		gamesIds: []
-	};
+	});
 
-	$: if (event) {
-		formValues = {
-			name: event.name,
-			description: event.description,
-			startDate: formatDateForInput(event.startDate),
-			finalDate: formatDateForInput(event.finalDate),
-			street: event.street,
-			number: event.number,
-			supplement: event.supplement,
-			neighborhood: event.neighborhood,
-			city: event.city,
-			state: event.state,
-			zipCode: event.zipCode,
-			hasBoardGames: event.hasBoardGames,
-			hasRpg: event.hasRpg,
-			hasEscapeRoom: event.hasEscapeRoom,
-			gamesIds: event.listGames.map((g) => g.id)
-		};
-	}
+	$effect(() => {
+		if (event) {
+			formValues = {
+				name: event.name,
+				description: event.description,
+				startDate: formatDateForInput(event.startDate),
+				finalDate: formatDateForInput(event.finalDate),
+				street: event.street,
+				number: event.number,
+				supplement: event.supplement,
+				neighborhood: event.neighborhood,
+				city: event.city,
+				state: event.state,
+				zipCode: event.zipCode,
+				hasBoardGames: event.hasBoardGames,
+				hasRpg: event.hasRpg,
+				hasEscapeRoom: event.hasEscapeRoom,
+				gamesIds: event.listGames.map((g: any) => g.id)
+			};
+		}
+	});
 
 	function handleOnEdit() {
 		isClicked = true;
@@ -153,7 +162,7 @@
 		</div>
 		<div class="skeleton-pulse mt-5 h-10 w-[290px] rounded bg-gray-300"></div>
 	{:else}
-		<EventForm bind:isValid={formIsValid} {formValues} {isClicked} {boardGames} />
+		<EventForm bind:isValid={formIsValid} bind:formValues={formValues} {isClicked} {boardGames} />
 		<Button text="Salvar" width="290px" height="40px" onClick={handleOnEdit} loading={isLoading} />
 	{/if}
 </main>

@@ -76,13 +76,15 @@
 			title={eventData.name}
 			description="Detalhes do evento"
 			{isLoadingDelete}
-			onDelete={eventData.status == EEventStatus.SCHEDULED && type == 'admin' ? handleOnDelete : null}
+			onDelete={eventData.status == EEventStatus.SCHEDULED && type == 'admin'
+				? handleOnDelete
+				: null}
 			onEdit={eventData.status == EEventStatus.SCHEDULED && type == 'admin' ? handleOnEdit : null}
 		/>
 		<div
-			class="body-section flex w-full max-w-350 flex-wrap items-start justify-between gap-10 px-0 pb-6 sm:px-2 lg:px-4 xl:px-10"
+			class="flex h-fit w-full max-w-350 flex-wrap items-start justify-between gap-10 px-0 sm:px-2 md:max-h-[calc(100%-125px)] md:pb-6 lg:px-4 xl:px-10"
 		>
-			<div class="flex h-full flex-1 flex-col gap-14">
+			<div class="flex h-fit flex-1 flex-col gap-6 md:gap-14">
 				<div class="flex flex-col gap-8">
 					<h3 class="h3">Detalhes</h3>
 					<p class="lg:min-h-20">
@@ -129,7 +131,7 @@
 					</div>
 				{/if}
 			</div>
-			<div class="flex h-full w-full flex-1 items-center justify-center">
+			<div class="flex h-[50vh] w-full flex-1 items-center justify-center md:h-full">
 				<BoardGamesList
 					gamesList={eventData.listGames.map((game) => ({
 						id: game.id,
@@ -151,16 +153,13 @@
 </main>
 
 <style>
-	.body-section {
-		height: calc(100% - 125px);
-	}
-
 	.skeleton-pulse {
 		animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 	}
 
 	@keyframes pulse {
-		0%, 100% {
+		0%,
+		100% {
 			opacity: 1;
 		}
 		50% {

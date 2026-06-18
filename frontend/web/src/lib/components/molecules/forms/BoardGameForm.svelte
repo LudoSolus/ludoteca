@@ -8,6 +8,7 @@
 	import { device } from '$lib/shared/hooks/useDevice';
 	import { inputHasValue, type IFormController } from '$lib/shared/interfaces/input-controller';
 	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
+	import { untrack } from 'svelte';
 
 	type FormField = keyof ICreateBoardGameRequest;
 
@@ -15,6 +16,23 @@
 		isValid: boolean;
 		formValues: Record<keyof ICreateBoardGameRequest, string>;
 	}>();
+
+	$effect(() => {
+		const snapshot = formValues ? { ...formValues } : null;
+
+		untrack(() => {
+			if (!snapshot) return;
+			Object.keys(formController).forEach((key: string) => {
+				const formKey = key as keyof typeof formController;
+				const val = snapshot[formKey as keyof ICreateBoardGameRequest];
+				if (inputHasValue(val)) {
+					formController[formKey].touched = true;
+				}
+				formController[formKey].value = val;
+			});
+			isValid = validateForm();
+		});
+	});
 
 	const validators = new Validators();
 

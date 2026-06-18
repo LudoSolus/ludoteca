@@ -8,12 +8,18 @@
 	import { getEnumKeyByValue } from '$lib/shared/helpers/get-enum-key-by-value';
 	import { toast } from 'svoast';
 
-	export let boardGame: IGetBoardGameDetailsResponse | null = null;
-	export let isLoading: boolean;
-	export let onEditBoardGame: (data: IEditBoardGameRequest) => void;
+	let {
+		boardGame = null,
+		isLoading,
+		onEditBoardGame
+	} = $props<{
+		boardGame: IGetBoardGameDetailsResponse | null;
+		isLoading: boolean;
+		onEditBoardGame: (data: IEditBoardGameRequest) => void;
+	}>();
 
-	let formIsValid: boolean = false;
-	let formValues: Record<keyof IEditBoardGameRequest, string> = {
+	let formIsValid = $state(false);
+	let formValues = $state<Record<keyof IEditBoardGameRequest, string>>({
 		barcode: '',
 		title: '',
 		category: '',
@@ -22,20 +28,22 @@
 		maxPlayers: '',
 		linkInstructionManual: '',
 		linkVideoTutorial: ''
-	};
+	});
 
-	$: if (boardGame) {
-		formValues = {
-			barcode: String(boardGame.barcode),
-			title: boardGame.title,
-			category: getEnumKeyByValue(ECategory, boardGame.category) ?? '',
-			description: boardGame.description,
-			minPlayers: String(boardGame.minPlayers),
-			maxPlayers: String(boardGame.maxPlayers),
-			linkInstructionManual: boardGame.linkInstructionManual,
-			linkVideoTutorial: boardGame.linkVideoTutorial
-		};
-	}
+	$effect(() => {
+		if (boardGame) {
+			formValues = {
+				barcode: String(boardGame.barcode),
+				title: boardGame.title,
+				category: getEnumKeyByValue(ECategory, boardGame.category) ?? '',
+				description: boardGame.description,
+				minPlayers: String(boardGame.minPlayers),
+				maxPlayers: String(boardGame.maxPlayers),
+				linkInstructionManual: boardGame.linkInstructionManual,
+				linkVideoTutorial: boardGame.linkVideoTutorial
+			};
+		}
+	});
 
 	function handleOnEdit() {
 		if (!formIsValid) {
@@ -103,7 +111,7 @@
 		</div>
 		<div class="skeleton-pulse mt-5 h-10 w-[290px] rounded bg-gray-300"></div>
 	{:else}
-		<BoardGameForm bind:isValid={formIsValid} {formValues} />
+		<BoardGameForm bind:isValid={formIsValid} bind:formValues={formValues} />
 		<Button text="Salvar" width="290px" height="40px" onClick={handleOnEdit} loading={isLoading} />
 	{/if}
 </main>

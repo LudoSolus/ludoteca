@@ -44,7 +44,7 @@
 				boardGames = data.resultData;
 			},
 			error: (err) => {
-				toast.error(err.message, { closable: true });
+				console.error(err);
 			}
 		});
 	}
@@ -62,7 +62,6 @@
 				isLoading = false;
 			},
 			error: (err) => {
-				toast.error(err.message, { closable: true });
 				isLoading = false;
 			}
 		});

@@ -45,7 +45,6 @@
 				isLoading = false;
 			},
 			error: (err) => {
-				toast.error(err.message, { closable: true });
 				isLoading = false;
 			}
 		});

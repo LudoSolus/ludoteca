@@ -8,12 +8,18 @@
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
 	import { toast } from 'svoast';
 
-	export let user: IGetUserDetails | null = null;
-	export let editUserLoading: boolean;
-	export let userEdit: (data: IEditUserRequest) => void;
+	let {
+		user = null,
+		editUserLoading,
+		userEdit
+	} = $props<{
+		user: IGetUserDetails | null;
+		editUserLoading: boolean;
+		userEdit: (data: IEditUserRequest) => void;
+	}>();
 
-	let formIsValid: boolean = false;
-	let formValues: Record<keyof ICreateUserRequest, string> = {
+	let formIsValid = $state(false);
+	let formValues = $state<Record<keyof ICreateUserRequest, string>>({
 		name: '',
 		cpf: '',
 		email: '',
@@ -22,20 +28,22 @@
 		birthDate: new Date().toISOString().split('T')[0],
 		userRole: 'USER',
 		institutionId: ''
-	};
+	});
 
-	$: if (user) {
-		formValues = {
-			name: user.name,
-			cpf: '',
-			email: user.email,
-			phone: user.phone,
-			ra: user.ra,
-			birthDate: new Date().toISOString().split('T')[0],
-			userRole: user.userType || 'USER',
-			institutionId: ''
-		};
-	}
+	$effect(() => {
+		if (user) {
+			formValues = {
+				name: user.name,
+				cpf: '',
+				email: user.email,
+				phone: user.phone,
+				ra: user.ra,
+				birthDate: new Date().toISOString().split('T')[0],
+				userRole: user.userType || 'USER',
+				institutionId: ''
+			};
+		}
+	});
 
 	function handleOnEdit() {
 		if (!formIsValid) {
