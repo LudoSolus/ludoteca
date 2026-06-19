@@ -10,11 +10,17 @@
 		faChartLine,
 		faUserGroup,
 		faInbox,
-		faClock
+		faClock,
+		faChartBar
 	} from '@fortawesome/free-solid-svg-icons';
 	import GoBack from '$lib/components/molecules/GoBack.svelte';
 	import Button from '$lib/components/atoms/Button.svelte';
 	import type { TReportType, TReportFormat } from '$lib/types/report.type';
+
+	const MONTH_NAMES = [
+		'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+		'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+	];
 
 	export let reportType: TReportType;
 	export let data: any[] | null;
@@ -51,6 +57,11 @@
 			title: 'Relatório de Atrasos e Devoluções',
 			description: 'Listagem de usuários com devoluções de jogos pendentes e dias de atraso.',
 			icon: faClock
+		},
+		seasonality: {
+			title: 'Relatório de Empréstimos por Período',
+			description: 'Análise de sazonalidade com o total de empréstimos consolidados por mês e ano.',
+			icon: faChartBar
 		}
 	};
 
@@ -175,6 +186,13 @@
 													<th class="border-r border-black/20 p-4 font-bold">Jogo</th>
 													<th class="border-r border-black/20 p-4 font-bold">Data Limite</th>
 													<th class="p-4 font-bold">Atraso</th>
+												{:else}
+													<!-- seasonality -->
+													{#if reportType === 'seasonality'}
+														<th class="border-r border-black/20 p-4 font-bold">Ano</th>
+														<th class="border-r border-black/20 p-4 font-bold">Mês</th>
+														<th class="p-4 font-bold">Total de Empréstimos</th>
+													{/if}
 												{/if}
 											{/if}
 										{/if}
@@ -285,6 +303,17 @@
 														<td class="p-4 font-bold text-red-600">
 															{item.daysLate || 0} dias
 														</td>
+													{:else}
+														<!-- seasonality -->
+														{#if reportType === 'seasonality'}
+															<td class="border-r border-black/10 p-4 font-medium">{item.year}</td>
+															<td class="border-r border-black/10 p-4">
+																{MONTH_NAMES[item.month - 1] || item.month}
+															</td>
+															<td class="p-4 font-bold">
+																{item.totalLoans} empréstimos
+															</td>
+														{/if}
 													{/if}
 												{/if}
 											{/if}

@@ -1,17 +1,18 @@
 <script lang="ts">
-	import TotalUsersCard from '$lib/components/molecules/TotalUsersCard.svelte';
-	import MostPlayedGamesChart from '$lib/components/molecules/chart/MostPlayedGamesChart.svelte';
-	import ParticipantsByEventChart from '$lib/components/molecules/chart/ParticipantsByEventChart.svelte';
 	import type { IMostPlayedGamesData } from '$lib/api/queries/dashboard/most-played-games/most-played-games.interface';
 	import type { IParticipantsByEventData } from '$lib/api/queries/dashboard/participants-by-event/participants-by-event.interface';
+	import MostPlayedGamesChart from '$lib/components/molecules/chart/MostPlayedGamesChart.svelte';
+	import ParticipantsByEventChart from '$lib/components/molecules/chart/ParticipantsByEventChart.svelte';
 	import ReportLinkCard from '$lib/components/molecules/ReportLinkCard.svelte';
+	import TotalUsersCard from '$lib/components/molecules/TotalUsersCard.svelte';
 	import {
 		faUsers,
 		faDice,
 		faCalendar,
 		faChartLine,
 		faUserGroup,
-		faClock
+		faClock,
+		faChartBar
 	} from '@fortawesome/free-solid-svg-icons';
 
 	export let totalUsers: number | null;
@@ -48,6 +49,11 @@
 			id: 'defaulters' as const,
 			title: 'Atrasos',
 			icon: faClock
+		},
+		{
+			id: 'seasonality' as const,
+			title: 'Sazonalidade',
+			icon: faChartBar
 		}
 	];
 </script>

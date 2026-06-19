@@ -73,6 +73,17 @@ export class ReportService {
 					Atraso: `${item.daysLate || 0} dias`
 				}));
 
+			case 'seasonality':
+				const MONTH_NAMES = [
+					'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+					'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+				];
+				return rawData.map((item) => ({
+					Ano: item.year,
+					Mês: MONTH_NAMES[item.month - 1] || item.month.toString(),
+					'Total de Empréstimos': `${item.totalLoans || 0} empréstimos`
+				}));
+
 			default:
 				return [];
 		}

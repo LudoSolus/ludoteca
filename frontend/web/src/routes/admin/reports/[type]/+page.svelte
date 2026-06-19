@@ -10,6 +10,7 @@
 	import { MostPlayedGamesQuery } from '$lib/api/queries/dashboard/most-played-games/most-played-games.query';
 	import { ParticipantsByEventQuery } from '$lib/api/queries/dashboard/participants-by-event/participants-by-event.query';
 	import { DefaultersQuery } from '$lib/api/queries/reports/defaulters/defaulters.query';
+	import { SeasonalityQuery } from '$lib/api/queries/reports/seasonality/seasonality.query';
 	import { reportService } from '$lib/services/report.service';
 	import type { TReportType, TReportFormat } from '$lib/types/report.type';
 	import ReportViewerTemplate from '$lib/components/templates/admin/ReportViewerTemplate.svelte';
@@ -102,6 +103,18 @@
 				});
 				break;
 
+			case 'seasonality':
+				queriesHandler.handle(new SeasonalityQuery()).subscribe({
+					next: (res) => {
+						reportData = res.resultData || [];
+					},
+					error: (err) => {
+						console.error('Erro ao buscar sazonalidade do relatório', err);
+						reportData = [];
+					}
+				});
+				break;
+
 			default:
 				reportData = [];
 				break;
@@ -122,6 +135,8 @@
 				return 'participacao_por_evento';
 			case 'defaulters':
 				return 'usuarios_inadimplentes';
+			case 'seasonality':
+				return 'sazonalidade_emprestimos';
 			default:
 				return 'relatorio';
 		}
@@ -141,6 +156,8 @@
 				return 'Relatório de Participação por Evento';
 			case 'defaulters':
 				return 'Relatório de Atrasos e Devoluções';
+			case 'seasonality':
+				return 'Relatório de Empréstimos por Período';
 			default:
 				return 'Relatório Administrativo';
 		}
