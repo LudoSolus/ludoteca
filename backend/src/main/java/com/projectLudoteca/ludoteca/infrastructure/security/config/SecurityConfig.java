@@ -94,6 +94,7 @@ public class SecurityConfig {
 
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:5173",   // Angular local
+                "https://ludoteca.vercel.app", // Staging
                 "https://seu-dominio.com"  // Produção
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
