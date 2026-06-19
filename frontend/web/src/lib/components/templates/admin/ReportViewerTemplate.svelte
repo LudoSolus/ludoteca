@@ -18,8 +18,18 @@
 	import type { TReportType, TReportFormat } from '$lib/types/report.type';
 
 	const MONTH_NAMES = [
-		'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-		'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+		'Janeiro',
+		'Fevereiro',
+		'Março',
+		'Abril',
+		'Maio',
+		'Junho',
+		'Julho',
+		'Agosto',
+		'Setembro',
+		'Outubro',
+		'Novembro',
+		'Dezembro'
 	];
 
 	export let reportType: TReportType;
@@ -98,7 +108,7 @@
 				disabled={exporting || !data || data.length === 0}
 			/>
 			<Button
-				text="Imprimir PDF"
+				text="Exportar PDF"
 				leftIcon={faFilePdf}
 				onClick={() => onExport('pdf')}
 				disabled={exporting || !data || data.length === 0}
@@ -294,8 +304,12 @@
 												{:else}
 													<!-- defaulters -->
 													{#if reportType === 'defaulters'}
-														<td class="border-r border-black/10 p-4 font-medium">{item.userName || ''}</td>
-														<td class="border-r border-black/10 p-4 font-mono text-xs">{item.userEmail || ''}</td>
+														<td class="border-r border-black/10 p-4 font-medium"
+															>{item.userName || ''}</td
+														>
+														<td class="border-r border-black/10 p-4 font-mono text-xs"
+															>{item.userEmail || ''}</td
+														>
 														<td class="border-r border-black/10 p-4">{item.gameTitle || ''}</td>
 														<td class="border-r border-black/10 p-4 text-xs">
 															{new Date(item.expectedReturnDate).toLocaleDateString('pt-BR')}
