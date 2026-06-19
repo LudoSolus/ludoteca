@@ -72,11 +72,11 @@
 	<GoBack title={currentMeta.title} description={currentMeta.description} />
 
 	<div
-		class="-mt-2 flex flex-col gap-4 rounded-lg border border-black/10 p-4 sm:flex-row sm:items-center sm:justify-between"
+		class="-mt-2 flex flex-col gap-4 rounded-lg border border-gray-300/10 p-4 sm:flex-row sm:items-center sm:justify-between"
 	>
 		<div class="flex items-center gap-3">
 			<div
-				class="flex h-8 w-8 items-center justify-center rounded-full border border-black bg-yellow-400 text-black"
+				class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 bg-yellow-400 text-black"
 			>
 				<Fa icon={currentMeta.icon} />
 			</div>
@@ -108,8 +108,8 @@
 
 	<div class="mt-2 w-full">
 		{#if data === null}
-			<div class="w-full overflow-hidden rounded-lg border-2 border-black bg-white shadow-md">
-				<div class="flex border-b-2 border-black bg-yellow-400 p-4">
+			<div class="w-full overflow-hidden rounded-lg border border-gray-300 bg-white shadow-md">
+				<div class="flex border-b border-gray-300 bg-yellow-400 p-4">
 					<div class="skeleton-pulse h-5 w-1/4 rounded bg-black/20"></div>
 					<div class="skeleton-pulse ml-auto h-5 w-1/4 rounded bg-black/20"></div>
 					<div class="skeleton-pulse ml-auto h-5 w-1/4 rounded bg-black/20"></div>
@@ -124,10 +124,10 @@
 			</div>
 		{:else if data.length === 0}
 			<div
-				class="flex w-full flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-black bg-white p-10 text-center shadow-[0px_4px_10px_rgba(0,0,0,0.15)]"
+				class="flex w-full flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-gray-300 bg-white p-10 text-center shadow-[0px_4px_10px_rgba(0,0,0,0.15)]"
 			>
 				<div
-					class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-black bg-yellow-400 text-black"
+					class="flex h-12 w-12 items-center justify-center rounded-full border border-gray-300 bg-yellow-400 text-black"
 				>
 					<Fa icon={faInbox} size="lg" />
 				</div>
@@ -141,56 +141,56 @@
 		{:else}
 			<!-- Renderização de Tabelas Específicas -->
 			<div
-				class="w-full overflow-x-auto rounded-lg border-2 border-black bg-white shadow-[0px_4px_10px_rgba(0,0,0,0.15)]"
+				class="w-full overflow-x-auto rounded-lg border border-gray-300 bg-white shadow-[0px_4px_10px_rgba(0,0,0,0.15)]"
 			>
 				<table
 					id="report-table"
 					class="w-full min-w-[600px] border-collapse text-left text-sm text-black"
 				>
 					<thead>
-						<tr class="border-b-2 border-black bg-yellow-400 select-none">
+						<tr class="border-b border-gray-300 bg-yellow-400 select-none">
 							{#if reportType === 'users'}
-								<th class="border-r border-black/20 p-4 font-bold">E-mail</th>
-								<th class="border-r border-black/20 p-4 font-bold">Faixa Etária</th>
+								<th class="border-r border-black/10 p-4 font-bold">E-mail</th>
+								<th class="border-r border-black/10 p-4 font-bold">Faixa Etária</th>
 								<th class="p-4 font-bold">Perfil</th>
 							{:else}
 								<!-- games -->
 								{#if reportType === 'games'}
-									<th class="border-r border-black/20 p-4 font-bold">Código de Barras</th>
-									<th class="border-r border-black/20 p-4 font-bold">Nome do Jogo</th>
-									<th class="border-r border-black/20 p-4 font-bold">Categoria</th>
+									<th class="border-r border-black/10 p-4 font-bold">Código de Barras</th>
+									<th class="border-r border-black/10 p-4 font-bold">Nome do Jogo</th>
+									<th class="border-r border-black/10 p-4 font-bold">Categoria</th>
 									<th class="p-4 font-bold">Limites de Jogadores</th>
 								{:else}
 									<!-- events -->
 									{#if reportType === 'events'}
-										<th class="border-r border-black/20 p-4 font-bold">Nome do Evento</th>
-										<th class="border-r border-black/20 p-4 font-bold">Status</th>
-										<th class="border-r border-black/20 p-4 font-bold">Período</th>
-										<th class="border-r border-black/20 p-4 font-bold">Endereço</th>
+										<th class="border-r border-black/10 p-4 font-bold">Nome do Evento</th>
+										<th class="border-r border-black/10 p-4 font-bold">Status</th>
+										<th class="border-r border-black/10 p-4 font-bold">Período</th>
+										<th class="border-r border-black/10 p-4 font-bold">Endereço</th>
 										<th class="p-4 font-bold">Atividades</th>
 									{:else}
 										<!-- most_played -->
 										{#if reportType === 'most_played'}
-											<th class="border-r border-black/20 p-4 font-bold">Título do Jogo</th>
+											<th class="border-r border-black/10 p-4 font-bold">Título do Jogo</th>
 											<th class="p-4 font-bold">Total de Empréstimos</th>
 										{:else}
 											<!-- event_participants -->
 											{#if reportType === 'event_participants'}
-												<th class="border-r border-black/20 p-4 font-bold">Nome do Evento</th>
+												<th class="border-r border-black/10 p-4 font-bold">Nome do Evento</th>
 												<th class="p-4 font-bold">Total de Participantes</th>
 											{:else}
 												<!-- defaulters -->
 												{#if reportType === 'defaulters'}
-													<th class="border-r border-black/20 p-4 font-bold">Usuário</th>
-													<th class="border-r border-black/20 p-4 font-bold">E-mail</th>
-													<th class="border-r border-black/20 p-4 font-bold">Jogo</th>
-													<th class="border-r border-black/20 p-4 font-bold">Data Limite</th>
+													<th class="border-r border-black/10 p-4 font-bold">Usuário</th>
+													<th class="border-r border-black/10 p-4 font-bold">E-mail</th>
+													<th class="border-r border-black/10 p-4 font-bold">Jogo</th>
+													<th class="border-r border-black/10 p-4 font-bold">Data Limite</th>
 													<th class="p-4 font-bold">Atraso</th>
 												{:else}
 													<!-- seasonality -->
 													{#if reportType === 'seasonality'}
-														<th class="border-r border-black/20 p-4 font-bold">Ano</th>
-														<th class="border-r border-black/20 p-4 font-bold">Mês</th>
+														<th class="border-r border-black/10 p-4 font-bold">Ano</th>
+														<th class="border-r border-black/10 p-4 font-bold">Mês</th>
 														<th class="p-4 font-bold">Total de Empréstimos</th>
 													{/if}
 												{/if}
@@ -203,10 +203,10 @@
 					</thead>
 					<tbody>
 						{#each data as item}
-							<tr class="border-b border-black/10 transition-colors hover:bg-yellow-50/30">
+							<tr class="border-b border-black/5 transition-colors hover:bg-yellow-50/30">
 								{#if reportType === 'users'}
-									<td class="border-r border-black/10 p-4">{item.email}</td>
-									<td class="border-r border-black/10 p-4">
+									<td class="border-r border-black/5 p-4">{item.email}</td>
+									<td class="border-r border-black/5 p-4">
 										{item.ageCategory === '+18' ? 'Maioridade' : item.ageCategory}
 									</td>
 									<td class="p-4">
@@ -215,15 +215,15 @@
 								{:else}
 									<!-- games -->
 									{#if reportType === 'games'}
-										<td class="border-r border-black/10 p-4">{item.barcode}</td>
-										<td class="border-r border-black/10 p-4 font-medium">{item.name}</td>
-										<td class="border-r border-black/10 p-4">{item.category}</td>
+										<td class="border-r border-black/5 p-4">{item.barcode}</td>
+										<td class="border-r border-black/5 p-4 font-medium">{item.name}</td>
+										<td class="border-r border-black/5 p-4">{item.category}</td>
 										<td class="p-4">{item.minParticipants} a {item.maxParticipants} jogadores</td>
 									{:else}
 										<!-- events -->
 										{#if reportType === 'events'}
-											<td class="border-r border-black/10 p-4 font-medium">{item.name}</td>
-											<td class="border-r border-black/10 p-4">
+											<td class="border-r border-black/5 p-4 font-medium">{item.name}</td>
+											<td class="border-r border-black/5 p-4">
 												<span
 													class="rounded-full border px-2 py-0.5 text-xs font-semibold {item.status ===
 													'SCHEDULED'
@@ -239,7 +239,7 @@
 															: 'Finalizado'}
 												</span>
 											</td>
-											<td class="border-r border-black/10 p-4 text-xs">
+											<td class="border-r border-black/5 p-4 text-xs">
 												<p>
 													<strong>De:</strong>
 													{new Date(item.startDate).toLocaleString('pt-BR')}
@@ -250,7 +250,7 @@
 												</p>
 											</td>
 											<td
-												class="max-w-[200px] border-r border-black/10 p-4 text-xs leading-relaxed"
+												class="max-w-[200px] border-r border-black/5 p-4 text-xs leading-relaxed"
 											>
 												{item.street}, {item.number} - {item.neighborhood}, {item.city}/{item.state}
 											</td>
@@ -276,7 +276,7 @@
 										{:else}
 											<!-- most_played -->
 											{#if reportType === 'most_played'}
-												<td class="border-r border-black/10 p-4 font-medium">
+												<td class="border-r border-black/5 p-4 font-medium">
 													{item.gameTitle || item.gameName || ''}
 												</td>
 												<td class="p-4 text-center font-bold sm:text-left">
@@ -285,7 +285,7 @@
 											{:else}
 												<!-- event_participants -->
 												{#if reportType === 'event_participants'}
-													<td class="border-r border-black/10 p-4 font-medium"
+													<td class="border-r border-black/5 p-4 font-medium"
 														>{item.eventName || ''}</td
 													>
 													<td class="p-4 text-center font-bold sm:text-left">
@@ -294,10 +294,10 @@
 												{:else}
 													<!-- defaulters -->
 													{#if reportType === 'defaulters'}
-														<td class="border-r border-black/10 p-4 font-medium">{item.userName || ''}</td>
-														<td class="border-r border-black/10 p-4 font-mono text-xs">{item.userEmail || ''}</td>
-														<td class="border-r border-black/10 p-4">{item.gameTitle || ''}</td>
-														<td class="border-r border-black/10 p-4 text-xs">
+														<td class="border-r border-black/5 p-4 font-medium">{item.userName || ''}</td>
+														<td class="border-r border-black/5 p-4 font-mono text-xs">{item.userEmail || ''}</td>
+														<td class="border-r border-black/5 p-4">{item.gameTitle || ''}</td>
+														<td class="border-r border-black/5 p-4 text-xs">
 															{new Date(item.expectedReturnDate).toLocaleDateString('pt-BR')}
 														</td>
 														<td class="p-4 font-bold text-red-600">
@@ -306,8 +306,8 @@
 													{:else}
 														<!-- seasonality -->
 														{#if reportType === 'seasonality'}
-															<td class="border-r border-black/10 p-4 font-medium">{item.year}</td>
-															<td class="border-r border-black/10 p-4">
+															<td class="border-r border-black/5 p-4 font-medium">{item.year}</td>
+															<td class="border-r border-black/5 p-4">
 																{MONTH_NAMES[item.month - 1] || item.month}
 															</td>
 															<td class="p-4 font-bold">

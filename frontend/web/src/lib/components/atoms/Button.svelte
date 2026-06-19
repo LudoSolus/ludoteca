@@ -36,19 +36,19 @@
 <style>
 	button {
 		font-weight: 600;
-		box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 4px;
+		box-shadow: rgb(59 59 59 / 0.5) 0px 4px 4px;
 		cursor: pointer;
 		transition: all 0.2s ease-in-out;
 	}
 
 	button.primary {
 		background-color: var(--primary-color);
-		border: black 2px solid;
+		border: transparent 2px solid;
 	}
 
 	button.secondary {
 		background-color: white;
-		border: black 2px solid;
+		border: transparent 2px solid;
 	}
 
 	button.black {
