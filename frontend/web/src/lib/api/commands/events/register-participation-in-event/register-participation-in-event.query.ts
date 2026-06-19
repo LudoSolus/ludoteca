@@ -12,7 +12,7 @@ export class RegisterParticipationInEventCommand implements ICommand {
 	) {}
 
 	execute(handler: CommandsHandlerService): Observable<AxiosResponse<ICommandResult>> {
-		const url = `${PUBLIC_API_URL}/command/admin/participations-event/register-participation-event`;
+		const url = `${PUBLIC_API_URL}/commands/admin/participations-event/register`;
 		return from(handler.axios.post<ICommandResult>(url, this));
 	}
 }
