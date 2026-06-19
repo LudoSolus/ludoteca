@@ -10,7 +10,7 @@
 	import type { IParticipantsByEventData } from '$lib/api/queries/dashboard/participants-by-event/participants-by-event.interface';
 
 	const queriesHandler = new QueriesHandlerService(axios);
-	
+
 	let totalUsers: number | null = null;
 	let mostPlayedGamesData: IMostPlayedGamesData[] | null = null;
 	let participantsByEventData: IParticipantsByEventData[] | null = null;
@@ -55,10 +55,8 @@
 	}
 </script>
 
-<DashboardManager 
-	{totalUsers} 
-	{mostPlayedGamesData} 
-	{participantsByEventData} 
+<DashboardManager
+	{totalUsers}
+	{mostPlayedGamesData}
+	{participantsByEventData}
 />
-
-
