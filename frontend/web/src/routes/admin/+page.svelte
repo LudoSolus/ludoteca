@@ -10,10 +10,10 @@
 	import type { IParticipantsByEventData } from '$lib/api/queries/dashboard/participants-by-event/participants-by-event.interface';
 
 	const queriesHandler = new QueriesHandlerService(axios);
-	
-	let totalUsers: number = 0;
-	let mostPlayedGamesData: IMostPlayedGamesData[] = [];
-	let participantsByEventData: IParticipantsByEventData[] = [];
+
+	let totalUsers: number | null = null;
+	let mostPlayedGamesData: IMostPlayedGamesData[] | null = null;
+	let participantsByEventData: IParticipantsByEventData[] | null = null;
 
 	onMount(() => {
 		fetchDashboardData();
@@ -27,6 +27,7 @@
 			},
 			error: (err) => {
 				console.error('Erro ao buscar total de usuários', err);
+				totalUsers = 0;
 			}
 		});
 
@@ -37,6 +38,7 @@
 			},
 			error: (err) => {
 				console.error('Erro ao buscar jogos mais jogados', err);
+				mostPlayedGamesData = [];
 			}
 		});
 
@@ -47,13 +49,14 @@
 			},
 			error: (err) => {
 				console.error('Erro ao buscar participantes por evento', err);
+				participantsByEventData = [];
 			}
 		});
 	}
 </script>
 
-<DashboardManager 
-	{totalUsers} 
-	{mostPlayedGamesData} 
-	{participantsByEventData} 
+<DashboardManager
+	{totalUsers}
+	{mostPlayedGamesData}
+	{participantsByEventData}
 />

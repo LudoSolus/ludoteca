@@ -7,7 +7,7 @@
   import { onMount } from "svelte";
 
   const queriesHandler = new QueriesHandlerService(axios);
-  let users: IUser[] = [];
+  let users: IUser[] | undefined = undefined;
 
   onMount(() => {
     fetchUsers();

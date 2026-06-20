@@ -45,15 +45,11 @@
 				isLoading = false;
 			},
 			error: (err) => {
-				toast.error(err.message, { closable: true });
 				isLoading = false;
 			}
 		});
 	}
 </script>
 
-{#if boardGameDetails}
-	<BoardGamesUpdate boardGame={boardGameDetails} {isLoading} onEditBoardGame={editBoardGame} />
-{:else}
-	<p>Carregando...</p>
-{/if}
+<BoardGamesUpdate boardGame={boardGameDetails} {isLoading} onEditBoardGame={editBoardGame} />
+

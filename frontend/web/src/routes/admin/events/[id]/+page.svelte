@@ -248,23 +248,19 @@
 	}
 </script>
 
-{#if eventData}
-	<EventDetails
-		{eventData}
-		openRegisterUser={openRegisterUserModal}
-		loanGame={handleOnClickLoanGame}
-		startEvent={openConfirmStartEventModal}
-		finishEvent={openConfirmFinishEventModal}
-		returnGame={openReturnGameWithoutGame}
-		{handleOnEdit}
-		handleOnDelete={deleteEvent}
-		goToGameDetails={goToGameDetails}
-		{isLoadingDelete}
-		type="admin"
-	/>
-{:else}
-	<p>Carregando...</p>
-{/if}
+<EventDetails
+	{eventData}
+	openRegisterUser={openRegisterUserModal}
+	loanGame={handleOnClickLoanGame}
+	startEvent={openConfirmStartEventModal}
+	finishEvent={openConfirmFinishEventModal}
+	returnGame={openReturnGameWithoutGame}
+	{handleOnEdit}
+	handleOnDelete={deleteEvent}
+	goToGameDetails={goToGameDetails}
+	{isLoadingDelete}
+	type="admin"
+/>
 
 <EventRegisterUserModal
 	bind:isOpen={eventRegisterUserModalIsOpen}

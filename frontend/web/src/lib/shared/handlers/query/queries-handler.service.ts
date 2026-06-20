@@ -5,6 +5,7 @@ import type { IQuery } from './query.interface';
 import { catchError, Observable, throwError } from 'rxjs';
 import { authService } from '$lib/shared/stores/auth';
 import { get } from 'svelte/store';
+import { toast } from 'svoast';
 
 export class QueriesHandlerService {
 	constructor(public axios: Axios) {
@@ -15,7 +16,9 @@ export class QueriesHandlerService {
 	public handle<T>(query: IQuery<T>): Observable<IQueryResult<T>> {
 		return query.execute(this).pipe(
 			catchError((err) => {
-				const errorMessage = err?.error?.errorMessage || 'Ocorreu um erro na requisição.';
+				toast.error(err?.response?.data?.errorMessage || 'Ocorreu um erro na requisição.', {
+					closable: true
+				});
 				return throwError(() => err);
 			})
 		);
@@ -24,8 +27,12 @@ export class QueriesHandlerService {
 	public handleExternal<T>(query: IExternalQuery<T>): Observable<T> {
 		return query.execute(this).pipe(
 			catchError((err) => {
+				toast.error(err?.response?.data?.errorMessage || 'Ocorreu um erro na requisição.', {
+					closable: true
+				});
 				return throwError(() => err);
 			})
 		);
 	}
 }
+

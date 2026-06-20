@@ -1,23 +1,32 @@
 <script lang="ts">
 	import { EUserRole } from '$lib/shared/enums/user-role.enum';
+	import Fa from 'svelte-fa';
+	import { faDice } from '@fortawesome/free-solid-svg-icons';
 	import SearchInput from '../atoms/SearchInput.svelte';
 	import BoardGame from '../molecules/BoardGame.svelte';
+	import BoardGameSkeleton from '../molecules/BoardGameSkeleton.svelte';
 	import type { IBoardGameForList } from '$lib/shared/interfaces/board-games';
 
-	export let gamesList: IBoardGameForList[];
+	export let gamesList: IBoardGameForList[] | undefined = undefined;
 	export let onClickGame: (gameId: string) => void;
 	export let onClickLoanGame: ((gameId: string) => void) | null = null;
+	export let loading: boolean | undefined = undefined;
 
 	let searchInputValue: string = '';
 
 	function handleOnScanBarCode(): void {}
 
-	$: filteredGamesList = gamesList.filter((game) => {
-		const searchValue = searchInputValue.toLowerCase();
-		return (
-			game.name.toLowerCase().includes(searchValue) || game.barcode.toString().includes(searchValue)
-		);
-	});
+	$: isLoading = loading ?? gamesList === undefined;
+
+	$: filteredGamesList = gamesList
+		? gamesList.filter((game) => {
+				const searchValue = searchInputValue.toLowerCase();
+				return (
+					game.name.toLowerCase().includes(searchValue) ||
+					game.barcode.toString().includes(searchValue)
+				);
+			})
+		: [];
 </script>
 
 <div class="flex h-full w-full max-w-150 flex-col items-center justify-start gap-8">
@@ -27,7 +36,11 @@
 			<SearchInput bind:value={searchInputValue} placeholder="Pesquisar..." />
 		</div>
 		<div class="board-games-list flex w-fit flex-col gap-2 overflow-y-auto px-1 md:px-4">
-			{#if filteredGamesList.length > 0}
+			{#if isLoading}
+				{#each Array(4) as _}
+					<BoardGameSkeleton userType={!!onClickLoanGame ? 'admin' : 'user'} />
+				{/each}
+			{:else if filteredGamesList.length > 0}
 				{#each filteredGamesList as game}
 					<BoardGame
 						title={game.name}
@@ -41,7 +54,19 @@
 					/>
 				{/each}
 			{:else}
-				<p class="w-[94vw] min-[590px]:w-136">Nenhum jogo encontrado.</p>
+				<div
+					class="flex w-[94vw] flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed border-black p-6 text-center shadow-[0px_4px_10px_rgba(0,0,0,0.25)] min-[590px]:w-136"
+				>
+					<div
+						class="flex h-14 w-14 items-center justify-center rounded-full border-2 border-black bg-[var(--primary-color)] text-black"
+					>
+						<Fa icon={faDice} size="lg" />
+					</div>
+					<div class="flex flex-col gap-1">
+						<h4 class="inknut text-base font-bold">Nenhum jogo encontrado</h4>
+						<p class="text-xs text-gray-700">Não encontramos nenhum jogo aqui.</p>
+					</div>
+				</div>
 			{/if}
 		</div>
 	</div>

@@ -1,6 +1,5 @@
 package com.projectLudoteca.ludoteca.command.startEvent;
 
-import ch.qos.logback.core.joran.event.StartEvent;
 import com.projectLudoteca.ludoteca.common.entity.Event;
 import com.projectLudoteca.ludoteca.common.enums.EventStatus;
 import com.projectLudoteca.ludoteca.common.exception.BusinessException;

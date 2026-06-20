@@ -44,7 +44,7 @@
 				boardGames = data.resultData;
 			},
 			error: (err) => {
-				toast.error(err.message, { closable: true });
+				console.error(err);
 			}
 		});
 	}
@@ -62,15 +62,11 @@
 				isLoading = false;
 			},
 			error: (err) => {
-				toast.error(err.message, { closable: true });
 				isLoading = false;
 			}
 		});
 	}
 </script>
 
-{#if eventDetails}
-	<EventUpdate event={eventDetails} {isLoading} onEditEvent={editEvent} {boardGames} />
-{:else}
-	<p>Carregando...</p>
-{/if}
+<EventUpdate event={eventDetails} {isLoading} onEditEvent={editEvent} {boardGames} />
+

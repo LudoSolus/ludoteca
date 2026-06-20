@@ -25,7 +25,7 @@
 		supplement: eventForCopy?.supplement ?? '',
 		neighborhood: eventForCopy?.neighborhood ?? '',
 		city: eventForCopy?.city ?? '',
-		state: eventForCopy?.state ?? '',
+		state: eventForCopy?.state ?? 'PR',
 		zipCode: eventForCopy?.zipCode ?? '',
 		hasBoardGames: eventForCopy?.hasBoardGames ?? false,
 		hasRpg: eventForCopy?.hasRpg ?? false,

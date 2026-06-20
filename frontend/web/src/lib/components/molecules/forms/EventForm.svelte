@@ -8,6 +8,8 @@
 	import { inputHasValue, type IFormController } from '$lib/shared/interfaces/input-controller';
 	import type { IBoardGame } from '$lib/api/queries/board-games/list-board-games/list-board-games.interface';
 	import { untrack } from 'svelte';
+	import SelectInput from '$lib/components/atoms/SelectInput.svelte';
+	import type { SelectInputOption } from '$lib/shared/interfaces/select-input-option';
 
 	type FormField = keyof IRegisterEventRequest;
 
@@ -150,6 +152,36 @@
 	);
 	const selectedGameIds = $derived(new Set(formValues.gamesIds));
 	const allGamesSelected = $derived(boardGames.length === selectedGameIds.size);
+
+	const statesList: SelectInputOption[] = [
+		{ label: 'Acre', value: 'AC' },
+		{ label: 'Alagoas', value: 'AL' },
+		{ label: 'Amapá', value: 'AP' },
+		{ label: 'Amazonas', value: 'AM' },
+		{ label: 'Bahia', value: 'BA' },
+		{ label: 'Ceará', value: 'CE' },
+		{ label: 'Distrito Federal', value: 'DF' },
+		{ label: 'Espírito Santo', value: 'ES' },
+		{ label: 'Goiás', value: 'GO' },
+		{ label: 'Maranhão', value: 'MA' },
+		{ label: 'Mato Grosso', value: 'MT' },
+		{ label: 'Mato Grosso do Sul', value: 'MS' },
+		{ label: 'Minas Gerais', value: 'MG' },
+		{ label: 'Pará', value: 'PA' },
+		{ label: 'Paraíba', value: 'PB' },
+		{ label: 'Paraná', value: 'PR' },
+		{ label: 'Pernambuco', value: 'PE' },
+		{ label: 'Piauí', value: 'PI' },
+		{ label: 'Rio de Janeiro', value: 'RJ' },
+		{ label: 'Rio Grande do Norte', value: 'RN' },
+		{ label: 'Rio Grande do Sul', value: 'RS' },
+		{ label: 'Rondônia', value: 'RO' },
+		{ label: 'Roraima', value: 'RR' },
+		{ label: 'Santa Catarina', value: 'SC' },
+		{ label: 'São Paulo', value: 'SP' },
+		{ label: 'Sergipe', value: 'SE' },
+		{ label: 'Tocantins', value: 'TO' }
+	];
 
 	function validateForm(): boolean {
 		if (formController.name.touched) {
@@ -316,11 +348,12 @@
 			error={formController.city.error}
 		/>
 
-		<FormInput
+		<SelectInput
 			label={'Estado'}
-			placeholder="UF"
+			placeholder="Selecione o estado"
 			width={$device == 'mobile' ? '46%' : '100%'}
 			height="90px"
+			options={statesList}
 			bind:value={formValues.state}
 			error={formController.state.error}
 		/>

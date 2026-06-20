@@ -45,7 +45,7 @@
 		</div>
 	</section>
 	<section
-		class="event-details-section flex h-full flex-col justify-between rounded-2xl rounded-bl-none p-4 md:w-full md:rounded-bl-2xl md:pt-3 md:pb-8"
+		class="event-details-section flex h-full w-full flex-col justify-between rounded-2xl rounded-bl-none p-4 md:rounded-bl-2xl md:pt-3 md:pb-8"
 	>
 		<div class="flex w-full flex-col gap-4">
 			<p class="w-full text-end text-[18px] md:hidden">{formatLongDate(startDate, 'short')}</p>

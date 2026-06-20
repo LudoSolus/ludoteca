@@ -28,7 +28,6 @@
 				goto("/auth/login")
 			},
 			error: (err) => {
-				toast.error(err, { closable: true });
 				isLoading = false;
 			}
 		});
